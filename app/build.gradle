@@ -39,7 +39,7 @@ dependencies {
     implementation 'com.google.maps:google-maps-services:0.2.5'
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     implementation 'com.google.firebase:firebase-core:16.0.8'
-    implementation 'com.google.firebase:firebase-messaging:17.5.0'
+    implementation 'com.google.firebase:firebase-messaging:17.6.0'
     implementation 'com.android.support:multidex:1.0.3'
 
     // Room components
