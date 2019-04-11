@@ -98,7 +98,6 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
     private Location location;
     private LocationManager locationManager;
     private Criteria criteria;
-    private PlacesSearch placesSearch = new PlacesSearch();
 
     public PlacesListAdapterSearch(Context context) {
         mInflater = LayoutInflater.from(context);
