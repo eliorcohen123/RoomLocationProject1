@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.eliorcohen123456.locationprojectroom.CustomAdapterPackage.PlacesListAdapterSearch;
+import com.eliorcohen123456.locationprojectroom.ItemDecoration;
 import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplication;
 import com.eliorcohen123456.locationprojectroom.R;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlacesSearch;
@@ -153,6 +154,8 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             adapter = new PlacesListAdapterSearch(getContext());
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            ItemDecoration itemDecoration = new ItemDecoration(20);
+            recyclerView.addItemDecoration(itemDecoration);
         } catch (Exception e) {
 
         }

@@ -182,8 +182,6 @@
             android:id="@+id/places_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="8dp"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="10.0sp" />
+            android:layout_marginBottom="8dp" />
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>
