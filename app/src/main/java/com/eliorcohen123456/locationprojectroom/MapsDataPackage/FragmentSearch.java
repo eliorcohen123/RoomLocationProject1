@@ -41,7 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.eliorcohen123456.locationprojectroom.CustomAdapterPackage.PlacesListAdapterSearch;
-import com.eliorcohen123456.locationprojectroom.ItemDecoration;
+import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.ItemDecoration;
 import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplication;
 import com.eliorcohen123456.locationprojectroom.R;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlacesSearch;

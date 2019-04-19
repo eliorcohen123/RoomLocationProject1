@@ -1,4 +1,4 @@
-package com.eliorcohen123456.locationprojectroom;
+package com.eliorcohen123456.locationprojectroom.MainAndOtherPackage;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
