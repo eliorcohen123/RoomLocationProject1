@@ -21,6 +21,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -78,6 +80,7 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
     private ImageView moovit, gett, waze, num1, num2, num3, num4, num5;
     private FragmentMapSearch fragmentMapSearch;
     private List<Marker> markers = new ArrayList<Marker>();
+    private CoordinatorLayout coordinatorLayout;
 
     @Nullable
     @Override
@@ -89,14 +92,19 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
             placeModelSearch = (PlacesSearch) bundle.getSerializable(getString(R.string.map_search_key));
         }
 
-        Toast toast = Toast.makeText(getContext(), "Please click on one of the markers to use the info you want...", Toast.LENGTH_LONG);
-        View view = toast.getView();
-        view.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
-        TextView text = view.findViewById(android.R.id.message);
-        text.setTextColor(getResources().getColor(R.color.colorDarkBrown));
-        toast.show();  // Toast
-
         fragmentMapSearch = this;
+
+        coordinatorLayout = mView.findViewById(R.id.myContent);
+
+        Snackbar.make(coordinatorLayout, R.string.item_removed_message, Snackbar.LENGTH_LONG)
+                .setAction(R.string.undo, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Respond to the click, such as by undoing the modification that caused
+                        // this message to be displayed
+                    }
+                })
+                .show();
 
         num1 = mView.findViewById(R.id.imageMe1);
         num1.setOnClickListener(new View.OnClickListener() {
