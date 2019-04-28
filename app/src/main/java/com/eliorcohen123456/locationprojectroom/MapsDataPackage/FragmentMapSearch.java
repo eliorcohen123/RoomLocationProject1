@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -80,9 +81,6 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
     private FragmentMapSearch fragmentMapSearch;
     private List<Marker> markers = new ArrayList<Marker>();
     private CoordinatorLayout coordinatorLayout;
-    private NetWorkDataProviderSearch dataProviderSearch;
-    private NetWorkDataProviderHistory dataProviderHistory;
-    private SharedPreferences prefsSeek, settingsQuery, settingsType;
 
     @Nullable
     @Override
@@ -150,27 +148,27 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
 
         try {
             if (!isConnected(getContext())) {
-                dataProviderHistory = new NetWorkDataProviderHistory();
-                dataProviderHistory.getPlacesByLocation(fragmentMapSearch);
+                NetWorkDataProviderHistory dataProvider = new NetWorkDataProviderHistory();
+                dataProvider.getPlacesByLocation(fragmentMapSearch);
                 buildDialog(getContext()).show();
             } else {
-                prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
-                int myRadius = prefsSeek.getInt("seek", 5000);
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
+                int myRadius = prefs.getInt("seek", 5000);
 
-                settingsQuery = getActivity().getSharedPreferences("mysettingsquery",
+                SharedPreferences settings1 = getActivity().getSharedPreferences("mysettings1",
                         Context.MODE_PRIVATE);
-                String myString1 = settingsQuery.getString("mystringquery", "");
+                String myString1 = settings1.getString("mystring1", "");
 
-                settingsType = getActivity().getSharedPreferences("mysettingstype",
+                SharedPreferences settings2 = getActivity().getSharedPreferences("mysettings2",
                         Context.MODE_PRIVATE);
-                String myString2 = settingsType.getString("mystringtype", "");
+                String myString2 = settings2.getString("mystring2", "");
 
-                if (settingsQuery.contains("mysettingsquery") && settingsType.contains("mysettingstype")) {
-                    dataProviderSearch = new NetWorkDataProviderSearch();
-                    dataProviderSearch.getPlacesByLocation(myString1, myRadius, myString2, fragmentMapSearch);
+                if (settings1.contains("mystring1") && settings2.contains("mystring2")) {
+                    NetWorkDataProviderSearch dataProvider = new NetWorkDataProviderSearch();
+                    dataProvider.getPlacesByLocation(myString1, myRadius, myString2, fragmentMapSearch);
                 } else {
-                    dataProviderSearch = new NetWorkDataProviderSearch();
-                    dataProviderSearch.getPlacesByLocation("", myRadius, "", fragmentMapSearch);
+                    NetWorkDataProviderSearch dataProvider = new NetWorkDataProviderSearch();
+                    dataProvider.getPlacesByLocation("", myRadius, "", fragmentMapSearch);
                 }
             }
         } catch (Exception e) {
