@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
+import com.eliorcohen123456.locationprojectroom.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -93,8 +94,7 @@ public class NetWorkDataProviderSearch {
                 location = locationManager.getLastKnownLocation(provider);
                 // Search maps from that URL and put them in the SQLiteHelper
                 if (location != null) {
-                    //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=32.029252,%2034.7425159&radius=1500&key=AIzaSyDc7oNJ8FQZc6xmDVEvj-vewU5-ohnlwR0
-                    urlQuery = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + location.getLatitude() + "," + location.getLongitude() + "&radius=" + urls[1] + "&rankby=prominence&types=" + urls[2] + "&keyword=" + urls[0] + "&key=AIzaSyDc7oNJ8FQZc6xmDVEvj-vewU5-ohnlwR0";
+                    urlQuery = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + location.getLatitude() + "," + location.getLongitude() + "&radius=" + urls[1] + "&rankby=prominence&types=" + urls[2] + "&keyword=" + urls[0] + "&key=" + NearByApplication.getApplication().getString(R.string.api_key_search);
                     Request request = new Request.Builder()
                             .url(urlQuery)
                             .build();
