@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/backMapCustom"
-        android:icon="@drawable/ic_arrow_back_blue_24dp"
+        android:icon="@drawable/ic_arrow_back_lightblue_24dp"
         android:title=""
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="ifRoom" />
 </menu>

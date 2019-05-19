@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/placepic"
+    android:background="@drawable/background"
     android:orientation="vertical"
     tools:context=".MainAndOtherPackage.Credits">
 
@@ -37,8 +37,9 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginTop="80dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/custom_button"
             android:text="@string/button1_ok"
-            android:textColor="@color/colorBrown" />
+            android:textColor="@color/colorWhite" />
     </LinearLayout>
 </ScrollView>

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlaceViewModelFavorites;
 import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlacesFavorites;
@@ -20,6 +21,9 @@ public class AddPlaceFavorites extends AppCompatActivity {
 
     private PlacesSearch item;
     private PlaceViewModelFavorites placeViewModelFavorites;
+    private EditText name, address, lat, lng, photo;
+    private TextView textViewOK, textViewShow;
+    private Button btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +33,11 @@ public class AddPlaceFavorites extends AppCompatActivity {
         // GetSerializable for the texts
         item = (PlacesSearch) getIntent().getExtras().getSerializable(getString(R.string.map_add_from_internet));
 
-        final EditText name = findViewById(R.id.editText8);  // ID of the name
-        final EditText address = findViewById(R.id.editText9);  // ID of the address
-        final EditText lat = findViewById(R.id.editText10);  // ID of the lat
-        final EditText lng = findViewById(R.id.editText11);  // ID of the lng
-        final EditText photo = findViewById(R.id.editText12);  // ID of the photo
+        name = findViewById(R.id.editTextName);  // ID of the name
+        address = findViewById(R.id.editTextAddress);  // ID of the address
+        lat = findViewById(R.id.editTextLat);  // ID of the lat
+        lng = findViewById(R.id.editTextLng);  // ID of the lng
+        photo = findViewById(R.id.editTextPhoto);  // ID of the photo
 
         name.setText(item.getName());  // GetSerializable of name
         address.setText(item.getAddress());  // GetSerializable of address
@@ -43,12 +47,11 @@ public class AddPlaceFavorites extends AppCompatActivity {
             photo.setText(item.getPhoto());  // GetSerializable of photo
         } catch (Exception e) {
             photo.setText("");  // GetSerializable of photo
-
         }
 
         // Button that does the following:
-        Button button1 = findViewById(R.id.button18);
-        button1.setOnClickListener(new View.OnClickListener() {
+        textViewOK = findViewById(R.id.textViewOK);
+        textViewOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String name1 = name.getText().toString();  // GetText of the name
@@ -75,13 +78,13 @@ public class AddPlaceFavorites extends AppCompatActivity {
                     + item.getPhoto() +
                     "&key=" +
                     getString(R.string.api_key_search);
-            final ImageView imageView = findViewById(R.id.imageView3);
+            final ImageView imageView = findViewById(R.id.imageViewMe);
             Picasso.get().load(picture).into(imageView);
             imageView.setVisibility(View.INVISIBLE); //Set the ImageView Invisible
 
             // Button to show the ImageView
-            Button button2 = findViewById(R.id.button17);
-            button2.setOnClickListener(new View.OnClickListener() {
+            textViewShow = findViewById(R.id.textViewShow);
+            textViewShow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     photo.setVisibility(View.INVISIBLE);  // Canceling the show of URL
@@ -90,8 +93,8 @@ public class AddPlaceFavorites extends AppCompatActivity {
             });
         } catch (Exception e) {
             // Button to show the ImageView
-            Button button2 = findViewById(R.id.button17);
-            button2.setOnClickListener(new View.OnClickListener() {
+            textViewShow = findViewById(R.id.textViewShow);
+            textViewShow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     photo.setVisibility(View.INVISIBLE);  // Canceling the show of URL
@@ -100,8 +103,8 @@ public class AddPlaceFavorites extends AppCompatActivity {
         }
 
         // Button are back to the previous activity
-        Button button3 = findViewById(R.id.button19);
-        button3.setOnClickListener(new View.OnClickListener() {
+        btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();

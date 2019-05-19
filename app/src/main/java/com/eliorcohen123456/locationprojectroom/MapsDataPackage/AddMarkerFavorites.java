@@ -29,17 +29,17 @@ public class AddMarkerFavorites extends AppCompatActivity {
         latS = getIntent().getExtras().getDouble(getString(R.string.lat_marker));
         lngS = getIntent().getExtras().getDouble(getString(R.string.lng_marker));
 
-        final EditText name = findViewById(R.id.editText8);  // ID of the name
-        final EditText address = findViewById(R.id.editText9);  // ID of the address
-        final EditText lat = findViewById(R.id.editText10);  // ID of the lat
-        final EditText lng = findViewById(R.id.editText11);  // ID of the lng
-        final EditText photo = findViewById(R.id.editText12);  // ID of the photo
+        final EditText name = findViewById(R.id.editTextName);  // ID of the name
+        final EditText address = findViewById(R.id.editTextAddress);  // ID of the address
+        final EditText lat = findViewById(R.id.editTextLat);  // ID of the lat
+        final EditText lng = findViewById(R.id.editTextLng);  // ID of the lng
+        final EditText photo = findViewById(R.id.editTextPhoto);  // ID of the photo
 
         lat.setText(String.valueOf(latS));
         lng.setText(String.valueOf(lngS));
 
         // Button that does the following:
-        Button button1 = findViewById(R.id.button18);
+        Button button1 = findViewById(R.id.textViewOK);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,12 +66,12 @@ public class AddMarkerFavorites extends AppCompatActivity {
                 + photo.getText().toString() +
                 "&key=" +
                 getString(R.string.api_key_search);
-        final ImageView imageView = findViewById(R.id.imageView3);
+        final ImageView imageView = findViewById(R.id.imageViewMe);
         Picasso.get().load(picture).into(imageView);
         imageView.setVisibility(View.INVISIBLE); //Set the ImageView Invisible
 
         // Button to show the ImageView
-        Button button2 = findViewById(R.id.button17);
+        Button button2 = findViewById(R.id.textViewShow);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +81,7 @@ public class AddMarkerFavorites extends AppCompatActivity {
         });
 
         // Button are back to the previous activity
-        Button button3 = findViewById(R.id.button19);
+        Button button3 = findViewById(R.id.btnBack);
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

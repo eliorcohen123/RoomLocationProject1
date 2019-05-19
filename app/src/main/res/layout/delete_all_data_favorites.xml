@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/placepic"
+    android:background="@drawable/background"
     tools:context=".MapsDataPackage.DeleteAllDataFavorites">
 
     <Button
@@ -19,7 +19,7 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/custom_button"
         android:text="@string/button1_ok"
-        android:textColor="@color/colorBrown"
+        android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.771"
@@ -39,7 +39,7 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/custom_button"
         android:text="@string/button2_cancel"
-        android:textColor="@color/colorBrown"
+        android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.214"
@@ -59,7 +59,7 @@
         android:layout_marginBottom="8dp"
         android:gravity="center"
         android:text="Are you sure you want to delete all your data of my favorites?"
-        android:textColor="@color/colorBrown"
+        android:textColor="@color/colorWhite"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
