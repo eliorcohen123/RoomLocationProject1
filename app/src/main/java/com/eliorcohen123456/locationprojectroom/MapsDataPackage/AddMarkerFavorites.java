@@ -40,8 +40,8 @@ public class AddMarkerFavorites extends AppCompatActivity {
         lng.setText(String.valueOf(lngS));
 
         // Button that does the following:
-        Button button1 = findViewById(R.id.textViewOK);
-        button1.setOnClickListener(new View.OnClickListener() {
+        TextView textView1 = findViewById(R.id.textViewOK);
+        textView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String name1 = name.getText().toString();  // GetText of the name
