@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlaceViewModelFavorites;
 import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlacesFavorites;
@@ -71,8 +72,8 @@ public class AddMarkerFavorites extends AppCompatActivity {
         imageView.setVisibility(View.INVISIBLE); //Set the ImageView Invisible
 
         // Button to show the ImageView
-        Button button2 = findViewById(R.id.textViewShow);
-        button2.setOnClickListener(new View.OnClickListener() {
+        TextView textView2 = findViewById(R.id.textViewShow);
+        textView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 photo.setVisibility(View.INVISIBLE);  // Canceling the show of URL
