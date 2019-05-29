@@ -46,7 +46,7 @@ import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplic
 import com.eliorcohen123456.locationprojectroom.R;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlacesSearch;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.IPlacesDataReceived;
-import com.eliorcohen123456.locationprojectroom.DataAppPackage.LocationModel;
+import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
 import com.eliorcohen123456.locationprojectroom.network.NetWorkDataProviderHistory;
 import com.eliorcohen123456.locationprojectroom.network.NetWorkDataProviderSearch;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceViewModelSearch;
@@ -770,7 +770,7 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
     }
 
     @Override
-    public void onPlacesDataReceived(ArrayList<LocationModel> results_) {
+    public void onPlacesDataReceived(ArrayList<PlaceModel> results_) {
         // pass data result to adapter
         mPlacesViewModel.getAllPlaces().observe(this, new Observer<List<PlacesSearch>>() {
             @Override

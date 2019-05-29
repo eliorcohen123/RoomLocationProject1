@@ -22,7 +22,7 @@ import java.util.List;
 import com.eliorcohen123456.locationprojectroom.MapsDataPackage.FragmentSearch;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlacesSearch;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.IPlacesDataReceived;
-import com.eliorcohen123456.locationprojectroom.DataAppPackage.LocationModel;
+import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceRepositorySearch;
 import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplication;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceViewModelSearch;
@@ -46,7 +46,7 @@ public class NetWorkDataProviderSearch {
 
     private class GetPlacesByLocationAsyncTask extends AsyncTask<String, Integer, IPlacesDataReceived> {
 
-        private ArrayList<LocationModel> mLocationModels;
+        private ArrayList<PlaceModel> mPlaceModels;
         private IPlacesDataReceived mIPlacesDataReceived;
         private PlaceViewModelSearch placeViewModelSearch;
         private Location location;
@@ -111,12 +111,12 @@ public class NetWorkDataProviderSearch {
                             e.printStackTrace();
                         }
                     try {
-                        mLocationModels = getLocationListFromJson(response.body().string());
+                        mPlaceModels = getLocationListFromJson(response.body().string());
                         PlaceRepositorySearch placeRepositorySearch = new PlaceRepositorySearch(NearByApplication.getApplication());
                         ArrayList<PlacesSearch> listPlaces = new ArrayList<>();
-                        for (LocationModel locationModel : mLocationModels) {
+                        for (PlaceModel placeModel : mPlaceModels) {
                             try {
-                                PlacesSearch place = new PlacesSearch(locationModel.getName(), locationModel.getGeometry().getLocation().getLat(), locationModel.getGeometry().getLocation().getLng(), locationModel.getVicinity(), locationModel.getPhotos().get(0).getPhoto_reference(), false, true, locationModel.getDistance(), locationModel.getRating(), locationModel.getUser_ratings_total());
+                                PlacesSearch place = new PlacesSearch(placeModel.getName(), placeModel.getGeometry().getLocation().getLat(), placeModel.getGeometry().getLocation().getLng(), placeModel.getVicinity(), placeModel.getPhotos().get(0).getPhoto_reference(), false, true, placeModel.getDistance(), placeModel.getRating(), placeModel.getUser_ratings_total());
                                 listPlaces.add(place);
                             } catch (Exception e) {
 
@@ -133,22 +133,22 @@ public class NetWorkDataProviderSearch {
             return mIPlacesDataReceived;
         }
 
-        private ArrayList<LocationModel> getLocationListFromJson(String jsonResponse) {
-            List<LocationModel> stuLocationData = new ArrayList<LocationModel>();
+        private ArrayList<PlaceModel> getLocationListFromJson(String jsonResponse) {
+            List<PlaceModel> stuLocationData = new ArrayList<PlaceModel>();
             Gson gson = new GsonBuilder().create();
             LocationResponse response = gson.fromJson(jsonResponse, LocationResponse.class);
             stuLocationData = response.results;
-            ArrayList<LocationModel> arrList = new ArrayList<>();
+            ArrayList<PlaceModel> arrList = new ArrayList<>();
             arrList.addAll(stuLocationData);
             return arrList;
         }
 
         public class LocationResponse {
-            private List<LocationModel> results;
+            private List<PlaceModel> results;
 
             // public constructor is necessary for collections
             public LocationResponse() {
-                results = new ArrayList<LocationModel>();
+                results = new ArrayList<PlaceModel>();
             }
         }
 
@@ -165,9 +165,9 @@ public class NetWorkDataProviderSearch {
                 FragmentSearch.stopShowingProgressBar();
             }
             try {
-                iPlacesDataReceived_.onPlacesDataReceived(mLocationModels);
+                iPlacesDataReceived_.onPlacesDataReceived(mPlaceModels);
             } catch (Exception e) {
-                iPlacesDataReceived_.onPlacesDataReceived(mLocationModels);
+                iPlacesDataReceived_.onPlacesDataReceived(mPlaceModels);
             }
         }
     }

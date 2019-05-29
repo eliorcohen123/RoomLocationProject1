@@ -32,7 +32,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.eliorcohen123456.locationprojectroom.DataAppPackage.LocationModel;
+import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
 import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplication;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.IPlacesDataReceived;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceViewModelSearch;
@@ -333,7 +333,7 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
     }
 
     @Override
-    public void onPlacesDataReceived(ArrayList<LocationModel> results_) {
+    public void onPlacesDataReceived(ArrayList<PlaceModel> results_) {
         // pass data result to adapter
         mPlacesViewModel.getAllPlaces().observe(this, new Observer<List<PlacesSearch>>() {
             @Override

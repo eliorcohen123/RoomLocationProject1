@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlacesSearch;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.IPlacesDataReceived;
-import com.eliorcohen123456.locationprojectroom.DataAppPackage.LocationModel;
+import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceRepositorySearch;
 import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplication;
 
@@ -25,7 +25,7 @@ public class NetWorkDataProviderHistory {
 
     private class GetPlacesByLocationAsyncTask extends AsyncTask<String, Integer, IPlacesDataReceived> {
 
-        private ArrayList<LocationModel> mLocationModels;
+        private ArrayList<PlaceModel> mPlaceModels;
         private IPlacesDataReceived mIPlacesDataReceived;
 
         public GetPlacesByLocationAsyncTask(IPlacesDataReceived iPlacesDataReceived) {
@@ -34,12 +34,12 @@ public class NetWorkDataProviderHistory {
 
         @Override
         protected IPlacesDataReceived doInBackground(String... urls) {
-            mLocationModels = new ArrayList<LocationModel>();
+            mPlaceModels = new ArrayList<PlaceModel>();
             PlaceRepositorySearch placeRepositorySearch = new PlaceRepositorySearch(NearByApplication.getApplication());
             ArrayList<PlacesSearch> listPlaces = new ArrayList<>();
-            for (LocationModel locationModel : mLocationModels) {
+            for (PlaceModel placeModel : mPlaceModels) {
                 try {
-                    PlacesSearch place = new PlacesSearch(locationModel.getName(), locationModel.getGeometry().getLocation().getLat(), locationModel.getGeometry().getLocation().getLng(), locationModel.getVicinity(), locationModel.getPhotos().get(0).getPhoto_reference(), false, true, locationModel.getDistance(), locationModel.getRating(), locationModel.getUser_ratings_total());
+                    PlacesSearch place = new PlacesSearch(placeModel.getName(), placeModel.getGeometry().getLocation().getLat(), placeModel.getGeometry().getLocation().getLng(), placeModel.getVicinity(), placeModel.getPhotos().get(0).getPhoto_reference(), false, true, placeModel.getDistance(), placeModel.getRating(), placeModel.getUser_ratings_total());
                     listPlaces.add(place);
                 } catch (Exception e) {
 
@@ -52,9 +52,9 @@ public class NetWorkDataProviderHistory {
         @Override
         protected void onPostExecute(IPlacesDataReceived iPlacesDataReceived_) {
             try {
-                iPlacesDataReceived_.onPlacesDataReceived(mLocationModels);
+                iPlacesDataReceived_.onPlacesDataReceived(mPlaceModels);
             } catch (Exception e) {
-                iPlacesDataReceived_.onPlacesDataReceived(mLocationModels);
+                iPlacesDataReceived_.onPlacesDataReceived(mPlaceModels);
             }
         }
     }

@@ -37,7 +37,7 @@ import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlaceViewMo
 import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlacesFavorites;
 import com.eliorcohen123456.locationprojectroom.CustomAdapterPackage.PlacesListAdapterFavorites;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.IPlacesDataReceived;
-import com.eliorcohen123456.locationprojectroom.DataAppPackage.LocationModel;
+import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
 import com.eliorcohen123456.locationprojectroom.network.NetWorkDataProviderFavorites;
 
 public class FragmentFavorites extends Fragment implements IPlacesDataReceived, NavigationView.OnNavigationItemSelectedListener {
@@ -185,7 +185,7 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
     }
 
     @Override
-    public void onPlacesDataReceived(ArrayList<LocationModel> results_) {
+    public void onPlacesDataReceived(ArrayList<PlaceModel> results_) {
         // pass data result to adapterFavorites
         mPlacesViewModelFavorites.getAllPlaces().observe(this, new Observer<List<PlacesFavorites>>() {
             @Override

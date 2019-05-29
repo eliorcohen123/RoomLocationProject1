@@ -3,7 +3,7 @@ package com.eliorcohen123456.locationprojectroom.DataAppPackage;
 import java.io.Serializable;
 import java.util.List;
 
-public class LocationModel implements Serializable {
+public class PlaceModel implements Serializable {
 
     private String id;
     private String name;

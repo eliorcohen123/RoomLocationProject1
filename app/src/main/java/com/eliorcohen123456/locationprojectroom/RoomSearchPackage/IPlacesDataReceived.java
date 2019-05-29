@@ -2,9 +2,9 @@ package com.eliorcohen123456.locationprojectroom.RoomSearchPackage;
 
 import java.util.ArrayList;
 
-import com.eliorcohen123456.locationprojectroom.DataAppPackage.LocationModel;
+import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
 
 public interface IPlacesDataReceived {
 
-    void onPlacesDataReceived(ArrayList<LocationModel> results_);
+    void onPlacesDataReceived(ArrayList<PlaceModel> results_);
 }

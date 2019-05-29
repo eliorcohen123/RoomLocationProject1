@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -29,10 +28,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.eliorcohen123456.locationprojectroom.DataAppPackage.LocationModel;
+import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
 import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlaceViewModelFavorites;
 import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlacesFavorites;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.IPlacesDataReceived;
@@ -230,7 +228,7 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
     }
 
     @Override
-    public void onPlacesDataReceived(ArrayList<LocationModel> results_) {
+    public void onPlacesDataReceived(ArrayList<PlaceModel> results_) {
         // pass data result to adapter
         mPlacesViewModel.getAllPlaces().observe(this, new Observer<List<PlacesFavorites>>() {
             @Override

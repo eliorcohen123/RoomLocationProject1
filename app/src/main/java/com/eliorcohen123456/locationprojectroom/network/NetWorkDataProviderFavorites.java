@@ -8,7 +8,7 @@ import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlacesFavor
 import java.util.ArrayList;
 
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.IPlacesDataReceived;
-import com.eliorcohen123456.locationprojectroom.DataAppPackage.LocationModel;
+import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
 import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplication;
 
 public class NetWorkDataProviderFavorites {
@@ -26,7 +26,7 @@ public class NetWorkDataProviderFavorites {
 
     private class GetPlacesByLocationAsyncTask extends AsyncTask<String, Integer, IPlacesDataReceived> {
 
-        private ArrayList<LocationModel> mLocationModels;
+        private ArrayList<PlaceModel> mPlaceModels;
         private IPlacesDataReceived mIPlacesDataReceived;
 
         public GetPlacesByLocationAsyncTask(IPlacesDataReceived iPlacesDataReceived) {
@@ -35,12 +35,12 @@ public class NetWorkDataProviderFavorites {
 
         @Override
         protected IPlacesDataReceived doInBackground(String... urls) {
-            mLocationModels = new ArrayList<LocationModel>();
+            mPlaceModels = new ArrayList<PlaceModel>();
             PlaceRepositoryFavorites placeRepository = new PlaceRepositoryFavorites(NearByApplication.getApplication());
             ArrayList<PlacesFavorites> listPlaces = new ArrayList<>();
-            for (LocationModel locationModel : mLocationModels) {
+            for (PlaceModel placeModel : mPlaceModels) {
                 try {
-                    PlacesFavorites place = new PlacesFavorites(locationModel.getName(), locationModel.getVicinity(), locationModel.getGeometry().getLocation().getLat(), locationModel.getGeometry().getLocation().getLng(), locationModel.getPhotos().get(0).getPhoto_reference());
+                    PlacesFavorites place = new PlacesFavorites(placeModel.getName(), placeModel.getVicinity(), placeModel.getGeometry().getLocation().getLat(), placeModel.getGeometry().getLocation().getLng(), placeModel.getPhotos().get(0).getPhoto_reference());
                     listPlaces.add(place);
                 } catch (Exception e) {
 
@@ -53,9 +53,9 @@ public class NetWorkDataProviderFavorites {
         @Override
         protected void onPostExecute(IPlacesDataReceived iPlacesDataReceived_) {
             try {
-                iPlacesDataReceived_.onPlacesDataReceived(mLocationModels);
+                iPlacesDataReceived_.onPlacesDataReceived(mPlaceModels);
             } catch (Exception e) {
-                iPlacesDataReceived_.onPlacesDataReceived(mLocationModels);
+                iPlacesDataReceived_.onPlacesDataReceived(mPlaceModels);
             }
         }
     }
