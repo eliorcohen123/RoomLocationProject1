@@ -219,7 +219,7 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
         if (provider != null) {
             location = locationManager.getLastKnownLocation(provider);
             if (location != null) {
-                Collections.sort(words, new Comparator<PlacesSearch>() {
+                Collections.sort(mPlacesSearchList, new Comparator<PlacesSearch>() {
                     public int compare(PlacesSearch obj1, PlacesSearch obj2) {
                         // ## Ascending order
 //                return obj1.getDistance().compareToIgnoreCase(obj2.getDistance()); // To compare string values
