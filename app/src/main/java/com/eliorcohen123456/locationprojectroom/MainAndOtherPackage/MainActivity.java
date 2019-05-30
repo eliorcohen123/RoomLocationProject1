@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     private void getMyLocation() {
         checkLocationPermission();
+
         // Start all of check location
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         buildGoogleApiClient();
