@@ -60,7 +60,9 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
         initUI();
         drawerLayout();
         getData();
+        myRecyclerView();
         enableSwipe();
+
         return mView;
     }
 
@@ -102,7 +104,9 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
     private void getData() {
         NetWorkDataProviderFavorites dataProvider = new NetWorkDataProviderFavorites();
         dataProvider.getPlacesByLocation(fragmentFavorites);
+    }
 
+    private void myRecyclerView() {
         try {
             adapterFavorites = new PlacesListAdapterFavorites(getContext());
             recyclerView.setAdapter(adapterFavorites);
