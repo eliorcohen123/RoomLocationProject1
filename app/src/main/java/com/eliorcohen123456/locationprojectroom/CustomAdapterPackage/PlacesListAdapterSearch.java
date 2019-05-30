@@ -52,6 +52,7 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
             kmMe1 = itemView.findViewById(R.id.kmMe1);
             image1 = itemView.findViewById(R.id.image1);
             relativeLayout = itemView.findViewById(R.id.relative1);
+
             itemView.setOnCreateContextMenuListener(this);
         }
 
