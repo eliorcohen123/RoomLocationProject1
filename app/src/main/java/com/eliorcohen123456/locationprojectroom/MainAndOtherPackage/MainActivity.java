@@ -79,14 +79,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         initUI();
         drawerLayout();
         frg();
-
-        AppRater.app_launched(this);
     }
 
     private void initUI() {
         toolbar = findViewById(R.id.toolbar);
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+
+        AppRater.app_launched(this);
     }
 
     private void drawerLayout() {
