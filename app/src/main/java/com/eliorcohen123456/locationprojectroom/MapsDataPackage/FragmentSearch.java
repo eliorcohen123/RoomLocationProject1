@@ -72,8 +72,13 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_search_layout, container, false);
 
-        mFragmentSearch = this;
+        initUI();
+        refreshUI();
 
+        return mView;
+    }
+
+    private void initUI() {
         btnBank = mView.findViewById(R.id.btnBank);
         btnBar = mView.findViewById(R.id.btnBar);
         btnBeauty = mView.findViewById(R.id.btnBeauty);
@@ -92,6 +97,14 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
 
         swipeRefreshLayout = mView.findViewById(R.id.swipe_containerFrag);  // ID of the SwipeRefreshLayout of FragmentSearch
 
+        recyclerView = mView.findViewById(R.id.places_list);
+
+        mFragmentSearch = this;
+
+        setHasOptionsMenu(true);
+    }
+
+    private void refreshUI() {
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorOrange));  // Colors of the SwipeRefreshLayout of FragmentSearch
         // Refresh the MapDBHelper of app in ListView of MainActivity
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -118,16 +131,11 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-
-        setHasOptionsMenu(true);
-        return mView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        recyclerView = mView.findViewById(R.id.places_list);
-
         if (!isConnected(getContext())) {
             dataProviderHistory = new NetWorkDataProviderHistory();
             dataProviderHistory.getPlacesByLocation(mFragmentSearch);

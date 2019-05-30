@@ -16,6 +16,7 @@ import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplic
 
 public class DeleteAllDataFavorites extends AppCompatActivity {
 
+    private Button btnOK, btnCancel;
     private PlaceViewModelFavorites placeViewModelFavorites;
 
     @Override
@@ -23,12 +24,21 @@ public class DeleteAllDataFavorites extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.delete_all_data_favorites);
 
+        initUI();
+        delData();
+        btnBack();
+    }
+
+    private void initUI() {
+        btnOK = findViewById(R.id.button3);
+        btnCancel = findViewById(R.id.button4);
+    }
+
+    private void delData() {
         // Button are delete all the data of the Favorites
-        Button button1 = findViewById(R.id.button3);
-        button1.setOnClickListener(new View.OnClickListener() {
+        btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 placeViewModelFavorites = new PlaceViewModelFavorites(NearByApplication.getApplication());
                 placeViewModelFavorites.deleteAll();
 
@@ -43,10 +53,11 @@ public class DeleteAllDataFavorites extends AppCompatActivity {
                 startActivity(intentDeleteAllDataToMain);
             }
         });
+    }
 
+    private void btnBack() {
         // Button are back to the previous activity
-        Button button2 = findViewById(R.id.button4);
-        button2.setOnClickListener(new View.OnClickListener() {
+        btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();

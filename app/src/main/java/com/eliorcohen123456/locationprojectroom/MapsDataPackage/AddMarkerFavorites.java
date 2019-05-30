@@ -21,27 +21,45 @@ public class AddMarkerFavorites extends AppCompatActivity {
     private double latS;
     private double lngS;
     private PlaceViewModelFavorites placeViewModelFavorites;
+    private EditText name, address, lat, lng, photo;
+    private TextView textViewOK, textViewShow;
+    private ImageView imageView;
+    private Button btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_marker_me);
 
+        initUI();
+        getData();
+        btnBack();
+    }
+
+    private void initUI() {
         latS = getIntent().getExtras().getDouble(getString(R.string.lat_marker));
         lngS = getIntent().getExtras().getDouble(getString(R.string.lng_marker));
 
-        final EditText name = findViewById(R.id.editTextName);  // ID of the name
-        final EditText address = findViewById(R.id.editTextAddress);  // ID of the address
-        final EditText lat = findViewById(R.id.editTextLat);  // ID of the lat
-        final EditText lng = findViewById(R.id.editTextLng);  // ID of the lng
-        final EditText photo = findViewById(R.id.editTextPhoto);  // ID of the photo
+        name = findViewById(R.id.editTextName);  // ID of the name
+        address = findViewById(R.id.editTextAddress);  // ID of the address
+        lat = findViewById(R.id.editTextLat);  // ID of the lat
+        lng = findViewById(R.id.editTextLng);  // ID of the lng
+        photo = findViewById(R.id.editTextPhoto);  // ID of the photo
 
+        textViewOK = findViewById(R.id.textViewOK);
+        textViewShow = findViewById(R.id.textViewShow);
+
+        imageView = findViewById(R.id.imageViewMe);
+
+        btnBack = findViewById(R.id.btnBack);
+    }
+
+    private void getData() {
         lat.setText(String.valueOf(latS));
         lng.setText(String.valueOf(lngS));
 
         // Button that does the following:
-        TextView textView1 = findViewById(R.id.textViewOK);
-        textView1.setOnClickListener(new View.OnClickListener() {
+        textViewOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String name1 = name.getText().toString();  // GetText of the name
@@ -67,23 +85,22 @@ public class AddMarkerFavorites extends AppCompatActivity {
                 + photo.getText().toString() +
                 "&key=" +
                 getString(R.string.api_key_search);
-        final ImageView imageView = findViewById(R.id.imageViewMe);
         Picasso.get().load(picture).into(imageView);
         imageView.setVisibility(View.INVISIBLE); //Set the ImageView Invisible
 
         // Button to show the ImageView
-        TextView textView2 = findViewById(R.id.textViewShow);
-        textView2.setOnClickListener(new View.OnClickListener() {
+        textViewShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 photo.setVisibility(View.INVISIBLE);  // Canceling the show of URL
                 imageView.setVisibility(View.VISIBLE);  // Show the ImageView
             }
         });
+    }
 
+    private void btnBack() {
         // Button are back to the previous activity
-        Button button3 = findViewById(R.id.btnBack);
-        button3.setOnClickListener(new View.OnClickListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();

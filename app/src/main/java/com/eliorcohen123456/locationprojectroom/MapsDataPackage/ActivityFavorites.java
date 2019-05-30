@@ -15,6 +15,10 @@ public class ActivityFavorites extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
 
+        frg();
+    }
+
+    private void frg() {
         FragmentFavorites fragmentFavorites = new FragmentFavorites();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

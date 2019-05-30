@@ -24,12 +24,19 @@ public class AddPlaceFavorites extends AppCompatActivity {
     private EditText name, address, lat, lng, photo;
     private TextView textViewOK, textViewShow;
     private Button btnBack;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_place_me);
 
+        initUI();
+        getData();
+        btnBack();
+    }
+
+    private void initUI() {
         // GetSerializable for the texts
         item = (PlacesSearch) getIntent().getExtras().getSerializable(getString(R.string.map_add_from_internet));
 
@@ -39,6 +46,15 @@ public class AddPlaceFavorites extends AppCompatActivity {
         lng = findViewById(R.id.editTextLng);  // ID of the lng
         photo = findViewById(R.id.editTextPhoto);  // ID of the photo
 
+        textViewOK = findViewById(R.id.textViewOK);
+        textViewShow = findViewById(R.id.textViewShow);
+
+        imageView = findViewById(R.id.imageViewMe);
+
+        btnBack = findViewById(R.id.btnBack);
+    }
+
+    private void getData() {
         name.setText(item.getName());  // GetSerializable of name
         address.setText(item.getAddress());  // GetSerializable of address
         lat.setText(String.valueOf(item.getLat()));  // GetSerializable of lat
@@ -50,7 +66,6 @@ public class AddPlaceFavorites extends AppCompatActivity {
         }
 
         // Button that does the following:
-        textViewOK = findViewById(R.id.textViewOK);
         textViewOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,12 +93,10 @@ public class AddPlaceFavorites extends AppCompatActivity {
                     + item.getPhoto() +
                     "&key=" +
                     getString(R.string.api_key_search);
-            final ImageView imageView = findViewById(R.id.imageViewMe);
             Picasso.get().load(picture).into(imageView);
             imageView.setVisibility(View.INVISIBLE); //Set the ImageView Invisible
 
             // Button to show the ImageView
-            textViewShow = findViewById(R.id.textViewShow);
             textViewShow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -93,7 +106,6 @@ public class AddPlaceFavorites extends AppCompatActivity {
             });
         } catch (Exception e) {
             // Button to show the ImageView
-            textViewShow = findViewById(R.id.textViewShow);
             textViewShow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -101,9 +113,10 @@ public class AddPlaceFavorites extends AppCompatActivity {
                 }
             });
         }
+    }
 
+    private void btnBack() {
         // Button are back to the previous activity
-        btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

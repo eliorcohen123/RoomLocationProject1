@@ -67,18 +67,30 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private GoogleApiClient mGoogleApiClient;
     private double diagonalInches;
     private DrawerLayout drawer;
+    private Toolbar toolbar;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        checkLocationPermission();
+        getMyLocation();
+        initUI();
+        drawerLayout();
+        frg();
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        AppRater.app_launched(this);
+    }
 
+    private void initUI() {
+        toolbar = findViewById(R.id.toolbar);
         drawer = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+    }
+
+    private void drawerLayout() {
+        setSupportActionBar(toolbar);
 
         findViewById(R.id.myButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,9 +111,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
 
+    private void frg() {
         // Tablet/Phone mode
         DisplayMetrics metrics = new DisplayMetrics();
         this.getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -121,7 +134,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             fragmentTransaction.replace(R.id.fragmentContainer, fragmentSearch);
         }
         fragmentTransaction.commit();
+    }
 
+    private void getMyLocation() {
+        checkLocationPermission();
         // Start all of check location
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         buildGoogleApiClient();
@@ -215,8 +231,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 }
             }
         });
-
-        AppRater.app_launched(this);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

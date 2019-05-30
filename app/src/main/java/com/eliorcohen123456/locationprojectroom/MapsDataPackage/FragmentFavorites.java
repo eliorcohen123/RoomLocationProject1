@@ -49,18 +49,33 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
     private Paint p = new Paint();
     private DrawerLayout drawer;
     private FragmentFavorites fragmentFavorites;
+    private Toolbar toolbar;
+    private NavigationView navigationView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_favorites_layout, container, false);
 
-        Toolbar toolbar = mView.findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        initUI();
+        drawerLayout();
+        getData();
+        enableSwipe();
+        return mView;
+    }
+
+    private void initUI() {
+        toolbar = mView.findViewById(R.id.toolbar);
+        drawer = mView.findViewById(R.id.drawer_layout);
+        navigationView = mView.findViewById(R.id.nav_view);
+
+        recyclerView = mView.findViewById(R.id.places_list_favorites);
 
         fragmentFavorites = this;
+    }
 
-        drawer = mView.findViewById(R.id.drawer_layout);
+    private void drawerLayout() {
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         mView.findViewById(R.id.myButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,11 +96,10 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
 
         toggle.syncState();
 
-        NavigationView navigationView = mView.findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
 
-        recyclerView = mView.findViewById(R.id.places_list_favorites);
-
+    private void getData() {
         NetWorkDataProviderFavorites dataProvider = new NetWorkDataProviderFavorites();
         dataProvider.getPlacesByLocation(fragmentFavorites);
 
@@ -98,11 +112,7 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
         }
 
         mPlacesViewModelFavorites = ViewModelProviders.of(this).get(PlaceViewModelFavorites.class);
-
-        enableSwipe();
-        return mView;
     }
-
 
     private void enableSwipe() {
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {

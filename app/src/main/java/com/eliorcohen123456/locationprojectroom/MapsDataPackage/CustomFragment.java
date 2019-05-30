@@ -39,13 +39,24 @@ public class CustomFragment extends Fragment implements OnMapReadyCallback {
     private Location location;
     private Criteria criteria;
     private LocationManager locationManager;
+    private Toolbar toolbar;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_custom_layout, container, false);
 
-        Toolbar toolbar = mView.findViewById(R.id.toolbar);
+        initUI();
+        myUI();
+
+        return mView;
+    }
+
+    private void initUI() {
+        toolbar = mView.findViewById(R.id.toolbar);
+    }
+
+    private void myUI() {
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         mView.findViewById(R.id.myButton).setOnClickListener(new View.OnClickListener() {
@@ -54,8 +65,6 @@ public class CustomFragment extends Fragment implements OnMapReadyCallback {
                 getActivity().onBackPressed();
             }
         });
-
-        return mView;
     }
 
     @Override

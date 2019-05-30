@@ -16,6 +16,7 @@ import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceViewModel
 
 public class DeleteAllDataHistory extends AppCompatActivity {
 
+    private Button btnOK, btnCancel;
     private PlaceViewModelSearch placeViewModelSearch;
 
     @Override
@@ -23,9 +24,19 @@ public class DeleteAllDataHistory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.delete_all_data_history);
 
+        initUI();
+        delData();
+        btnBack();
+    }
+
+    private void initUI() {
+        btnOK = findViewById(R.id.button3);
+        btnCancel = findViewById(R.id.button4);
+    }
+
+    private void delData() {
         // Button are delete all the data of the app
-        Button button1 = findViewById(R.id.button3);
-        button1.setOnClickListener(new View.OnClickListener() {
+        btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 placeViewModelSearch = new PlaceViewModelSearch(NearByApplication.getApplication());
@@ -42,10 +53,11 @@ public class DeleteAllDataHistory extends AppCompatActivity {
                 startActivity(intentDeleteAllDataToMain);
             }
         });
+    }
 
+    private void btnBack() {
         // Button are back to the previous activity
-        Button button2 = findViewById(R.id.button4);
-        button2.setOnClickListener(new View.OnClickListener() {
+        btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();

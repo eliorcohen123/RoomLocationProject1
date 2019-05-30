@@ -81,15 +81,32 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_map_layout_favorites, container, false);
 
+        initUI();
+        mapShow();
+        getData();
+
+        return mView;
+    }
+
+    private void initUI() {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             placeModelFavorites = (PlacesFavorites) bundle.getSerializable(getString(R.string.map_favorites_key));
         }
 
+        coordinatorLayout = mView.findViewById(R.id.myContent);
+        num1 = mView.findViewById(R.id.imageMe1);
+        num2 = mView.findViewById(R.id.imageMe2);
+        num3 = mView.findViewById(R.id.imageMe3);
+        num4 = mView.findViewById(R.id.imageMe4);
+        num5 = mView.findViewById(R.id.imageMe5);
+
         fragmentMapFavorites = this;
 
-        coordinatorLayout = mView.findViewById(R.id.myContent);
+        setHasOptionsMenu(true);
+    }
 
+    private void mapShow() {
         Snackbar.make(coordinatorLayout, R.string.item_removed_message, Snackbar.LENGTH_LONG)
                 .setAction(R.string.undo, new View.OnClickListener() {
                     @Override
@@ -100,7 +117,6 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                 })
                 .show();
 
-        num1 = mView.findViewById(R.id.imageMe1);
         num1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,7 +124,6 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
             }
         });
 
-        num2 = mView.findViewById(R.id.imageMe2);
         num2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +131,6 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
             }
         });
 
-        num3 = mView.findViewById(R.id.imageMe3);
         num3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,7 +138,6 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
             }
         });
 
-        num4 = mView.findViewById(R.id.imageMe4);
         num4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,14 +145,15 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
             }
         });
 
-        num5 = mView.findViewById(R.id.imageMe5);
         num5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mGoogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
             }
         });
+    }
 
+    private void getData() {
         try {
             NetWorkDataProviderFavorites dataProvider = new NetWorkDataProviderFavorites();
             dataProvider.getPlacesByLocation(fragmentMapFavorites);
@@ -148,9 +162,6 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
         }
 
         mPlacesViewModel = ViewModelProviders.of(this).get(PlaceViewModelFavorites.class);
-
-        setHasOptionsMenu(true);
-        return mView;
     }
 
     @Override
