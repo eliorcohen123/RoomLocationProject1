@@ -37,8 +37,8 @@ import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplic
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.IPlacesDataReceived;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceViewModelSearch;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlacesSearch;
-import com.eliorcohen123456.locationprojectroom.network.NetWorkDataProviderHistory;
-import com.eliorcohen123456.locationprojectroom.network.NetWorkDataProviderSearch;
+import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetWorkDataProviderHistory;
+import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetWorkDataProviderSearch;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;

@@ -34,7 +34,7 @@ import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
 import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlaceViewModelFavorites;
 import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlacesFavorites;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.IPlacesDataReceived;
-import com.eliorcohen123456.locationprojectroom.network.NetWorkDataProviderFavorites;
+import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetWorkDataProviderFavorites;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;

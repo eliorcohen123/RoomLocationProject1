@@ -1,4 +1,4 @@
-package com.eliorcohen123456.locationprojectroom.network;
+package com.eliorcohen123456.locationprojectroom.DataProviderPackage;
 
 import android.Manifest;
 import android.content.Context;

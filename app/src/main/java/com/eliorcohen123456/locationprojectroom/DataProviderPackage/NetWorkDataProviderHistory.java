@@ -1,22 +1,21 @@
-package com.eliorcohen123456.locationprojectroom.network;
+package com.eliorcohen123456.locationprojectroom.DataProviderPackage;
 
 import android.os.AsyncTask;
 
-import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlaceRepositoryFavorites;
-import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlacesFavorites;
-
 import java.util.ArrayList;
 
+import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlacesSearch;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.IPlacesDataReceived;
 import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
+import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceRepositorySearch;
 import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplication;
 
-public class NetWorkDataProviderFavorites {
+public class NetWorkDataProviderHistory {
 
     public void getPlacesByLocation(IPlacesDataReceived resultListener_) {
 
         //go get data from google API
-        // take time....
+        //take time...
         //more time...
         //Data received -> resultListener_
 
@@ -36,17 +35,17 @@ public class NetWorkDataProviderFavorites {
         @Override
         protected IPlacesDataReceived doInBackground(String... urls) {
             mPlaceModels = new ArrayList<PlaceModel>();
-            PlaceRepositoryFavorites placeRepository = new PlaceRepositoryFavorites(NearByApplication.getApplication());
-            ArrayList<PlacesFavorites> listPlaces = new ArrayList<>();
+            PlaceRepositorySearch placeRepositorySearch = new PlaceRepositorySearch(NearByApplication.getApplication());
+            ArrayList<PlacesSearch> listPlaces = new ArrayList<>();
             for (PlaceModel placeModel : mPlaceModels) {
                 try {
-                    PlacesFavorites place = new PlacesFavorites(placeModel.getName(), placeModel.getVicinity(), placeModel.getGeometry().getLocation().getLat(), placeModel.getGeometry().getLocation().getLng(), placeModel.getPhotos().get(0).getPhoto_reference());
+                    PlacesSearch place = new PlacesSearch(placeModel.getName(), placeModel.getGeometry().getLocation().getLat(), placeModel.getGeometry().getLocation().getLng(), placeModel.getVicinity(), placeModel.getPhotos().get(0).getPhoto_reference(), false, true, placeModel.getDistance(), placeModel.getRating(), placeModel.getUser_ratings_total());
                     listPlaces.add(place);
                 } catch (Exception e) {
 
                 }
             }
-            placeRepository.insert(listPlaces);
+            placeRepositorySearch.insert(listPlaces);
             return mIPlacesDataReceived;
         }
 

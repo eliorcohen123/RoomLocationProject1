@@ -47,8 +47,8 @@ import com.eliorcohen123456.locationprojectroom.R;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlacesSearch;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.IPlacesDataReceived;
 import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
-import com.eliorcohen123456.locationprojectroom.network.NetWorkDataProviderHistory;
-import com.eliorcohen123456.locationprojectroom.network.NetWorkDataProviderSearch;
+import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetWorkDataProviderHistory;
+import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetWorkDataProviderSearch;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceViewModelSearch;
 
 public class FragmentSearch extends Fragment implements IPlacesDataReceived {
