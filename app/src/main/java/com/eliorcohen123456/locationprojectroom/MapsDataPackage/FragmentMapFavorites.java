@@ -95,11 +95,16 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
         }
 
         coordinatorLayout = mView.findViewById(R.id.myContent);
+
         num1 = mView.findViewById(R.id.imageMe1);
         num2 = mView.findViewById(R.id.imageMe2);
         num3 = mView.findViewById(R.id.imageMe3);
         num4 = mView.findViewById(R.id.imageMe4);
         num5 = mView.findViewById(R.id.imageMe5);
+
+        moovit = mView.findViewById(R.id.imageViewMoovit);
+        gett = mView.findViewById(R.id.imageViewGett);
+        waze = mView.findViewById(R.id.imageViewWaze);
 
         fragmentMapFavorites = this;
 
@@ -274,7 +279,6 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                                 final int finalI1 = finalI;
                                 if (marker.getTitle().equals(words.get(finalI1).getName())) {
                                     try {
-                                        moovit = mView.findViewById(R.id.imageViewMoovit);
                                         moovit.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -294,7 +298,6 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                                             }
                                         });
 
-                                        gett = mView.findViewById(R.id.imageViewGett);
                                         gett.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -314,7 +317,6 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                                             }
                                         });
 
-                                        waze = mView.findViewById(R.id.imageViewWaze);
                                         waze.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -477,7 +479,6 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                                     break;
                                 } else if (marker.equals(markerFavorites)) {
                                     try {
-                                        moovit = mView.findViewById(R.id.imageViewMoovit);
                                         moovit.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -497,7 +498,6 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                                             }
                                         });
 
-                                        gett = mView.findViewById(R.id.imageViewGett);
                                         gett.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -517,7 +517,6 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                                             }
                                         });
 
-                                        waze = mView.findViewById(R.id.imageViewWaze);
                                         waze.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {

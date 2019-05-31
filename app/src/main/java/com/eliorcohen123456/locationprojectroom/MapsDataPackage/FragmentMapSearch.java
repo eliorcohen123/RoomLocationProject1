@@ -83,6 +83,7 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
     private NetWorkDataProviderSearch dataProviderSearch;
     private NetWorkDataProviderHistory dataProviderHistory;
     private SharedPreferences prefsSeek, settingsQuery, settingsType;
+    private TextView disNearBy, disSearch;
 
     @Nullable
     @Override
@@ -103,11 +104,19 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
         }
 
         coordinatorLayout = mView.findViewById(R.id.myContent);
+
         num1 = mView.findViewById(R.id.imageMe1);
         num2 = mView.findViewById(R.id.imageMe2);
         num3 = mView.findViewById(R.id.imageMe3);
         num4 = mView.findViewById(R.id.imageMe4);
         num5 = mView.findViewById(R.id.imageMe5);
+
+        moovit = mView.findViewById(R.id.imageViewMoovit);
+        gett = mView.findViewById(R.id.imageViewGett);
+        waze = mView.findViewById(R.id.imageViewWaze);
+
+        disNearBy = mView.findViewById(R.id.disNearBy);
+        disSearch = mView.findViewById(R.id.disSearch);
 
         fragmentMapSearch = this;
     }
@@ -278,17 +287,14 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
                     double distanceKm = myRadius / val;
                     String radiusMeKm = String.format("%.2f", distanceKm);
                     if (myRadius >= 1000.0) {
-                        TextView disNearBy = mView.findViewById(R.id.disNearBy);
                         disNearBy.setText(" = " + radiusMeKm + " KM R - Nearby");
                     } else {
                         double distanceMeters = distanceKm * 1000;
-                        TextView disNearBy = mView.findViewById(R.id.disNearBy);
                         disNearBy.setText(" = " + (int) distanceMeters + " Meters R - Nearby");
                     }
                 } else if (val == 1609.344) {
                     double distanceMile = myRadius / val;
                     String radiusMeMile = String.format("%.2f", distanceMile);
-                    TextView disNearBy = mView.findViewById(R.id.disNearBy);
                     disNearBy.setText(" = " + radiusMeMile + " Miles R - Nearby");
                 }
                 mGoogleMap.addCircle(new CircleOptions()
@@ -325,11 +331,9 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
                 assert result != null;
                 double val = Double.parseDouble(result);
                 if (val == 1000.0) {
-                    TextView disNearBy = mView.findViewById(R.id.disSearch);
-                    disNearBy.setText(" = " + 50.00 + " KM R - Search");
+                    disSearch.setText(" = " + 50.00 + " KM R - Search");
                 } else if (val == 1609.344) {
-                    TextView disNearBy = mView.findViewById(R.id.disSearch);
-                    disNearBy.setText(" = " + 31.06 + " Miles R - Search");
+                    disSearch.setText(" = " + 31.06 + " Miles R - Search");
                 }
                 mGoogleMap.addCircle(new CircleOptions()
                         .center(new LatLng(location.getLatitude(), location.getLongitude()))
@@ -378,7 +382,6 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
                                 final int finalI1 = finalI;
                                 if (marker.getTitle().equals(words.get(finalI1).getName())) {
                                     try {
-                                        moovit = mView.findViewById(R.id.imageViewMoovit);
                                         moovit.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -398,7 +401,6 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
                                             }
                                         });
 
-                                        gett = mView.findViewById(R.id.imageViewGett);
                                         gett.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -418,7 +420,6 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
                                             }
                                         });
 
-                                        waze = mView.findViewById(R.id.imageViewWaze);
                                         waze.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -587,7 +588,6 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
                                     break;
                                 } else if (marker.equals(markerSearch)) {
                                     try {
-                                        moovit = mView.findViewById(R.id.imageViewMoovit);
                                         moovit.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -607,7 +607,6 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
                                             }
                                         });
 
-                                        gett = mView.findViewById(R.id.imageViewGett);
                                         gett.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -627,7 +626,6 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
                                             }
                                         });
 
-                                        waze = mView.findViewById(R.id.imageViewWaze);
                                         waze.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
