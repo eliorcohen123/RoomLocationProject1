@@ -84,6 +84,7 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
     private NetWorkDataProviderHistory dataProviderHistory;
     private SharedPreferences prefsSeek, settingsQuery, settingsType;
     private TextView disNearBy, disSearch;
+    private String myString1, myString2;
 
     @Nullable
     @Override
@@ -180,11 +181,11 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
 
                 settingsQuery = getActivity().getSharedPreferences("mysettingsquery",
                         Context.MODE_PRIVATE);
-                String myString1 = settingsQuery.getString("mystringquery", "");
+                myString1 = settingsQuery.getString("mystringquery", "");
 
                 settingsType = getActivity().getSharedPreferences("mysettingstype",
                         Context.MODE_PRIVATE);
-                String myString2 = settingsType.getString("mystringtype", "");
+                myString2 = settingsType.getString("mystringtype", "");
 
                 if (settingsQuery.contains("mystringquery") && settingsType.contains("mystringtype")) {
                     dataProviderSearch = new NetWorkDataProviderSearch();
