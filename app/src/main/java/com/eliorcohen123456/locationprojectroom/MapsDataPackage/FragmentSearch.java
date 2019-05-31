@@ -138,7 +138,24 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
         super.onResume();
 
         myRecyclerView();
+        getTypeSearch();
+    }
 
+    private void myRecyclerView() {
+        try {
+            adapter = new PlacesListAdapterSearch(getContext());
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            ItemDecoration itemDecoration = new ItemDecoration(20);
+            recyclerView.addItemDecoration(itemDecoration);
+        } catch (Exception e) {
+
+        }
+
+        mPlacesViewModel = ViewModelProviders.of(this).get(PlaceViewModelSearch.class);
+    }
+
+    private void getTypeSearch() {
         if (!isConnected(getContext())) {
             dataProviderHistory = new NetWorkDataProviderHistory();
             dataProviderHistory.getPlacesByLocation(mFragmentSearch);
@@ -628,20 +645,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                 }
             }
         });
-    }
-
-    private void myRecyclerView() {
-        try {
-            adapter = new PlacesListAdapterSearch(getContext());
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            ItemDecoration itemDecoration = new ItemDecoration(20);
-            recyclerView.addItemDecoration(itemDecoration);
-        } catch (Exception e) {
-
-        }
-
-        mPlacesViewModel = ViewModelProviders.of(this).get(PlaceViewModelSearch.class);
     }
 
     // Sets off the menu of activity_menu
