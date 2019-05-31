@@ -31,6 +31,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.ItemDecoration;
 import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.MainActivity;
 import com.eliorcohen123456.locationprojectroom.R;
 import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlaceViewModelFavorites;
@@ -59,8 +60,8 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
 
         initUI();
         drawerLayout();
-        getData();
         myRecyclerView();
+        getData();
         enableSwipe();
 
         return mView;
@@ -101,21 +102,23 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void getData() {
-        NetWorkDataProviderFavorites dataProvider = new NetWorkDataProviderFavorites();
-        dataProvider.getPlacesByLocation(fragmentFavorites);
-    }
-
     private void myRecyclerView() {
         try {
             adapterFavorites = new PlacesListAdapterFavorites(getContext());
             recyclerView.setAdapter(adapterFavorites);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            ItemDecoration itemDecoration = new ItemDecoration(20);
+            recyclerView.addItemDecoration(itemDecoration);
         } catch (Exception e) {
 
         }
 
         mPlacesViewModelFavorites = ViewModelProviders.of(this).get(PlaceViewModelFavorites.class);
+    }
+
+    private void getData() {
+        NetWorkDataProviderFavorites dataProvider = new NetWorkDataProviderFavorites();
+        dataProvider.getPlacesByLocation(fragmentFavorites);
     }
 
     private void enableSwipe() {
