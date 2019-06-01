@@ -66,6 +66,7 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
     private NetWorkDataProviderHistory dataProviderHistory;
     private SharedPreferences prefsSeek, settingsQuery, settingsType;
     private SharedPreferences.Editor editorQuery, editorType;
+    private int myRadius;
 
     @Nullable
     @Override
@@ -155,13 +156,10 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             dataProviderHistory.getPlacesByLocation(mFragmentSearch);
             buildDialog(getContext()).show();
         } else {
-            int myRadius = prefsSeek.getInt("seek", 5000);
+            myRadius = prefsSeek.getInt("seek", 5000);
 
             editorQuery.putString("mystringquery", "");
-            editorQuery.apply();
-
             editorType.putString("mystringtype", "");
-            editorType.apply();
 
             dataProviderSearch.getPlacesByLocation("", myRadius, "", mFragmentSearch);
         }
@@ -173,13 +171,10 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    int myRadius = prefsSeek.getInt("seek", 5000);
+                    myRadius = prefsSeek.getInt("seek", 5000);
 
                     editorQuery.putString("mystringquery", "");
-                    editorQuery.apply();
-
                     editorType.putString("mystringtype", "bank");
-                    editorType.apply();
 
                     dataProviderSearch.getPlacesByLocation("", myRadius, "bank", mFragmentSearch);
                 }
@@ -193,13 +188,10 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    int myRadius = prefsSeek.getInt("seek", 5000);
+                    myRadius = prefsSeek.getInt("seek", 5000);
 
                     editorQuery.putString("mystringquery", "");
-                    editorQuery.apply();
-
                     editorType.putString("mystringtype", "bar|night_club");
-                    editorType.apply();
 
                     dataProviderSearch.getPlacesByLocation("", myRadius, "bar|night_club", mFragmentSearch);
                 }
@@ -213,13 +205,10 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    int myRadius = prefsSeek.getInt("seek", 5000);
+                    myRadius = prefsSeek.getInt("seek", 5000);
 
                     editorQuery.putString("mystringquery", "");
-                    editorQuery.apply();
-
                     editorType.putString("mystringtype", "beauty_salon|hair_care");
-                    editorType.apply();
 
                     dataProviderSearch.getPlacesByLocation("", myRadius, "beauty_salon|hair_care", mFragmentSearch);
                 }
@@ -233,13 +222,10 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    int myRadius = prefsSeek.getInt("seek", 5000);
+                    myRadius = prefsSeek.getInt("seek", 5000);
 
                     editorQuery.putString("mystringquery", "");
-                    editorQuery.apply();
-
                     editorType.putString("mystringtype", "book_store|library");
-                    editorType.apply();
 
                     dataProviderSearch.getPlacesByLocation("", myRadius, "book_store|library", mFragmentSearch);
                 }
@@ -253,13 +239,10 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    int myRadius = prefsSeek.getInt("seek", 5000);
+                    myRadius = prefsSeek.getInt("seek", 5000);
 
                     editorQuery.putString("mystringquery", "");
-                    editorQuery.apply();
-
                     editorType.putString("mystringtype", "bus_station");
-                    editorType.apply();
 
                     dataProviderSearch.getPlacesByLocation("", myRadius, "bus_station", mFragmentSearch);
                 }
@@ -273,13 +256,10 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    int myRadius = prefsSeek.getInt("seek", 5000);
+                    myRadius = prefsSeek.getInt("seek", 5000);
 
                     editorQuery.putString("mystringquery", "");
-                    editorQuery.apply();
-
                     editorType.putString("mystringtype", "car_dealer|car_rental|car_repair|car_wash");
-                    editorType.apply();
 
                     dataProviderSearch.getPlacesByLocation("", myRadius, "car_dealer|car_rental|car_repair|car_wash", mFragmentSearch);
                 }
@@ -293,13 +273,10 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    int myRadius = prefsSeek.getInt("seek", 5000);
+                    myRadius = prefsSeek.getInt("seek", 5000);
 
                     editorQuery.putString("mystringquery", "");
-                    editorQuery.apply();
-
                     editorType.putString("mystringtype", "clothing_store");
-                    editorType.apply();
 
                     dataProviderSearch.getPlacesByLocation("", myRadius, "clothing_store", mFragmentSearch);
                 }
@@ -313,13 +290,10 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    int myRadius = prefsSeek.getInt("seek", 5000);
+                    myRadius = prefsSeek.getInt("seek", 5000);
 
                     editorQuery.putString("mystringquery", "");
-                    editorQuery.apply();
-
                     editorType.putString("mystringtype", "doctor");
-                    editorType.apply();
 
                     dataProviderSearch.getPlacesByLocation("", myRadius, "doctor", mFragmentSearch);
                 }
@@ -333,13 +307,10 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    int myRadius = prefsSeek.getInt("seek", 5000);
+                    myRadius = prefsSeek.getInt("seek", 5000);
 
                     editorQuery.putString("mystringquery", "");
-                    editorQuery.apply();
-
                     editorType.putString("mystringtype", "gas_station");
-                    editorType.apply();
 
                     dataProviderSearch.getPlacesByLocation("", myRadius, "gas_station", mFragmentSearch);
                 }
@@ -353,13 +324,10 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    int myRadius = prefsSeek.getInt("seek", 5000);
+                    myRadius = prefsSeek.getInt("seek", 5000);
 
                     editorQuery.putString("mystringquery", "");
-                    editorQuery.apply();
-
                     editorType.putString("mystringtype", "gym");
-                    editorType.apply();
 
                     dataProviderSearch.getPlacesByLocation("", myRadius, "gym", mFragmentSearch);
                 }
@@ -373,13 +341,10 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    int myRadius = prefsSeek.getInt("seek", 5000);
+                    myRadius = prefsSeek.getInt("seek", 5000);
 
                     editorQuery.putString("mystringquery", "");
-                    editorQuery.apply();
-
                     editorType.putString("mystringtype", "jewelry_store");
-                    editorType.apply();
 
                     dataProviderSearch.getPlacesByLocation("", myRadius, "jewelry_store", mFragmentSearch);
                 }
@@ -393,13 +358,10 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    int myRadius = prefsSeek.getInt("seek", 5000);
+                    myRadius = prefsSeek.getInt("seek", 5000);
 
                     editorQuery.putString("mystringquery", "");
-                    editorQuery.apply();
-
                     editorType.putString("mystringtype", "park|amusement_park|parking|rv_park");
-                    editorType.apply();
 
                     dataProviderSearch.getPlacesByLocation("", myRadius, "park|amusement_park|parking|rv_park", mFragmentSearch);
                 }
@@ -413,13 +375,10 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    int myRadius = prefsSeek.getInt("seek", 5000);
+                    myRadius = prefsSeek.getInt("seek", 5000);
 
                     editorQuery.putString("mystringquery", "");
-                    editorQuery.apply();
-
                     editorType.putString("mystringtype", "food|restaurant|cafe|bakery");
-                    editorType.apply();
 
                     dataProviderSearch.getPlacesByLocation("", myRadius, "food|restaurant|cafe|bakery", mFragmentSearch);
                 }
@@ -433,13 +392,10 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    int myRadius = prefsSeek.getInt("seek", 5000);
+                    myRadius = prefsSeek.getInt("seek", 5000);
 
                     editorQuery.putString("mystringquery", "");
-                    editorQuery.apply();
-
                     editorType.putString("mystringtype", "school");
-                    editorType.apply();
 
                     dataProviderSearch.getPlacesByLocation("", myRadius, "school", mFragmentSearch);
                 }
@@ -453,18 +409,17 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    int myRadius = prefsSeek.getInt("seek", 5000);
+                    myRadius = prefsSeek.getInt("seek", 5000);
 
                     editorQuery.putString("mystringquery", "");
-                    editorQuery.apply();
-
                     editorType.putString("mystringtype", "spa");
-                    editorType.apply();
 
                     dataProviderSearch.getPlacesByLocation("", myRadius, "spa", mFragmentSearch);
                 }
             }
         });
+        editorQuery.apply();
+        editorType.apply();
     }
 
     private void myRecyclerView() {
@@ -554,7 +509,7 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    int myRadius = prefsSeek.getInt("seek", 5000);
+                    myRadius = prefsSeek.getInt("seek", 5000);
 
                     editorQuery.putString("mystringquery", "");
                     editorQuery.apply();
