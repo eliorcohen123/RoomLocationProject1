@@ -74,6 +74,8 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
 
         initUI();
         refreshUI();
+        myRecyclerView();
+        getTypeSearch();
 
         return mView;
     }
@@ -131,14 +133,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        myRecyclerView();
-        getTypeSearch();
     }
 
     private void myRecyclerView() {

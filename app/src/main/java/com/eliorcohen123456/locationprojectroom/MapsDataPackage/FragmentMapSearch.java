@@ -84,7 +84,7 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
     private NetWorkDataProviderHistory dataProviderHistory;
     private SharedPreferences prefsSeek, settingsQuery, settingsType;
     private TextView disNearBy, disSearch;
-    private String myString1, myString2;
+    private String myStringQuery, myStringType;
 
     @Nullable
     @Override
@@ -181,15 +181,15 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
 
                 settingsQuery = getActivity().getSharedPreferences("mysettingsquery",
                         Context.MODE_PRIVATE);
-                myString1 = settingsQuery.getString("mystringquery", "");
+                myStringQuery = settingsQuery.getString("mystringquery", "");
 
                 settingsType = getActivity().getSharedPreferences("mysettingstype",
                         Context.MODE_PRIVATE);
-                myString2 = settingsType.getString("mystringtype", "");
+                myStringType = settingsType.getString("mystringtype", "");
 
                 if (settingsQuery.contains("mystringquery") && settingsType.contains("mystringtype")) {
                     dataProviderSearch = new NetWorkDataProviderSearch();
-                    dataProviderSearch.getPlacesByLocation(myString1, myRadius, myString2, fragmentMapSearch);
+                    dataProviderSearch.getPlacesByLocation(myStringQuery, myRadius, myStringType, fragmentMapSearch);
                 } else {
                     dataProviderSearch = new NetWorkDataProviderSearch();
                     dataProviderSearch.getPlacesByLocation("", myRadius, "", fragmentMapSearch);
@@ -220,8 +220,6 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
         try {
             MapsInitializer.initialize(getContext());
             mGoogleMap = googleMap;
-            addCircleNearBy();
-            addCircleSearch();
             googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
             if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -353,7 +351,10 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
         mPlacesViewModel.getAllPlaces().observe(this, new Observer<List<PlacesSearch>>() {
             @Override
             public void onChanged(@Nullable final List<PlacesSearch> words) {
+                mGoogleMap.clear();
                 try {
+                    addCircleNearBy();
+                    addCircleSearch();
                     for (int i = 0; i <= words.size(); i++) {
                         if (placeModelSearch != null) {
                             markerSearch = mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(placeModelSearch.getLat(), placeModelSearch.getLng())).title(placeModelSearch.getName()).icon(BitmapDescriptorFactory
