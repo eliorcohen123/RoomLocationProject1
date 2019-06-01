@@ -74,8 +74,8 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
 
         initUI();
         refreshUI();
-        myRecyclerView();
         getTypeSearch();
+        myRecyclerView();
 
         return mView;
     }
@@ -133,20 +133,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-    }
-
-    private void myRecyclerView() {
-        try {
-            adapter = new PlacesListAdapterSearch(getContext());
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            ItemDecoration itemDecoration = new ItemDecoration(20);
-            recyclerView.addItemDecoration(itemDecoration);
-        } catch (Exception e) {
-
-        }
-
-        mPlacesViewModel = ViewModelProviders.of(this).get(PlaceViewModelSearch.class);
     }
 
     private void getTypeSearch() {
@@ -639,6 +625,20 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                 }
             }
         });
+    }
+
+    private void myRecyclerView() {
+        try {
+            adapter = new PlacesListAdapterSearch(getContext());
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            ItemDecoration itemDecoration = new ItemDecoration(20);
+            recyclerView.addItemDecoration(itemDecoration);
+        } catch (Exception e) {
+
+        }
+
+        mPlacesViewModel = ViewModelProviders.of(this).get(PlaceViewModelSearch.class);
     }
 
     // Sets off the menu of activity_menu

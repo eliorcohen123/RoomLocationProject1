@@ -24,6 +24,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.eliorcohen123456.locationprojectroom.MapsDataPackage.FragmentMapFavorites;
@@ -147,6 +149,24 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
 
     public void setWords(List<PlacesFavorites> words) {
         mPlacesList = words;
+
+        try {
+            Collections.sort(mPlacesList, new Comparator<PlacesFavorites>() {
+                public int compare(PlacesFavorites obj1, PlacesFavorites obj2) {
+                    // ## Ascending order
+//                return obj1.getDistance().compareToIgnoreCase(obj2.getDistance()); // To compare string values
+                    return Double.compare(Math.sqrt(Math.pow(obj1.getLat() - location.getLatitude(), 2) + Math.pow(obj1.getLng() - location.getLongitude(), 2)),
+                            Math.sqrt(Math.pow(obj2.getLat() - location.getLatitude(), 2) + Math.pow(obj2.getLng() - location.getLongitude(), 2))); // To compare integer values
+
+                    // ## Descending order
+                    // return obj2.getCompanyName().compareToIgnoreCase(obj1.getCompanyName()); // To compare string values
+                    // return Integer.valueOf(obj2.getId()).compareTo(obj1.getId()); // To compare integer values
+                }
+            });
+        } catch (Exception e) {
+
+        }
+
         notifyDataSetChanged();
     }
 
