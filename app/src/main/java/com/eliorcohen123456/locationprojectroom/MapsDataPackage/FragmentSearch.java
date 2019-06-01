@@ -106,6 +106,18 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
         dataProviderHistory = new NetWorkDataProviderHistory();
         dataProviderSearch = new NetWorkDataProviderSearch();
 
+        prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
+
+        settingsQuery = getActivity().getSharedPreferences("mysettingsquery",
+                Context.MODE_PRIVATE);
+
+        editorQuery = settingsQuery.edit();
+
+        settingsType = getActivity().getSharedPreferences("mysettingstype",
+                Context.MODE_PRIVATE);
+
+        editorType = settingsType.edit();
+
         setHasOptionsMenu(true);
     }
 
@@ -143,24 +155,14 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             dataProviderHistory.getPlacesByLocation(mFragmentSearch);
             buildDialog(getContext()).show();
         } else {
-            prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
             int myRadius = prefsSeek.getInt("seek", 5000);
 
-            settingsQuery = getActivity().getSharedPreferences("mysettingsquery",
-                    Context.MODE_PRIVATE);
-
-            editorQuery = settingsQuery.edit();
             editorQuery.putString("mystringquery", "");
             editorQuery.apply();
 
-            settingsType = getActivity().getSharedPreferences("mysettingstype",
-                    Context.MODE_PRIVATE);
-
-            editorType = settingsType.edit();
             editorType.putString("mystringtype", "");
             editorType.apply();
 
-            dataProviderSearch = new NetWorkDataProviderSearch();
             dataProviderSearch.getPlacesByLocation("", myRadius, "", mFragmentSearch);
         }
 
@@ -171,20 +173,11 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
                     int myRadius = prefsSeek.getInt("seek", 5000);
 
-                    settingsQuery = getActivity().getSharedPreferences("mysettingsquery",
-                            Context.MODE_PRIVATE);
-
-                    editorQuery = settingsQuery.edit();
                     editorQuery.putString("mystringquery", "");
                     editorQuery.apply();
 
-                    settingsType = getActivity().getSharedPreferences("mysettingstype",
-                            Context.MODE_PRIVATE);
-
-                    editorType = settingsType.edit();
                     editorType.putString("mystringtype", "bank");
                     editorType.apply();
 
@@ -200,19 +193,11 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
                     int myRadius = prefsSeek.getInt("seek", 5000);
 
-                    settingsQuery = getActivity().getSharedPreferences("mysettingsquery",
-                            Context.MODE_PRIVATE);
-                    editorQuery = settingsQuery.edit();
                     editorQuery.putString("mystringquery", "");
                     editorQuery.apply();
 
-                    settingsType = getActivity().getSharedPreferences("mysettingstype",
-                            Context.MODE_PRIVATE);
-
-                    editorType = settingsType.edit();
                     editorType.putString("mystringtype", "bar|night_club");
                     editorType.apply();
 
@@ -228,20 +213,11 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
                     int myRadius = prefsSeek.getInt("seek", 5000);
 
-                    settingsQuery = getActivity().getSharedPreferences("mysettingsquery",
-                            Context.MODE_PRIVATE);
-
-                    editorQuery = settingsQuery.edit();
                     editorQuery.putString("mystringquery", "");
                     editorQuery.apply();
 
-                    settingsType = getActivity().getSharedPreferences("mysettingstype",
-                            Context.MODE_PRIVATE);
-
-                    editorType = settingsType.edit();
                     editorType.putString("mystringtype", "beauty_salon|hair_care");
                     editorType.apply();
 
@@ -257,20 +233,11 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
                     int myRadius = prefsSeek.getInt("seek", 5000);
 
-                    settingsQuery = getActivity().getSharedPreferences("mysettingsquery",
-                            Context.MODE_PRIVATE);
-
-                    editorQuery = settingsQuery.edit();
                     editorQuery.putString("mystringquery", "");
                     editorQuery.apply();
 
-                    settingsType = getActivity().getSharedPreferences("mysettingstype",
-                            Context.MODE_PRIVATE);
-
-                    editorType = settingsType.edit();
                     editorType.putString("mystringtype", "book_store|library");
                     editorType.apply();
 
@@ -286,20 +253,11 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
                     int myRadius = prefsSeek.getInt("seek", 5000);
 
-                    settingsQuery = getActivity().getSharedPreferences("mysettingsquery",
-                            Context.MODE_PRIVATE);
-
-                    editorQuery = settingsQuery.edit();
                     editorQuery.putString("mystringquery", "");
                     editorQuery.apply();
 
-                    settingsType = getActivity().getSharedPreferences("mysettingstype",
-                            Context.MODE_PRIVATE);
-
-                    editorType = settingsType.edit();
                     editorType.putString("mystringtype", "bus_station");
                     editorType.apply();
 
@@ -315,20 +273,11 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
                     int myRadius = prefsSeek.getInt("seek", 5000);
 
-                    settingsQuery = getActivity().getSharedPreferences("mysettingsquery",
-                            Context.MODE_PRIVATE);
-
-                    editorQuery = settingsQuery.edit();
                     editorQuery.putString("mystringquery", "");
                     editorQuery.apply();
 
-                    settingsType = getActivity().getSharedPreferences("mysettingstype",
-                            Context.MODE_PRIVATE);
-
-                    editorType = settingsType.edit();
                     editorType.putString("mystringtype", "car_dealer|car_rental|car_repair|car_wash");
                     editorType.apply();
 
@@ -344,20 +293,11 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
                     int myRadius = prefsSeek.getInt("seek", 5000);
 
-                    settingsQuery = getActivity().getSharedPreferences("mysettingsquery",
-                            Context.MODE_PRIVATE);
-
-                    editorQuery = settingsQuery.edit();
                     editorQuery.putString("mystringquery", "");
                     editorQuery.apply();
 
-                    settingsType = getActivity().getSharedPreferences("mysettingstype",
-                            Context.MODE_PRIVATE);
-
-                    editorType = settingsType.edit();
                     editorType.putString("mystringtype", "clothing_store");
                     editorType.apply();
 
@@ -373,20 +313,11 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
                     int myRadius = prefsSeek.getInt("seek", 5000);
 
-                    settingsQuery = getActivity().getSharedPreferences("mysettingsquery",
-                            Context.MODE_PRIVATE);
-
-                    editorQuery = settingsQuery.edit();
                     editorQuery.putString("mystringquery", "");
                     editorQuery.apply();
 
-                    settingsType = getActivity().getSharedPreferences("mysettingstype",
-                            Context.MODE_PRIVATE);
-
-                    editorType = settingsType.edit();
                     editorType.putString("mystringtype", "doctor");
                     editorType.apply();
 
@@ -402,20 +333,11 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
                     int myRadius = prefsSeek.getInt("seek", 5000);
 
-                    settingsQuery = getActivity().getSharedPreferences("mysettingsquery",
-                            Context.MODE_PRIVATE);
-
-                    editorQuery = settingsQuery.edit();
                     editorQuery.putString("mystringquery", "");
                     editorQuery.apply();
 
-                    settingsType = getActivity().getSharedPreferences("mysettingstype",
-                            Context.MODE_PRIVATE);
-
-                    editorType = settingsType.edit();
                     editorType.putString("mystringtype", "gas_station");
                     editorType.apply();
 
@@ -431,20 +353,11 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
                     int myRadius = prefsSeek.getInt("seek", 5000);
 
-                    settingsQuery = getActivity().getSharedPreferences("mysettingsquery",
-                            Context.MODE_PRIVATE);
-
-                    editorQuery = settingsQuery.edit();
                     editorQuery.putString("mystringquery", "");
                     editorQuery.apply();
 
-                    settingsType = getActivity().getSharedPreferences("mysettingstype",
-                            Context.MODE_PRIVATE);
-
-                    editorType = settingsType.edit();
                     editorType.putString("mystringtype", "gym");
                     editorType.apply();
 
@@ -460,20 +373,11 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
                     int myRadius = prefsSeek.getInt("seek", 5000);
 
-                    settingsQuery = getActivity().getSharedPreferences("mysettingsquery",
-                            Context.MODE_PRIVATE);
-
-                    editorQuery = settingsQuery.edit();
                     editorQuery.putString("mystringquery", "");
                     editorQuery.apply();
 
-                    settingsType = getActivity().getSharedPreferences("mysettingstype",
-                            Context.MODE_PRIVATE);
-
-                    editorType = settingsType.edit();
                     editorType.putString("mystringtype", "jewelry_store");
                     editorType.apply();
 
@@ -489,20 +393,11 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
                     int myRadius = prefsSeek.getInt("seek", 5000);
 
-                    settingsQuery = getActivity().getSharedPreferences("mysettingsquery",
-                            Context.MODE_PRIVATE);
-
-                    editorQuery = settingsQuery.edit();
                     editorQuery.putString("mystringquery", "");
                     editorQuery.apply();
 
-                    settingsType = getActivity().getSharedPreferences("mysettingstype",
-                            Context.MODE_PRIVATE);
-
-                    editorType = settingsType.edit();
                     editorType.putString("mystringtype", "park|amusement_park|parking|rv_park");
                     editorType.apply();
 
@@ -518,20 +413,11 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
                     int myRadius = prefsSeek.getInt("seek", 5000);
 
-                    settingsQuery = getActivity().getSharedPreferences("mysettingsquery",
-                            Context.MODE_PRIVATE);
-
-                    editorQuery = settingsQuery.edit();
                     editorQuery.putString("mystringquery", "");
                     editorQuery.apply();
 
-                    settingsType = getActivity().getSharedPreferences("mysettingstype",
-                            Context.MODE_PRIVATE);
-
-                    editorType = settingsType.edit();
                     editorType.putString("mystringtype", "food|restaurant|cafe|bakery");
                     editorType.apply();
 
@@ -547,20 +433,11 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
                     int myRadius = prefsSeek.getInt("seek", 5000);
 
-                    settingsQuery = getActivity().getSharedPreferences("mysettingsquery",
-                            Context.MODE_PRIVATE);
-
-                    editorQuery = settingsQuery.edit();
                     editorQuery.putString("mystringquery", "");
                     editorQuery.apply();
 
-                    settingsType = getActivity().getSharedPreferences("mysettingstype",
-                            Context.MODE_PRIVATE);
-
-                    editorType = settingsType.edit();
                     editorType.putString("mystringtype", "school");
                     editorType.apply();
 
@@ -576,20 +453,11 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
                     int myRadius = prefsSeek.getInt("seek", 5000);
 
-                    settingsQuery = getActivity().getSharedPreferences("mysettingsquery",
-                            Context.MODE_PRIVATE);
-
-                    editorQuery = settingsQuery.edit();
                     editorQuery.putString("mystringquery", "");
                     editorQuery.apply();
 
-                    settingsType = getActivity().getSharedPreferences("mysettingstype",
-                            Context.MODE_PRIVATE);
-
-                    editorType = settingsType.edit();
                     editorType.putString("mystringtype", "spa");
                     editorType.apply();
 
@@ -656,17 +524,9 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                         dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                         buildDialog(getContext()).show();
                     } else {
-                        settingsQuery = getActivity().getSharedPreferences("mysettingsquery",
-                                Context.MODE_PRIVATE);
-
-                        editorQuery = settingsQuery.edit();
                         editorQuery.putString("mystringquery", query);
                         editorQuery.apply();
 
-                        settingsType = getActivity().getSharedPreferences("mysettingstype",
-                                Context.MODE_PRIVATE);
-
-                        editorType = settingsType.edit();
                         editorType.putString("mystringtype", "");
                         editorType.apply();
 
@@ -694,20 +554,11 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
-                    prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
                     int myRadius = prefsSeek.getInt("seek", 5000);
 
-                    SharedPreferences settings = getActivity().getSharedPreferences("mysettingsquery",
-                            Context.MODE_PRIVATE);
-
-                    editorQuery = settings.edit();
                     editorQuery.putString("mystringquery", "");
                     editorQuery.apply();
 
-                    settingsType = getActivity().getSharedPreferences("mysettingstype",
-                            Context.MODE_PRIVATE);
-
-                    editorType = settingsType.edit();
                     editorType.putString("mystringtype", "");
                     editorType.apply();
 
