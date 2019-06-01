@@ -120,6 +120,9 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
         disSearch = mView.findViewById(R.id.disSearch);
 
         fragmentMapSearch = this;
+
+        dataProviderHistory = new NetWorkDataProviderHistory();
+        dataProviderSearch = new NetWorkDataProviderSearch();
     }
 
     private void mapShow() {
@@ -172,7 +175,6 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
     private void getData() {
         try {
             if (!isConnected(getContext())) {
-                dataProviderHistory = new NetWorkDataProviderHistory();
                 dataProviderHistory.getPlacesByLocation(fragmentMapSearch);
                 buildDialog(getContext()).show();
             } else {
@@ -188,10 +190,8 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
                 myStringType = settingsType.getString("mystringtype", "");
 
                 if (settingsQuery.contains("mystringquery") && settingsType.contains("mystringtype")) {
-                    dataProviderSearch = new NetWorkDataProviderSearch();
                     dataProviderSearch.getPlacesByLocation(myStringQuery, myRadius, myStringType, fragmentMapSearch);
                 } else {
-                    dataProviderSearch = new NetWorkDataProviderSearch();
                     dataProviderSearch.getPlacesByLocation("", myRadius, "", fragmentMapSearch);
                 }
             }

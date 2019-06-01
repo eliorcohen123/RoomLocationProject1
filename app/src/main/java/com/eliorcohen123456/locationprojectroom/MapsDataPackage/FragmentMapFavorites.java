@@ -75,6 +75,7 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
     private FragmentMapFavorites fragmentMapFavorites;
     private List<Marker> markers = new ArrayList<Marker>();
     private CoordinatorLayout coordinatorLayout;
+    private NetWorkDataProviderFavorites netWorkDataProviderFavorites;
 
     @Nullable
     @Override
@@ -107,6 +108,8 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
         waze = mView.findViewById(R.id.imageViewWaze);
 
         fragmentMapFavorites = this;
+
+        netWorkDataProviderFavorites = new NetWorkDataProviderFavorites();
 
         setHasOptionsMenu(true);
     }
@@ -160,8 +163,7 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
 
     private void getData() {
         try {
-            NetWorkDataProviderFavorites dataProvider = new NetWorkDataProviderFavorites();
-            dataProvider.getPlacesByLocation(fragmentMapFavorites);
+            netWorkDataProviderFavorites.getPlacesByLocation(fragmentMapFavorites);
         } catch (Exception e) {
 
         }

@@ -103,6 +103,9 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
 
         mFragmentSearch = this;
 
+        dataProviderHistory = new NetWorkDataProviderHistory();
+        dataProviderSearch = new NetWorkDataProviderSearch();
+
         setHasOptionsMenu(true);
     }
 
@@ -137,7 +140,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
 
     private void getTypeSearch() {
         if (!isConnected(getContext())) {
-            dataProviderHistory = new NetWorkDataProviderHistory();
             dataProviderHistory.getPlacesByLocation(mFragmentSearch);
             buildDialog(getContext()).show();
         } else {
@@ -166,7 +168,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             @Override
             public void onClick(View v) {
                 if (!isConnected(getContext())) {
-                    dataProviderHistory = new NetWorkDataProviderHistory();
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
@@ -187,7 +188,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     editorType.putString("mystringtype", "bank");
                     editorType.apply();
 
-                    dataProviderSearch = new NetWorkDataProviderSearch();
                     dataProviderSearch.getPlacesByLocation("", myRadius, "bank", mFragmentSearch);
                 }
             }
@@ -197,7 +197,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             @Override
             public void onClick(View v) {
                 if (!isConnected(getContext())) {
-                    dataProviderHistory = new NetWorkDataProviderHistory();
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
@@ -217,7 +216,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     editorType.putString("mystringtype", "bar|night_club");
                     editorType.apply();
 
-                    dataProviderSearch = new NetWorkDataProviderSearch();
                     dataProviderSearch.getPlacesByLocation("", myRadius, "bar|night_club", mFragmentSearch);
                 }
             }
@@ -227,7 +225,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             @Override
             public void onClick(View v) {
                 if (!isConnected(getContext())) {
-                    dataProviderHistory = new NetWorkDataProviderHistory();
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
@@ -248,7 +245,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     editorType.putString("mystringtype", "beauty_salon|hair_care");
                     editorType.apply();
 
-                    dataProviderSearch = new NetWorkDataProviderSearch();
                     dataProviderSearch.getPlacesByLocation("", myRadius, "beauty_salon|hair_care", mFragmentSearch);
                 }
             }
@@ -258,7 +254,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             @Override
             public void onClick(View v) {
                 if (!isConnected(getContext())) {
-                    dataProviderHistory = new NetWorkDataProviderHistory();
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
@@ -279,7 +274,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     editorType.putString("mystringtype", "book_store|library");
                     editorType.apply();
 
-                    dataProviderSearch = new NetWorkDataProviderSearch();
                     dataProviderSearch.getPlacesByLocation("", myRadius, "book_store|library", mFragmentSearch);
                 }
             }
@@ -289,7 +283,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             @Override
             public void onClick(View v) {
                 if (!isConnected(getContext())) {
-                    dataProviderHistory = new NetWorkDataProviderHistory();
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
@@ -310,7 +303,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     editorType.putString("mystringtype", "bus_station");
                     editorType.apply();
 
-                    dataProviderSearch = new NetWorkDataProviderSearch();
                     dataProviderSearch.getPlacesByLocation("", myRadius, "bus_station", mFragmentSearch);
                 }
             }
@@ -320,7 +312,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             @Override
             public void onClick(View v) {
                 if (!isConnected(getContext())) {
-                    dataProviderHistory = new NetWorkDataProviderHistory();
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
@@ -341,7 +332,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     editorType.putString("mystringtype", "car_dealer|car_rental|car_repair|car_wash");
                     editorType.apply();
 
-                    dataProviderSearch = new NetWorkDataProviderSearch();
                     dataProviderSearch.getPlacesByLocation("", myRadius, "car_dealer|car_rental|car_repair|car_wash", mFragmentSearch);
                 }
             }
@@ -351,7 +341,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             @Override
             public void onClick(View v) {
                 if (!isConnected(getContext())) {
-                    dataProviderHistory = new NetWorkDataProviderHistory();
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
@@ -372,7 +361,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     editorType.putString("mystringtype", "clothing_store");
                     editorType.apply();
 
-                    dataProviderSearch = new NetWorkDataProviderSearch();
                     dataProviderSearch.getPlacesByLocation("", myRadius, "clothing_store", mFragmentSearch);
                 }
             }
@@ -382,7 +370,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             @Override
             public void onClick(View v) {
                 if (!isConnected(getContext())) {
-                    dataProviderHistory = new NetWorkDataProviderHistory();
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
@@ -403,7 +390,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     editorType.putString("mystringtype", "doctor");
                     editorType.apply();
 
-                    dataProviderSearch = new NetWorkDataProviderSearch();
                     dataProviderSearch.getPlacesByLocation("", myRadius, "doctor", mFragmentSearch);
                 }
             }
@@ -413,7 +399,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             @Override
             public void onClick(View v) {
                 if (!isConnected(getContext())) {
-                    dataProviderHistory = new NetWorkDataProviderHistory();
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
@@ -434,7 +419,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     editorType.putString("mystringtype", "gas_station");
                     editorType.apply();
 
-                    dataProviderSearch = new NetWorkDataProviderSearch();
                     dataProviderSearch.getPlacesByLocation("", myRadius, "gas_station", mFragmentSearch);
                 }
             }
@@ -444,7 +428,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             @Override
             public void onClick(View v) {
                 if (!isConnected(getContext())) {
-                    dataProviderHistory = new NetWorkDataProviderHistory();
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
@@ -465,7 +448,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     editorType.putString("mystringtype", "gym");
                     editorType.apply();
 
-                    dataProviderSearch = new NetWorkDataProviderSearch();
                     dataProviderSearch.getPlacesByLocation("", myRadius, "gym", mFragmentSearch);
                 }
             }
@@ -475,7 +457,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             @Override
             public void onClick(View v) {
                 if (!isConnected(getContext())) {
-                    dataProviderHistory = new NetWorkDataProviderHistory();
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
@@ -496,7 +477,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     editorType.putString("mystringtype", "jewelry_store");
                     editorType.apply();
 
-                    dataProviderSearch = new NetWorkDataProviderSearch();
                     dataProviderSearch.getPlacesByLocation("", myRadius, "jewelry_store", mFragmentSearch);
                 }
             }
@@ -506,7 +486,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             @Override
             public void onClick(View v) {
                 if (!isConnected(getContext())) {
-                    dataProviderHistory = new NetWorkDataProviderHistory();
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
@@ -527,7 +506,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     editorType.putString("mystringtype", "park|amusement_park|parking|rv_park");
                     editorType.apply();
 
-                    dataProviderSearch = new NetWorkDataProviderSearch();
                     dataProviderSearch.getPlacesByLocation("", myRadius, "park|amusement_park|parking|rv_park", mFragmentSearch);
                 }
             }
@@ -537,7 +515,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             @Override
             public void onClick(View v) {
                 if (!isConnected(getContext())) {
-                    dataProviderHistory = new NetWorkDataProviderHistory();
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
@@ -558,7 +535,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     editorType.putString("mystringtype", "food|restaurant|cafe|bakery");
                     editorType.apply();
 
-                    dataProviderSearch = new NetWorkDataProviderSearch();
                     dataProviderSearch.getPlacesByLocation("", myRadius, "food|restaurant|cafe|bakery", mFragmentSearch);
                 }
             }
@@ -568,7 +544,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             @Override
             public void onClick(View v) {
                 if (!isConnected(getContext())) {
-                    dataProviderHistory = new NetWorkDataProviderHistory();
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
@@ -589,7 +564,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     editorType.putString("mystringtype", "school");
                     editorType.apply();
 
-                    dataProviderSearch = new NetWorkDataProviderSearch();
                     dataProviderSearch.getPlacesByLocation("", myRadius, "school", mFragmentSearch);
                 }
             }
@@ -599,7 +573,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             @Override
             public void onClick(View v) {
                 if (!isConnected(getContext())) {
-                    dataProviderHistory = new NetWorkDataProviderHistory();
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
@@ -620,7 +593,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     editorType.putString("mystringtype", "spa");
                     editorType.apply();
 
-                    dataProviderSearch = new NetWorkDataProviderSearch();
                     dataProviderSearch.getPlacesByLocation("", myRadius, "spa", mFragmentSearch);
                 }
             }
@@ -681,7 +653,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     if (!isConnected(getContext())) {
-                        dataProviderHistory = new NetWorkDataProviderHistory();
                         dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                         buildDialog(getContext()).show();
                     } else {
@@ -699,7 +670,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                         editorType.putString("mystringtype", "");
                         editorType.apply();
 
-                        dataProviderSearch = new NetWorkDataProviderSearch();
                         dataProviderSearch.getPlacesByLocation(query, 50000.0, "", mFragmentSearch);
                     }
                     return true;
@@ -721,7 +691,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                 break;
             case R.id.nearByMe:
                 if (!isConnected(getContext())) {
-                    dataProviderHistory = new NetWorkDataProviderHistory();
                     dataProviderHistory.getPlacesByLocation(mFragmentSearch);
                     buildDialog(getContext()).show();
                 } else {
@@ -742,7 +711,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                     editorType.putString("mystringtype", "");
                     editorType.apply();
 
-                    dataProviderSearch = new NetWorkDataProviderSearch();
                     dataProviderSearch.getPlacesByLocation("", myRadius, "", mFragmentSearch);
                 }
                 break;

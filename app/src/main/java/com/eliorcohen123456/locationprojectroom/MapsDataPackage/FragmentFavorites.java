@@ -52,6 +52,7 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
     private FragmentFavorites fragmentFavorites;
     private Toolbar toolbar;
     private NavigationView navigationView;
+    private NetWorkDataProviderFavorites netWorkDataProviderFavorites;
 
     @Nullable
     @Override
@@ -75,6 +76,8 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
         recyclerView = mView.findViewById(R.id.places_list_favorites);
 
         fragmentFavorites = this;
+
+        netWorkDataProviderFavorites = new NetWorkDataProviderFavorites();
     }
 
     private void drawerLayout() {
@@ -103,8 +106,7 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
     }
 
     private void getData() {
-        NetWorkDataProviderFavorites dataProvider = new NetWorkDataProviderFavorites();
-        dataProvider.getPlacesByLocation(fragmentFavorites);
+        netWorkDataProviderFavorites.getPlacesByLocation(fragmentFavorites);
     }
 
     private void myRecyclerView() {
