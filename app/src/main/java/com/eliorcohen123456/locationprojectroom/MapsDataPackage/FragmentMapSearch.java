@@ -257,93 +257,6 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
         }
     }
 
-    // Add circle of NearBy
-    private void addCircleNearBy() {
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        criteria = new Criteria();
-        String provider = locationManager.getBestProvider(criteria, true);
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-        }
-        if (provider != null) {
-            location = locationManager.getLastKnownLocation(provider);
-            if (location != null) {
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-                double myRadius = prefs.getInt("seek", 5000);
-                SharedPreferences prefs2 = PreferenceManager.getDefaultSharedPreferences(getContext());
-                String result = prefs2.getString("myKm", "1000.0");
-                assert result != null;
-                double val = Double.parseDouble(result);
-                if (val == 1000.0) {
-                    double distanceKm = myRadius / val;
-                    String radiusMeKm = String.format("%.2f", distanceKm);
-                    if (myRadius >= 1000.0) {
-                        disNearBy.setText(" = " + radiusMeKm + " KM R - Nearby");
-                    } else {
-                        double distanceMeters = distanceKm * 1000;
-                        disNearBy.setText(" = " + (int) distanceMeters + " Meters R - Nearby");
-                    }
-                } else if (val == 1609.344) {
-                    double distanceMile = myRadius / val;
-                    String radiusMeMile = String.format("%.2f", distanceMile);
-                    disNearBy.setText(" = " + radiusMeMile + " Miles R - Nearby");
-                }
-                mGoogleMap.addCircle(new CircleOptions()
-                        .center(new LatLng(location.getLatitude(), location.getLongitude()))
-                        .radius(myRadius)
-                        .strokeColor(Color.rgb(153, 153, 102))
-                        .fillColor(0x20FF0000)
-                        .strokeWidth(3)
-                );
-            }
-        }
-    }
-
-    // Add Circle of Search
-    private void addCircleSearch() {
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        criteria = new Criteria();
-        String provider = locationManager.getBestProvider(criteria, true);
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-        }
-        if (provider != null) {
-            location = locationManager.getLastKnownLocation(provider);
-            if (location != null) {
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-                String result = prefs.getString("myKm", "1000.0");
-                assert result != null;
-                double val = Double.parseDouble(result);
-                if (val == 1000.0) {
-                    disSearch.setText(" = " + 50.00 + " KM R - Search");
-                } else if (val == 1609.344) {
-                    disSearch.setText(" = " + 31.06 + " Miles R - Search");
-                }
-                mGoogleMap.addCircle(new CircleOptions()
-                        .center(new LatLng(location.getLatitude(), location.getLongitude()))
-                        .radius(50000)
-                        .strokeColor(Color.rgb(232, 232, 53))
-                        .fillColor(0x200000FF)
-                        .strokeWidth(3)
-                );
-            }
-        }
-    }
-
     @Override
     public void onPlacesDataReceived(ArrayList<PlaceModel> results_) {
         // pass data result to adapter
@@ -802,6 +715,93 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
                 });
             }
         });
+    }
+
+    // Add circle of NearBy
+    private void addCircleNearBy() {
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        criteria = new Criteria();
+        String provider = locationManager.getBestProvider(criteria, true);
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+        }
+        if (provider != null) {
+            location = locationManager.getLastKnownLocation(provider);
+            if (location != null) {
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+                double myRadius = prefs.getInt("seek", 5000);
+                SharedPreferences prefs2 = PreferenceManager.getDefaultSharedPreferences(getContext());
+                String result = prefs2.getString("myKm", "1000.0");
+                assert result != null;
+                double val = Double.parseDouble(result);
+                if (val == 1000.0) {
+                    double distanceKm = myRadius / val;
+                    String radiusMeKm = String.format("%.2f", distanceKm);
+                    if (myRadius >= 1000.0) {
+                        disNearBy.setText(" = " + radiusMeKm + " KM R - Nearby");
+                    } else {
+                        double distanceMeters = distanceKm * 1000;
+                        disNearBy.setText(" = " + (int) distanceMeters + " Meters R - Nearby");
+                    }
+                } else if (val == 1609.344) {
+                    double distanceMile = myRadius / val;
+                    String radiusMeMile = String.format("%.2f", distanceMile);
+                    disNearBy.setText(" = " + radiusMeMile + " Miles R - Nearby");
+                }
+                mGoogleMap.addCircle(new CircleOptions()
+                        .center(new LatLng(location.getLatitude(), location.getLongitude()))
+                        .radius(myRadius)
+                        .strokeColor(Color.rgb(153, 153, 102))
+                        .fillColor(0x20FF0000)
+                        .strokeWidth(3)
+                );
+            }
+        }
+    }
+
+    // Add Circle of Search
+    private void addCircleSearch() {
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        criteria = new Criteria();
+        String provider = locationManager.getBestProvider(criteria, true);
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+        }
+        if (provider != null) {
+            location = locationManager.getLastKnownLocation(provider);
+            if (location != null) {
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+                String result = prefs.getString("myKm", "1000.0");
+                assert result != null;
+                double val = Double.parseDouble(result);
+                if (val == 1000.0) {
+                    disSearch.setText(" = " + 50.00 + " KM R - Search");
+                } else if (val == 1609.344) {
+                    disSearch.setText(" = " + 31.06 + " Miles R - Search");
+                }
+                mGoogleMap.addCircle(new CircleOptions()
+                        .center(new LatLng(location.getLatitude(), location.getLongitude()))
+                        .radius(50000)
+                        .strokeColor(Color.rgb(232, 232, 53))
+                        .fillColor(0x200000FF)
+                        .strokeWidth(3)
+                );
+            }
+        }
     }
 
     private static boolean isPackageInstalled(Context context, String packageId) {
