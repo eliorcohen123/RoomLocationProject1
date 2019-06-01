@@ -216,7 +216,6 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
         try {
             MapsInitializer.initialize(getContext());
             mGoogleMap = googleMap;

@@ -185,7 +185,6 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
         try {
             MapsInitializer.initialize(getContext());
             mGoogleMap = googleMap;
