@@ -199,7 +199,7 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
             });
         } else {
             // Covers the case of data not being ready yet.
-            holder.name1.setText("No PlacesSearch");
+            holder.name1.setText("No Places");
         }
     }
 

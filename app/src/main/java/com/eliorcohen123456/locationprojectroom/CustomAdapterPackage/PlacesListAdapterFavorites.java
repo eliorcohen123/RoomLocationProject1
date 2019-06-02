@@ -143,7 +143,7 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
             });
         } else {
             // Covers the case of data not being ready yet.
-            holder.name3.setText("No PlacesSearch");
+            holder.name3.setText("No Places");
         }
     }
 
