@@ -38,7 +38,7 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
 
         private TextView name3, address3, kmMe3;
         private ImageView image3;
-        private RelativeLayout relativeLayout;
+        private RelativeLayout relativeLayout3;
 
         private WordViewHolder(View itemView) {
             super(itemView);
@@ -46,7 +46,7 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
             address3 = itemView.findViewById(R.id.address3);
             kmMe3 = itemView.findViewById(R.id.kmMe3);
             image3 = itemView.findViewById(R.id.image3);
-            relativeLayout = itemView.findViewById(R.id.relative3);
+            relativeLayout3 = itemView.findViewById(R.id.relative3);
         }
     }
 
@@ -127,7 +127,7 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
                     }
                 }
             }
-            holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+            holder.relativeLayout3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     FragmentMapFavorites fragmentMapFavorites = new FragmentMapFavorites();

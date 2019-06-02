@@ -43,7 +43,7 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
 
         private TextView name1, address1, kmMe1;
         private ImageView image1;
-        private RelativeLayout relativeLayout;
+        private RelativeLayout relativeLayout1;
 
         private WordViewHolder(View itemView) {
             super(itemView);
@@ -51,7 +51,7 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
             address1 = itemView.findViewById(R.id.address1);
             kmMe1 = itemView.findViewById(R.id.kmMe1);
             image1 = itemView.findViewById(R.id.image1);
-            relativeLayout = itemView.findViewById(R.id.relative1);
+            relativeLayout1 = itemView.findViewById(R.id.relative1);
 
             itemView.setOnCreateContextMenuListener(this);
         }
@@ -171,7 +171,7 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
                     }
                 }
             }
-            holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+            holder.relativeLayout1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // Tablet/Phone mode
