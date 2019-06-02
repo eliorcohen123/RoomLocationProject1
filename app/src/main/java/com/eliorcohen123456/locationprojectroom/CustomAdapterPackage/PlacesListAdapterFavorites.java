@@ -51,7 +51,7 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
     }
 
     private final LayoutInflater mInflater;
-    private List<PlacesFavorites> mPlacesSearchList;
+    private List<PlacesFavorites> mPlacesFavoritesList;
     private Location location;
     private LocationManager locationManager;
     private Criteria criteria;
@@ -68,8 +68,8 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
 
     @Override
     public void onBindViewHolder(final WordViewHolder holder, final int position) {
-        if (mPlacesSearchList != null) {
-            final PlacesFavorites current = mPlacesSearchList.get(position);
+        if (mPlacesFavoritesList != null) {
+            final PlacesFavorites current = mPlacesFavoritesList.get(position);
             locationManager = (LocationManager) mInflater.getContext().getSystemService(Context.LOCATION_SERVICE);
             criteria = new Criteria();
             String provider = locationManager.getBestProvider(criteria, true);
@@ -148,10 +148,10 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
     }
 
     public void setWords(List<PlacesFavorites> words) {
-        mPlacesSearchList = words;
+        mPlacesFavoritesList = words;
 
         try {
-            Collections.sort(mPlacesSearchList, new Comparator<PlacesFavorites>() {
+            Collections.sort(mPlacesFavoritesList, new Comparator<PlacesFavorites>() {
                 public int compare(PlacesFavorites obj1, PlacesFavorites obj2) {
                     // ## Ascending order
 //                return obj1.getDistance().compareToIgnoreCase(obj2.getDistance()); // To compare string values
@@ -174,13 +174,13 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
     // mWords has not been updated (means initially, it's null, and we can't return null).
     @Override
     public int getItemCount() {
-        if (mPlacesSearchList != null)
-            return mPlacesSearchList.size();
+        if (mPlacesFavoritesList != null)
+            return mPlacesFavoritesList.size();
         else return 0;
     }
 
     public PlacesFavorites getPlaceAtPosition(int position) {
-        return mPlacesSearchList.get(position);
+        return mPlacesFavoritesList.get(position);
     }
 
 }
