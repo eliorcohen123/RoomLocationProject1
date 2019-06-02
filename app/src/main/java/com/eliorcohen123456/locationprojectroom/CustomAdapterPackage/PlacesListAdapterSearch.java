@@ -94,7 +94,7 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
     }
 
     private final LayoutInflater mInflater;
-    private List<PlacesSearch> mPlacesSearchList; // Cached copy of words
+    private List<PlacesSearch> mPlacesSearchList;
     private double diagonalInches;
     private Location location;
     private LocationManager locationManager;

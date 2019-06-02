@@ -51,7 +51,7 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
     }
 
     private final LayoutInflater mInflater;
-    private List<PlacesFavorites> mPlacesList; // Cached copy of words
+    private List<PlacesFavorites> mPlacesList;
     private Location location;
     private LocationManager locationManager;
     private Criteria criteria;
