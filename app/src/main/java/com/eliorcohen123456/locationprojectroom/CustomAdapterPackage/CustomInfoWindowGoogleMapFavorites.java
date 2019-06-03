@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlacesFavorites;
-import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlacesSearch;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
