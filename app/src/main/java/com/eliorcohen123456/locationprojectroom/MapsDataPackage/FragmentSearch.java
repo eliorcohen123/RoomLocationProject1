@@ -100,7 +100,7 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
 
         swipeRefreshLayout = mView.findViewById(R.id.swipe_containerFrag);  // ID of the SwipeRefreshLayout of FragmentSearch
 
-        recyclerView = mView.findViewById(R.id.places_list);
+        recyclerView = mView.findViewById(R.id.places_list_search);
 
         mFragmentSearch = this;
 
