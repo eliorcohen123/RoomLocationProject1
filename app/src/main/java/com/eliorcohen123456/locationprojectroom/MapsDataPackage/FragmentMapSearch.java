@@ -261,7 +261,9 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
         mPlacesViewModel.getAllPlaces().observe(this, new Observer<List<PlacesSearch>>() {
             @Override
             public void onChanged(@Nullable final List<PlacesSearch> words) {
-                mGoogleMap.clear();
+                if (mGoogleMap != null) {
+                    mGoogleMap.clear();
+                }
                 try {
                     addCircleNearBy();
                     addCircleSearch();
