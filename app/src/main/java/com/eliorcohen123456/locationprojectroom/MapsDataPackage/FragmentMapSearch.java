@@ -181,12 +181,10 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
                 prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
                 int myRadius = prefsSeek.getInt("seek", 5000);
 
-                settingsQuery = getActivity().getSharedPreferences("mysettingsquery",
-                        Context.MODE_PRIVATE);
+                settingsQuery = getActivity().getSharedPreferences("mysettingsquery", Context.MODE_PRIVATE);
                 myStringQuery = settingsQuery.getString("mystringquery", "");
 
-                settingsType = getActivity().getSharedPreferences("mysettingstype",
-                        Context.MODE_PRIVATE);
+                settingsType = getActivity().getSharedPreferences("mysettingstype", Context.MODE_PRIVATE);
                 myStringType = settingsType.getString("mystringtype", "");
 
                 if (settingsQuery.contains("mystringquery") && settingsType.contains("mystringtype")) {

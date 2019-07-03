@@ -108,14 +108,10 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
 
         prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
 
-        settingsQuery = getActivity().getSharedPreferences("mysettingsquery",
-                Context.MODE_PRIVATE);
-
+        settingsQuery = getActivity().getSharedPreferences("mysettingsquery", Context.MODE_PRIVATE);
         editorQuery = settingsQuery.edit();
 
-        settingsType = getActivity().getSharedPreferences("mysettingstype",
-                Context.MODE_PRIVATE);
-
+        settingsType = getActivity().getSharedPreferences("mysettingstype", Context.MODE_PRIVATE);
         editorType = settingsType.edit();
 
         setHasOptionsMenu(true);
