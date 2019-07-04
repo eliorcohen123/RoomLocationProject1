@@ -37,15 +37,15 @@ import com.eliorcohen123456.locationprojectroom.MapsDataPackage.FragmentMapSearc
 import com.eliorcohen123456.locationprojectroom.R;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlacesSearch;
 
-public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdapterSearch.WordViewHolder> {
+public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdapterSearch.PlaceViewHolder> {
 
-    class WordViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
+    class PlaceViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
         private TextView name1, address1, kmMe1;
         private ImageView image1;
         private RelativeLayout relativeLayout1;
 
-        private WordViewHolder(View itemView) {
+        private PlaceViewHolder(View itemView) {
             super(itemView);
             name1 = itemView.findViewById(R.id.name1);
             address1 = itemView.findViewById(R.id.address1);
@@ -105,13 +105,13 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
     }
 
     @Override
-    public WordViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PlaceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.recyclerview_item_search, parent, false);
-        return new WordViewHolder(itemView);
+        return new PlaceViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final WordViewHolder holder, final int position) {
+    public void onBindViewHolder(final PlaceViewHolder holder, final int position) {
         if (mPlacesSearchList != null) {
             final PlacesSearch current = mPlacesSearchList.get(position);
             locationManager = (LocationManager) mInflater.getContext().getSystemService(Context.LOCATION_SERVICE);

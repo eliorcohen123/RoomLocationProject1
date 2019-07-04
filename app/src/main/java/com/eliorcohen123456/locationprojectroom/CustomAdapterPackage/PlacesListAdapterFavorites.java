@@ -32,15 +32,15 @@ import com.eliorcohen123456.locationprojectroom.MapsDataPackage.FragmentMapFavor
 import com.eliorcohen123456.locationprojectroom.R;
 import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlacesFavorites;
 
-public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListAdapterFavorites.WordViewHolder> {
+public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListAdapterFavorites.PlaceViewHolder> {
 
-    class WordViewHolder extends RecyclerView.ViewHolder {
+    class PlaceViewHolder extends RecyclerView.ViewHolder {
 
         private TextView name3, address3, kmMe3;
         private ImageView image3;
         private RelativeLayout relativeLayout3;
 
-        private WordViewHolder(View itemView) {
+        private PlaceViewHolder(View itemView) {
             super(itemView);
             name3 = itemView.findViewById(R.id.name3);
             address3 = itemView.findViewById(R.id.address3);
@@ -61,13 +61,13 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
     }
 
     @Override
-    public WordViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PlaceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.recyclerview_item_favorites, parent, false);
-        return new WordViewHolder(itemView);
+        return new PlaceViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final WordViewHolder holder, final int position) {
+    public void onBindViewHolder(final PlaceViewHolder holder, final int position) {
         if (mPlacesFavoritesList != null) {
             final PlacesFavorites current = mPlacesFavoritesList.get(position);
             locationManager = (LocationManager) mInflater.getContext().getSystemService(Context.LOCATION_SERVICE);
