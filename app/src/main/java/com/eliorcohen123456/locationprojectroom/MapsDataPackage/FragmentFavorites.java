@@ -47,7 +47,7 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
     private RecyclerView recyclerView;
     private View mView;
     private PlacesListAdapterFavorites adapterFavorites;
-    private Paint p = new Paint();
+    private Paint p;
     private DrawerLayout drawer;
     private FragmentFavorites fragmentFavorites;
     private Toolbar toolbar;
@@ -78,6 +78,8 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
         fragmentFavorites = this;
 
         netWorkDataProviderFavorites = new NetWorkDataProviderFavorites();
+
+        p = new Paint();
     }
 
     private void drawerLayout() {
