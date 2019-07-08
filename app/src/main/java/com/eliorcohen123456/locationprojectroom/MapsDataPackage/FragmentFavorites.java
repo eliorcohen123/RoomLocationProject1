@@ -46,7 +46,7 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
     private PlaceViewModelFavorites mPlacesViewModelFavorites;
     private RecyclerView recyclerView;
     private View mView;
-    private PlacesListAdapterFavorites adapterFavorites;
+    private PlacesListAdapterFavorites mAdapterFavorites;
     private Paint p;
     private DrawerLayout drawer;
     private FragmentFavorites fragmentFavorites;
@@ -113,8 +113,8 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
 
     private void myRecyclerView() {
         try {
-            adapterFavorites = new PlacesListAdapterFavorites(getContext());
-            recyclerView.setAdapter(adapterFavorites);
+            mAdapterFavorites = new PlacesListAdapterFavorites(getContext());
+            recyclerView.setAdapter(mAdapterFavorites);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             ItemDecoration itemDecoration = new ItemDecoration(20);
             recyclerView.addItemDecoration(itemDecoration);
@@ -136,7 +136,7 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
-                PlacesFavorites mPlace = adapterFavorites.getPlaceAtPosition(position);
+                PlacesFavorites mPlace = mAdapterFavorites.getPlaceAtPosition(position);
 
                 if (direction == ItemTouchHelper.LEFT) {
                     Toast.makeText(getContext(), "Editing " + mPlace.getName(), Toast.LENGTH_LONG).show();
@@ -207,12 +207,12 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
 
     @Override
     public void onPlacesDataReceived(ArrayList<PlaceModel> results_) {
-        // pass data result to adapterFavorites
+        // pass data result to mAdapterFavorites
         mPlacesViewModelFavorites.getAllPlaces().observe(this, new Observer<List<PlacesFavorites>>() {
             @Override
             public void onChanged(@Nullable final List<PlacesFavorites> words) {
-                // Update the cached copy of the words in the adapterFavorites.
-                adapterFavorites.setWords(words);
+                // Update the cached copy of the words in the mAdapterFavorites.
+                mAdapterFavorites.setWords(words);
             }
         });
     }

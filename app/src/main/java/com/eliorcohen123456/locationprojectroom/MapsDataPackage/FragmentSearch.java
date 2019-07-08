@@ -53,12 +53,12 @@ import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceViewModel
 
 public class FragmentSearch extends Fragment implements IPlacesDataReceived {
 
-    private PlaceViewModelSearch mPlacesViewModel;
+    private PlaceViewModelSearch mPlacesViewModelSearch;
     private RecyclerView recyclerView;
     private View mView;
-    private static ProgressDialog mProgressDialogInternet;
+    private static ProgressDialog mProgressDialog;
     private static FragmentSearch mFragmentSearch;
-    private PlacesListAdapterSearch adapter;
+    private PlacesListAdapterSearch mAdapterSearch;
     private SwipeRefreshLayout swipeRefreshLayout;
     private Button btnBank, btnBar, btnBeauty, btnBooks, btnBusStation, btnCars, btnClothing, btnDoctor, btnGasStation,
             btnGym, btnJewelry, btnPark, btnRestaurant, btnSchool, btnSpa;
@@ -119,8 +119,8 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
 
     private void myRecyclerView() {
         try {
-            adapter = new PlacesListAdapterSearch(getContext());
-            recyclerView.setAdapter(adapter);
+            mAdapterSearch = new PlacesListAdapterSearch(getContext());
+            recyclerView.setAdapter(mAdapterSearch);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             ItemDecoration itemDecoration = new ItemDecoration(20);
             recyclerView.addItemDecoration(itemDecoration);
@@ -128,7 +128,7 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
 
         }
 
-        mPlacesViewModel = ViewModelProviders.of(this).get(PlaceViewModelSearch.class);
+        mPlacesViewModelSearch = ViewModelProviders.of(this).get(PlaceViewModelSearch.class);
     }
 
     private void refreshUI() {
@@ -557,29 +557,29 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
 
     @Override
     public void onPlacesDataReceived(ArrayList<PlaceModel> results_) {
-        // pass data result to adapter
-        mPlacesViewModel.getAllPlaces().observe(this, new Observer<List<PlacesSearch>>() {
+        // pass data result to mAdapterSearch
+        mPlacesViewModelSearch.getAllPlaces().observe(this, new Observer<List<PlacesSearch>>() {
             @Override
             public void onChanged(@Nullable final List<PlacesSearch> words) {
-                // Update the cached copy of the words in the adapter.
-                adapter.setWords(words);
+                // Update the cached copy of the words in the adapterSearch.
+                mAdapterSearch.setWords(words);
             }
         });
     }
 
     // stopShowingProgressBar
     public static void stopShowingProgressBar() {
-        if (mProgressDialogInternet != null) {
-            mProgressDialogInternet.dismiss();
-            mProgressDialogInternet = null;
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+            mProgressDialog = null;
         }
     }
 
     // startShowingProgressBar
     public static void startShowingProgressBar() {
-        mProgressDialogInternet = ProgressDialog.show(mFragmentSearch.getActivity(), "Loading...",
+        mProgressDialog = ProgressDialog.show(mFragmentSearch.getActivity(), "Loading...",
                 "Please wait...", true);
-        mProgressDialogInternet.show();
+        mProgressDialog.show();
     }
 
 }
