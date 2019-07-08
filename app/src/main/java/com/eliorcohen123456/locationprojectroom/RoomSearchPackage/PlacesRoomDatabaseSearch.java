@@ -9,7 +9,6 @@ import android.content.Context;
 public abstract class PlacesRoomDatabaseSearch extends RoomDatabase {
 
     public abstract PlacesDaoSearch placesDao();
-
     private static volatile PlacesRoomDatabaseSearch INSTANCE;
 
     public static PlacesRoomDatabaseSearch getDatabase(final Context context) {

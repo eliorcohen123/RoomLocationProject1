@@ -9,7 +9,6 @@ import android.content.Context;
 public abstract class PlacesRoomDatabaseFavorites extends RoomDatabase {
 
     public abstract PlacesDaoFavorites placesDao();
-
     private static volatile PlacesRoomDatabaseFavorites INSTANCE;
 
     public static PlacesRoomDatabaseFavorites getDatabase(final Context context) {
