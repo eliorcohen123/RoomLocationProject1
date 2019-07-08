@@ -23,6 +23,10 @@ public class PlacesSearch implements Serializable {
         this.mUser_ratings_total = mUser_ratings_total;
     }
 
+    public PlacesSearch() {
+
+    }
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "ID")
     private long ID;
@@ -56,10 +60,6 @@ public class PlacesSearch implements Serializable {
 
     @ColumnInfo(name = "user_ratings_total")
     private int mUser_ratings_total;
-
-    public PlacesSearch() {
-
-    }
 
     public long getID() {
         return ID;

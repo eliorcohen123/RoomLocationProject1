@@ -18,6 +18,10 @@ public class PlacesFavorites implements Serializable {
         this.mPhoto = photo1;
     }
 
+    public PlacesFavorites() {
+
+    }
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "ID")
     private long ID;
@@ -51,10 +55,6 @@ public class PlacesFavorites implements Serializable {
 
     @ColumnInfo(name = "user_ratings_total")
     private int mUser_ratings_total;
-
-    public PlacesFavorites() {
-
-    }
 
     public long getID() {
         return ID;
