@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Entity(tableName = "places_table_search")
 public class PlacesSearch implements Serializable {
 
-    public PlacesSearch(@NonNull String mName, @NonNull double mLat, @NonNull double mLng, @NonNull String mAddress, String mPhoto, boolean mIsLastSearch, boolean mIsFavorite, String mDistance, double mRating, int mUser_ratings_total) {
+    public PlacesSearch(@NonNull String mName, double mLat, double mLng, @NonNull String mAddress, String mPhoto, boolean mIsLastSearch, boolean mIsFavorite, String mDistance, double mRating, int mUser_ratings_total) {
         this.mName = mName;
         this.mLat = mLat;
         this.mLng = mLng;
@@ -24,23 +24,18 @@ public class PlacesSearch implements Serializable {
     }
 
     @PrimaryKey(autoGenerate = true)
-    @NonNull
     @ColumnInfo(name = "ID")
     private long ID;
 
-    @NonNull
     @ColumnInfo(name = "name")
     private String mName;
 
-    @NonNull
     @ColumnInfo(name = "lat")
     private double mLat;
 
-    @NonNull
     @ColumnInfo(name = "lng")
     private double mLng;
 
-    @NonNull
     @ColumnInfo(name = "address")
     private String mAddress;
 
@@ -67,13 +62,11 @@ public class PlacesSearch implements Serializable {
 
     }
 
-
-    @NonNull
     public long getID() {
         return ID;
     }
 
-    public void setID(@NonNull long ID) {
+    public void setID(long ID) {
         this.ID = ID;
     }
 
@@ -86,21 +79,20 @@ public class PlacesSearch implements Serializable {
         this.mName = mName;
     }
 
-    @NonNull
     public double getLat() {
         return mLat;
     }
 
-    public void setLat(@NonNull double mLat) {
+    public void setLat(double mLat) {
         this.mLat = mLat;
     }
 
-    @NonNull
+
     public double getLng() {
         return mLng;
     }
 
-    public void setLng(@NonNull double mLng) {
+    public void setLng(double mLng) {
         this.mLng = mLng;
     }
 
@@ -146,21 +138,19 @@ public class PlacesSearch implements Serializable {
         this.mDistance = mDistance;
     }
 
-    @NonNull
     public double getRating() {
         return mRating;
     }
 
-    public void setRating(@NonNull double mRating) {
+    public void setRating(double mRating) {
         this.mRating = mRating;
     }
 
-    @NonNull
     public int getUser_ratings_total() {
         return mUser_ratings_total;
     }
 
-    public void setUser_ratings_total(@NonNull int mUser_ratings_total) {
+    public void setUser_ratings_total(int mUser_ratings_total) {
         this.mUser_ratings_total = mUser_ratings_total;
     }
 
