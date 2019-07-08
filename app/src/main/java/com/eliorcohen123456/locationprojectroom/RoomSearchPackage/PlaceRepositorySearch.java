@@ -21,11 +21,11 @@ public class PlaceRepositorySearch {
         return mAllPlaces;
     }
 
-    private static class DeleteLastSearch extends AsyncTask<Void, Void, Void> {
+    private static class DeleteLastSearchAsyncTask extends AsyncTask<Void, Void, Void> {
 
         private PlacesDaoSearch placesDaoSearch;
 
-        private DeleteLastSearch(PlacesDaoSearch dao) {
+        private DeleteLastSearchAsyncTask(PlacesDaoSearch dao) {
             placesDaoSearch = dao;
         }
 
@@ -37,8 +37,8 @@ public class PlaceRepositorySearch {
     }
 
     void deleteLastSearch() {
-        DeleteLastSearch deleteLastSearch = new DeleteLastSearch(mPLacesDaoSearch);
-        deleteLastSearch.execute();
+        DeleteLastSearchAsyncTask deleteLastSearchAsyncTask = new DeleteLastSearchAsyncTask(mPLacesDaoSearch);
+        deleteLastSearchAsyncTask.execute();
     }
 
     private static class updatePlaceAsyncTask extends AsyncTask<PlacesSearch, Void, Void> {

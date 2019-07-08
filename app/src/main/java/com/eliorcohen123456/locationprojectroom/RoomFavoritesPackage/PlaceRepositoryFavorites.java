@@ -21,11 +21,11 @@ public class PlaceRepositoryFavorites {
         return mAllPlacesFavorites;
     }
 
-    private static class DeleteLastSearch extends AsyncTask<Void, Void, Void> {
+    private static class DeleteLastSearchAsyncTask extends AsyncTask<Void, Void, Void> {
 
         private PlacesDaoFavorites placesDaoFavorites;
 
-        private DeleteLastSearch(PlacesDaoFavorites dao) {
+        private DeleteLastSearchAsyncTask(PlacesDaoFavorites dao) {
             placesDaoFavorites = dao;
         }
 
@@ -37,8 +37,8 @@ public class PlaceRepositoryFavorites {
     }
 
     void deleteLastSearch() {
-        DeleteLastSearch deleteLastSearch = new DeleteLastSearch(mPLacesDaoFavorites);
-        deleteLastSearch.execute();
+        DeleteLastSearchAsyncTask deleteLastSearchAsyncTask = new DeleteLastSearchAsyncTask(mPLacesDaoFavorites);
+        deleteLastSearchAsyncTask.execute();
     }
 
     private static class updatePlaceAsyncTask extends AsyncTask<PlacesFavorites, Void, Void> {
