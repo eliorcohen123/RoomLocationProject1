@@ -147,7 +147,7 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
         }
     }
 
-    public void setWords(List<PlacesFavorites> words) {
+    public void setPlaces(List<PlacesFavorites> words) {
         mPlacesFavoritesList = words;
 
         try {

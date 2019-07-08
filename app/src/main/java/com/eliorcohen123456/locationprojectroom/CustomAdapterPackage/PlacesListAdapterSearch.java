@@ -203,7 +203,7 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
         }
     }
 
-    public void setWords(List<PlacesSearch> words) {
+    public void setPlaces(List<PlacesSearch> words) {
         mPlacesSearchList = words;
         locationManager = (LocationManager) mInflater.getContext().getSystemService(Context.LOCATION_SERVICE);
         criteria = new Criteria();

@@ -210,9 +210,9 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
         // pass data result to mAdapterFavorites
         mPlacesViewModelFavorites.getAllPlaces().observe(this, new Observer<List<PlacesFavorites>>() {
             @Override
-            public void onChanged(@Nullable final List<PlacesFavorites> words) {
+            public void onChanged(@Nullable final List<PlacesFavorites> placesFavorites) {
                 // Update the cached copy of the words in the mAdapterFavorites.
-                mAdapterFavorites.setWords(words);
+                mAdapterFavorites.setPlaces(placesFavorites);
             }
         });
     }
