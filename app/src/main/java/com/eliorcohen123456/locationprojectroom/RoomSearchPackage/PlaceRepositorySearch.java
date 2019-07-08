@@ -25,7 +25,7 @@ public class PlaceRepositorySearch {
 
         private PlacesDaoSearch placesDaoSearch;
 
-        DeleteLastSearch(PlacesDaoSearch dao) {
+        private DeleteLastSearch(PlacesDaoSearch dao) {
             placesDaoSearch = dao;
         }
 
@@ -45,7 +45,7 @@ public class PlaceRepositorySearch {
 
         private PlacesDaoSearch mAsyncTaskDao;
 
-        updateWordAsyncTask(PlacesDaoSearch dao) {
+        private updateWordAsyncTask(PlacesDaoSearch dao) {
             mAsyncTaskDao = dao;
         }
 
@@ -64,7 +64,7 @@ public class PlaceRepositorySearch {
 
         private PlacesDaoSearch mAsyncTaskDao;
 
-        deleteWordAsyncTask(PlacesDaoSearch dao) {
+        private deleteWordAsyncTask(PlacesDaoSearch dao) {
             mAsyncTaskDao = dao;
         }
 
@@ -83,7 +83,7 @@ public class PlaceRepositorySearch {
 
         private PlacesDaoSearch mAsyncTaskDao;
 
-        insertAsyncTask(PlacesDaoSearch dao) {
+        private insertAsyncTask(PlacesDaoSearch dao) {
             mAsyncTaskDao = dao;
         }
 

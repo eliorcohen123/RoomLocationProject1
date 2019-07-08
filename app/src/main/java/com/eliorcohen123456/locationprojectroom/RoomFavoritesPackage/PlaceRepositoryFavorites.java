@@ -25,7 +25,7 @@ public class PlaceRepositoryFavorites {
 
         private PlacesDaoFavorites placesDaoFavorites;
 
-        DeleteLastSearch(PlacesDaoFavorites dao) {
+        private DeleteLastSearch(PlacesDaoFavorites dao) {
             placesDaoFavorites = dao;
         }
 
@@ -45,7 +45,7 @@ public class PlaceRepositoryFavorites {
 
         private PlacesDaoFavorites placesDaoFavorites;
 
-        updateWordAsyncTask(PlacesDaoFavorites dao) {
+        private updateWordAsyncTask(PlacesDaoFavorites dao) {
             placesDaoFavorites = dao;
         }
 
@@ -64,7 +64,7 @@ public class PlaceRepositoryFavorites {
 
         private PlacesDaoFavorites placesDaoFavorites;
 
-        deleteWordAsyncTask(PlacesDaoFavorites dao) {
+        private deleteWordAsyncTask(PlacesDaoFavorites dao) {
             placesDaoFavorites = dao;
         }
 
@@ -83,7 +83,7 @@ public class PlaceRepositoryFavorites {
 
         private PlacesDaoFavorites placesDaoFavorites;
 
-        insertAsyncTask(PlacesDaoFavorites dao) {
+        private insertAsyncTask(PlacesDaoFavorites dao) {
             placesDaoFavorites = dao;
         }
 
