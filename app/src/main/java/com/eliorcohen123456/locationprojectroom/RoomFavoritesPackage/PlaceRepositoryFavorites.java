@@ -41,11 +41,11 @@ public class PlaceRepositoryFavorites {
         deleteLastSearch.execute();
     }
 
-    private static class updateWordAsyncTask extends AsyncTask<PlacesFavorites, Void, Void> {
+    private static class updatePlaceAsyncTask extends AsyncTask<PlacesFavorites, Void, Void> {
 
         private PlacesDaoFavorites placesDaoFavorites;
 
-        private updateWordAsyncTask(PlacesDaoFavorites dao) {
+        private updatePlaceAsyncTask(PlacesDaoFavorites dao) {
             placesDaoFavorites = dao;
         }
 
@@ -56,15 +56,15 @@ public class PlaceRepositoryFavorites {
         }
     }
 
-    void updateWord(PlacesFavorites places) {
-        new updateWordAsyncTask(mPLacesDaoFavorites).execute(places);
+    void updatePlace(PlacesFavorites places) {
+        new updatePlaceAsyncTask(mPLacesDaoFavorites).execute(places);
     }
 
-    private static class deleteWordAsyncTask extends AsyncTask<PlacesFavorites, Void, Void> {
+    private static class deletePlaceAsyncTask extends AsyncTask<PlacesFavorites, Void, Void> {
 
         private PlacesDaoFavorites placesDaoFavorites;
 
-        private deleteWordAsyncTask(PlacesDaoFavorites dao) {
+        private deletePlaceAsyncTask(PlacesDaoFavorites dao) {
             placesDaoFavorites = dao;
         }
 
@@ -75,8 +75,8 @@ public class PlaceRepositoryFavorites {
         }
     }
 
-    void deleteWord(PlacesFavorites places) {
-        new deleteWordAsyncTask(mPLacesDaoFavorites).execute(places);
+    void deletePlace(PlacesFavorites places) {
+        new deletePlaceAsyncTask(mPLacesDaoFavorites).execute(places);
     }
 
     private static class insertAsyncTask extends AsyncTask<PlacesFavorites, Void, Void> {

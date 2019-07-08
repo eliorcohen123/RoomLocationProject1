@@ -21,8 +21,8 @@ public class PlaceViewModelSearch extends AndroidViewModel {
         return mAllPlaces;
     }
 
-    public void insert(PlacesSearch word) {
-        mRepository.insert(word);
+    public void insert(PlacesSearch placesSearch) {
+        mRepository.insert(placesSearch);
     }
 
     public void deleteAll() {
@@ -30,11 +30,11 @@ public class PlaceViewModelSearch extends AndroidViewModel {
     }
 
     public void deletePlace(PlacesSearch placesSearch) {
-        mRepository.deleteWord(placesSearch);
+        mRepository.deletePlace(placesSearch);
     }
 
     public void updatePlace(PlacesSearch placesSearch) {
-        mRepository.updateWord(placesSearch);
+        mRepository.updatePlace(placesSearch);
     }
 
 }

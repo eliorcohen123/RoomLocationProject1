@@ -21,8 +21,8 @@ public class PlaceViewModelFavorites extends AndroidViewModel {
         return mAllPlacesFavorites;
     }
 
-    public void insert(PlacesFavorites word) {
-        placeRepositoryFavorites.insert(word);
+    public void insert(PlacesFavorites placesFavorites) {
+        placeRepositoryFavorites.insert(placesFavorites);
     }
 
     public void deleteAll() {
@@ -30,11 +30,11 @@ public class PlaceViewModelFavorites extends AndroidViewModel {
     }
 
     public void deletePlace(PlacesFavorites places) {
-        placeRepositoryFavorites.deleteWord(places);
+        placeRepositoryFavorites.deletePlace(places);
     }
 
     public void updatePlace(PlacesFavorites places) {
-        placeRepositoryFavorites.updateWord(places);
+        placeRepositoryFavorites.updatePlace(places);
     }
 
 }

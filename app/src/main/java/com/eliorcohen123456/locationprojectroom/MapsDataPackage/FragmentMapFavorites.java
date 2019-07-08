@@ -249,9 +249,9 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
         // pass data result to adapter
         mPlacesViewModel.getAllPlaces().observe(this, new Observer<List<PlacesFavorites>>() {
             @Override
-            public void onChanged(@Nullable final List<PlacesFavorites> words) {
+            public void onChanged(@Nullable final List<PlacesFavorites> placesFavorites) {
                 try {
-                    for (int i = 0; i <= words.size(); i++) {
+                    for (int i = 0; i <= placesFavorites.size(); i++) {
                         if (placeModelFavorites != null) {
                             markerFavorites = mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(placeModelFavorites.getLat(), placeModelFavorites.getLng())).title(placeModelFavorites.getName()).icon(BitmapDescriptorFactory
                                     .defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
@@ -259,7 +259,7 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                         }
 
                         try {
-                            markerAllFavorites[i] = mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(words.get(i).getLat(), words.get(i).getLng())).title(words.get(i).getName()).icon(BitmapDescriptorFactory
+                            markerAllFavorites[i] = mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(placesFavorites.get(i).getLat(), placesFavorites.get(i).getLng())).title(placesFavorites.get(i).getName()).icon(BitmapDescriptorFactory
                                     .defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
                             if (!markerAllFavorites[i].getTitle().equals(markerFavorites.getTitle())) {
                                 markers.add(markerAllFavorites[i]);
@@ -276,9 +276,9 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                     @Override
                     public boolean onMarkerClick(Marker marker) {
                         try {
-                            for (int finalI = 0; finalI <= words.size(); finalI++) {
+                            for (int finalI = 0; finalI <= placesFavorites.size(); finalI++) {
                                 final int finalI1 = finalI;
-                                if (marker.getTitle().equals(words.get(finalI1).getName())) {
+                                if (marker.getTitle().equals(placesFavorites.get(finalI1).getName())) {
                                     try {
                                         moovit.setOnClickListener(new View.OnClickListener() {
                                             @Override
@@ -286,7 +286,7 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                                                 try {
                                                     PackageManager pm = getActivity().getPackageManager();
                                                     pm.getPackageInfo("com.tranzmate", PackageManager.GET_ACTIVITIES);
-                                                    String uri = "moovit://directions?dest_lat=" + words.get(finalI1).getLat() + "&dest_lon=" + words.get(finalI1).getLng() + "&dest_name=" + words.get(finalI1).getName() + "&orig_lat=" + location.getLatitude() + "&orig_lon=" + location.getLongitude() + "&orig_name=Your current location&auto_run=true&partner_id=Room Lovely Favorites Places";
+                                                    String uri = "moovit://directions?dest_lat=" + placesFavorites.get(finalI1).getLat() + "&dest_lon=" + placesFavorites.get(finalI1).getLng() + "&dest_name=" + placesFavorites.get(finalI1).getName() + "&orig_lat=" + location.getLatitude() + "&orig_lon=" + location.getLongitude() + "&orig_name=Your current location&auto_run=true&partner_id=Room Lovely Favorites Places";
                                                     Intent intent = new Intent(Intent.ACTION_VIEW);
                                                     intent.setData(Uri.parse(uri));
                                                     startActivity(intent);
@@ -303,7 +303,7 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                                             @Override
                                             public void onClick(View v) {
                                                 if (isPackageInstalled(getContext(), "com.gettaxi.android")) {
-                                                    String link = "gett://order?pickup=my_location&dropoff_latitude=" + words.get(finalI1).getLat() + "&dropoff_longitude=" + words.get(finalI1).getLng() + "&product_id=0c1202f8-6c43-4330-9d8a-3b4fa66505fd";
+                                                    String link = "gett://order?pickup=my_location&dropoff_latitude=" + placesFavorites.get(finalI1).getLat() + "&dropoff_longitude=" + placesFavorites.get(finalI1).getLng() + "&product_id=0c1202f8-6c43-4330-9d8a-3b4fa66505fd";
                                                     Intent playStoreIntent = new Intent(Intent.ACTION_VIEW);
                                                     playStoreIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                                     playStoreIntent.setData(Uri.parse(link));
@@ -322,7 +322,7 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                                             @Override
                                             public void onClick(View v) {
                                                 try {
-                                                    String url = "https://www.waze.com/ul?ll=" + words.get(finalI1).getLat() + "%2C" + words.get(finalI1).getLng() + "&navigate=yes&zoom=17";
+                                                    String url = "https://www.waze.com/ul?ll=" + placesFavorites.get(finalI1).getLat() + "%2C" + placesFavorites.get(finalI1).getLng() + "&navigate=yes&zoom=17";
                                                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                                                     startActivity(intent);
                                                 } catch (ActivityNotFoundException ex) {
@@ -350,8 +350,8 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                                                 PlacesFavorites info = new PlacesFavorites();
                                                 double distanceMe;
                                                 Location locationA = new Location("Point A");
-                                                locationA.setLatitude(words.get(finalI1).getLat());
-                                                locationA.setLongitude(words.get(finalI1).getLng());
+                                                locationA.setLatitude(placesFavorites.get(finalI1).getLat());
+                                                locationA.setLongitude(placesFavorites.get(finalI1).getLng());
                                                 Location locationB = new Location("Point B");
                                                 locationB.setLatitude(location.getLatitude());
                                                 locationB.setLongitude(location.getLongitude());
@@ -366,21 +366,21 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                                                     if (distanceMe < 1) {
                                                         int dis = (int) (distanceMe * 1000);
                                                         distanceKm1 = "\n" + "Meters: " + String.valueOf(dis);
-                                                        info.setName(words.get(finalI1).getName());
-                                                        info.setAddress(words.get(finalI1).getAddress());
+                                                        info.setName(placesFavorites.get(finalI1).getName());
+                                                        info.setAddress(placesFavorites.get(finalI1).getAddress());
                                                         info.setDistance(distanceKm1);
                                                     } else if (distanceMe >= 1) {
                                                         String disM = String.format("%.2f", distanceMe);
                                                         distanceKm1 = "\n" + "Km: " + String.valueOf(disM);
-                                                        info.setName(words.get(finalI1).getName());
-                                                        info.setAddress(words.get(finalI1).getAddress());
+                                                        info.setName(placesFavorites.get(finalI1).getName());
+                                                        info.setAddress(placesFavorites.get(finalI1).getAddress());
                                                         info.setDistance(distanceKm1);
                                                     }
                                                 } else if (val == 1609.344) {
                                                     String distanceMile1 = String.format("%.2f", distanceMe);
                                                     disMile = "\n" + "Miles: " + String.valueOf(distanceMile1);
-                                                    info.setName(words.get(finalI1).getName());
-                                                    info.setAddress(words.get(finalI1).getAddress());
+                                                    info.setName(placesFavorites.get(finalI1).getName());
+                                                    info.setAddress(placesFavorites.get(finalI1).getAddress());
                                                     info.setDistance(disMile);
                                                 }
 
@@ -392,7 +392,7 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                                             }
                                         }
 
-                                        Toast.makeText(getContext(), words.get(finalI1).getName(), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getContext(), placesFavorites.get(finalI1).getName(), Toast.LENGTH_LONG).show();
 
                                         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
                                         criteria = new Criteria();
@@ -422,7 +422,7 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                                                 GeoApiContext context = new GeoApiContext.Builder()
                                                         .apiKey(getString(R.string.api_key_search))
                                                         .build();
-                                                DirectionsApiRequest req = DirectionsApi.getDirections(context, lat1 + ", " + lng1, words.get(finalI1).getLat() + ", " + words.get(finalI1).getLng());
+                                                DirectionsApiRequest req = DirectionsApi.getDirections(context, lat1 + ", " + lng1, placesFavorites.get(finalI1).getLat() + ", " + placesFavorites.get(finalI1).getLng());
                                                 try {
                                                     DirectionsResult res = req.await();
 

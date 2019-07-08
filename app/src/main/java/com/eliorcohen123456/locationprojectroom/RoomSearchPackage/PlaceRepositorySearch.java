@@ -41,11 +41,11 @@ public class PlaceRepositorySearch {
         deleteLastSearch.execute();
     }
 
-    private static class updateWordAsyncTask extends AsyncTask<PlacesSearch, Void, Void> {
+    private static class updatePlaceAsyncTask extends AsyncTask<PlacesSearch, Void, Void> {
 
         private PlacesDaoSearch mAsyncTaskDao;
 
-        private updateWordAsyncTask(PlacesDaoSearch dao) {
+        private updatePlaceAsyncTask(PlacesDaoSearch dao) {
             mAsyncTaskDao = dao;
         }
 
@@ -56,15 +56,15 @@ public class PlaceRepositorySearch {
         }
     }
 
-    void updateWord(PlacesSearch word) {
-        new updateWordAsyncTask(mPLacesDaoSearch).execute(word);
+    void updatePlace(PlacesSearch placesSearch) {
+        new updatePlaceAsyncTask(mPLacesDaoSearch).execute(placesSearch);
     }
 
-    private static class deleteWordAsyncTask extends AsyncTask<PlacesSearch, Void, Void> {
+    private static class deletePlaceAsyncTask extends AsyncTask<PlacesSearch, Void, Void> {
 
         private PlacesDaoSearch mAsyncTaskDao;
 
-        private deleteWordAsyncTask(PlacesDaoSearch dao) {
+        private deletePlaceAsyncTask(PlacesDaoSearch dao) {
             mAsyncTaskDao = dao;
         }
 
@@ -75,8 +75,8 @@ public class PlaceRepositorySearch {
         }
     }
 
-    void deleteWord(PlacesSearch word) {
-        new deleteWordAsyncTask(mPLacesDaoSearch).execute(word);
+    void deletePlace(PlacesSearch placesSearch) {
+        new deletePlaceAsyncTask(mPLacesDaoSearch).execute(placesSearch);
     }
 
     private static class insertAsyncTask extends AsyncTask<PlacesSearch, Void, Void> {

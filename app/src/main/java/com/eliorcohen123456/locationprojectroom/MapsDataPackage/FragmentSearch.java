@@ -561,7 +561,7 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
         mPlacesViewModelSearch.getAllPlaces().observe(this, new Observer<List<PlacesSearch>>() {
             @Override
             public void onChanged(@Nullable final List<PlacesSearch> placesSearches) {
-                // Update the cached copy of the words in the adapterSearch.
+                // Update the cached copy of the words in the mAdapterSearch.
                 mAdapterSearch.setPlaces(placesSearches);
             }
         });

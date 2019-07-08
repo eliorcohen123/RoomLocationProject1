@@ -260,14 +260,14 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
         // pass data result to adapter
         mPlacesViewModel.getAllPlaces().observe(this, new Observer<List<PlacesSearch>>() {
             @Override
-            public void onChanged(@Nullable final List<PlacesSearch> words) {
+            public void onChanged(@Nullable final List<PlacesSearch> placesSearches) {
                 if (mGoogleMap != null) {
                     mGoogleMap.clear();
                 }
                 try {
                     addCircleNearBy();
                     addCircleSearch();
-                    for (int i = 0; i <= words.size(); i++) {
+                    for (int i = 0; i <= placesSearches.size(); i++) {
                         if (placeModelSearch != null) {
                             markerSearch = mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(placeModelSearch.getLat(), placeModelSearch.getLng())).title(placeModelSearch.getName()).icon(BitmapDescriptorFactory
                                     .defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
@@ -275,7 +275,7 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
                         }
 
                         try {
-                            markerAllSearch[i] = mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(words.get(i).getLat(), words.get(i).getLng())).title(words.get(i).getName()).icon(BitmapDescriptorFactory
+                            markerAllSearch[i] = mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(placesSearches.get(i).getLat(), placesSearches.get(i).getLng())).title(placesSearches.get(i).getName()).icon(BitmapDescriptorFactory
                                     .defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
                             if (!markerAllSearch[i].getTitle().equals(markerSearch.getTitle())) {
                                 markers.add(markerAllSearch[i]);
@@ -292,9 +292,9 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
                     @Override
                     public boolean onMarkerClick(Marker marker) {
                         try {
-                            for (int finalI = 0; finalI <= words.size(); finalI++) {
+                            for (int finalI = 0; finalI <= placesSearches.size(); finalI++) {
                                 final int finalI1 = finalI;
-                                if (marker.getTitle().equals(words.get(finalI1).getName())) {
+                                if (marker.getTitle().equals(placesSearches.get(finalI1).getName())) {
                                     try {
                                         moovit.setOnClickListener(new View.OnClickListener() {
                                             @Override
@@ -302,7 +302,7 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
                                                 try {
                                                     PackageManager pm = getActivity().getPackageManager();
                                                     pm.getPackageInfo("com.tranzmate", PackageManager.GET_ACTIVITIES);
-                                                    String uri = "moovit://directions?dest_lat=" + words.get(finalI1).getLat() + "&dest_lon=" + words.get(finalI1).getLng() + "&dest_name=" + words.get(finalI1).getName() + "&orig_lat=" + location.getLatitude() + "&orig_lon=" + location.getLongitude() + "&orig_name=Your current location&auto_run=true&partner_id=Room Lovely Favorites Places";
+                                                    String uri = "moovit://directions?dest_lat=" + placesSearches.get(finalI1).getLat() + "&dest_lon=" + placesSearches.get(finalI1).getLng() + "&dest_name=" + placesSearches.get(finalI1).getName() + "&orig_lat=" + location.getLatitude() + "&orig_lon=" + location.getLongitude() + "&orig_name=Your current location&auto_run=true&partner_id=Room Lovely Favorites Places";
                                                     Intent intent = new Intent(Intent.ACTION_VIEW);
                                                     intent.setData(Uri.parse(uri));
                                                     startActivity(intent);
@@ -319,7 +319,7 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
                                             @Override
                                             public void onClick(View v) {
                                                 if (isPackageInstalled(getContext(), "com.gettaxi.android")) {
-                                                    String link = "gett://order?pickup=my_location&dropoff_latitude=" + words.get(finalI1).getLat() + "&dropoff_longitude=" + words.get(finalI1).getLng() + "&product_id=0c1202f8-6c43-4330-9d8a-3b4fa66505fd";
+                                                    String link = "gett://order?pickup=my_location&dropoff_latitude=" + placesSearches.get(finalI1).getLat() + "&dropoff_longitude=" + placesSearches.get(finalI1).getLng() + "&product_id=0c1202f8-6c43-4330-9d8a-3b4fa66505fd";
                                                     Intent playStoreIntent = new Intent(Intent.ACTION_VIEW);
                                                     playStoreIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                                     playStoreIntent.setData(Uri.parse(link));
@@ -338,7 +338,7 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
                                             @Override
                                             public void onClick(View v) {
                                                 try {
-                                                    String url = "https://www.waze.com/ul?ll=" + words.get(finalI1).getLat() + "%2C" + words.get(finalI1).getLng() + "&navigate=yes&zoom=17";
+                                                    String url = "https://www.waze.com/ul?ll=" + placesSearches.get(finalI1).getLat() + "%2C" + placesSearches.get(finalI1).getLng() + "&navigate=yes&zoom=17";
                                                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                                                     startActivity(intent);
                                                 } catch (ActivityNotFoundException ex) {
@@ -366,8 +366,8 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
                                                 PlacesSearch info = new PlacesSearch();
                                                 double distanceMe;
                                                 Location locationA = new Location("Point A");
-                                                locationA.setLatitude(words.get(finalI1).getLat());
-                                                locationA.setLongitude(words.get(finalI1).getLng());
+                                                locationA.setLatitude(placesSearches.get(finalI1).getLat());
+                                                locationA.setLongitude(placesSearches.get(finalI1).getLng());
                                                 Location locationB = new Location("Point B");
                                                 locationB.setLatitude(location.getLatitude());
                                                 locationB.setLongitude(location.getLongitude());
@@ -382,27 +382,27 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
                                                     if (distanceMe < 1) {
                                                         int dis = (int) (distanceMe * 1000);
                                                         distanceKm1 = "\n" + "Meters: " + String.valueOf(dis);
-                                                        info.setName(words.get(finalI1).getName());
-                                                        info.setAddress(words.get(finalI1).getAddress());
-                                                        info.setRating(words.get(finalI1).getRating());
-                                                        info.setUser_ratings_total(words.get(finalI1).getUser_ratings_total());
+                                                        info.setName(placesSearches.get(finalI1).getName());
+                                                        info.setAddress(placesSearches.get(finalI1).getAddress());
+                                                        info.setRating(placesSearches.get(finalI1).getRating());
+                                                        info.setUser_ratings_total(placesSearches.get(finalI1).getUser_ratings_total());
                                                         info.setDistance(distanceKm1);
                                                     } else if (distanceMe >= 1) {
                                                         String disM = String.format("%.2f", distanceMe);
                                                         distanceKm1 = "\n" + "Km: " + String.valueOf(disM);
-                                                        info.setName(words.get(finalI1).getName());
-                                                        info.setAddress(words.get(finalI1).getAddress());
-                                                        info.setRating(words.get(finalI1).getRating());
-                                                        info.setUser_ratings_total(words.get(finalI1).getUser_ratings_total());
+                                                        info.setName(placesSearches.get(finalI1).getName());
+                                                        info.setAddress(placesSearches.get(finalI1).getAddress());
+                                                        info.setRating(placesSearches.get(finalI1).getRating());
+                                                        info.setUser_ratings_total(placesSearches.get(finalI1).getUser_ratings_total());
                                                         info.setDistance(distanceKm1);
                                                     }
                                                 } else if (val == 1609.344) {
                                                     String distanceMile1 = String.format("%.2f", distanceMe);
                                                     disMile = "\n" + "Miles: " + String.valueOf(distanceMile1);
-                                                    info.setName(words.get(finalI1).getName());
-                                                    info.setAddress(words.get(finalI1).getAddress());
-                                                    info.setRating(words.get(finalI1).getRating());
-                                                    info.setUser_ratings_total(words.get(finalI1).getUser_ratings_total());
+                                                    info.setName(placesSearches.get(finalI1).getName());
+                                                    info.setAddress(placesSearches.get(finalI1).getAddress());
+                                                    info.setRating(placesSearches.get(finalI1).getRating());
+                                                    info.setUser_ratings_total(placesSearches.get(finalI1).getUser_ratings_total());
                                                     info.setDistance(disMile);
                                                 }
 
@@ -414,7 +414,7 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
                                             }
                                         }
 
-                                        Toast.makeText(getContext(), words.get(finalI1).getName(), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getContext(), placesSearches.get(finalI1).getName(), Toast.LENGTH_LONG).show();
 
                                         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
                                         criteria = new Criteria();
@@ -444,7 +444,7 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
                                                 GeoApiContext context = new GeoApiContext.Builder()
                                                         .apiKey(getString(R.string.api_key_search))
                                                         .build();
-                                                DirectionsApiRequest req = DirectionsApi.getDirections(context, lat1 + ", " + lng1, words.get(finalI1).getLat() + ", " + words.get(finalI1).getLng());
+                                                DirectionsApiRequest req = DirectionsApi.getDirections(context, lat1 + ", " + lng1, placesSearches.get(finalI1).getLat() + ", " + placesSearches.get(finalI1).getLng());
                                                 try {
                                                     DirectionsResult res = req.await();
 
