@@ -149,7 +149,6 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
 
     public void setPlaces(List<PlacesFavorites> placesFavorites) {
         mPlacesFavoritesList = placesFavorites;
-
         try {
             Collections.sort(mPlacesFavoritesList, new Comparator<PlacesFavorites>() {
                 public int compare(PlacesFavorites obj1, PlacesFavorites obj2) {
@@ -166,7 +165,6 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
         } catch (Exception e) {
 
         }
-
         notifyDataSetChanged();
     }
 
