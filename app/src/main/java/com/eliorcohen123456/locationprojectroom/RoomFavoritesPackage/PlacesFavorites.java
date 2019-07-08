@@ -56,6 +56,7 @@ public class PlacesFavorites implements Serializable {
     @ColumnInfo(name = "user_ratings_total")
     private int mUser_ratings_total;
 
+
     public long getID() {
         return ID;
     }
