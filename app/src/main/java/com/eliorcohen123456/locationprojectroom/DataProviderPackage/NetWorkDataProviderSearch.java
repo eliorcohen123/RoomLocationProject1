@@ -124,7 +124,7 @@ public class NetWorkDataProviderSearch {
                         }
                         placeViewModelSearch = new PlaceViewModelSearch(NearByApplication.getApplication());
                         placeViewModelSearch.deleteAll();
-                        placeRepositorySearch.insert(listPlaces);
+                        placeRepositorySearch.insertPlace(listPlaces);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

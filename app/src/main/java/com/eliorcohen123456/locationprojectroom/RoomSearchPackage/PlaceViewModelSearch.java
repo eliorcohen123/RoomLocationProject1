@@ -22,7 +22,7 @@ public class PlaceViewModelSearch extends AndroidViewModel {
     }
 
     public void insert(PlacesSearch placesSearch) {
-        mRepository.insert(placesSearch);
+        mRepository.insertPlace(placesSearch);
     }
 
     public void deleteAll() {

@@ -94,13 +94,13 @@ public class PlaceRepositorySearch {
         }
     }
 
-    public void insert(PlacesSearch place_) {
+    public void insertPlace(PlacesSearch place_) {
         new insertAsyncTask(mPLacesDaoSearch).execute(place_);
     }
 
-    public void insert(List<PlacesSearch> placeList_) {
+    public void insertPlace(List<PlacesSearch> placeList_) {
         for (PlacesSearch p : placeList_) {
-            insert(p);
+            insertPlace(p);
         }
     }
 

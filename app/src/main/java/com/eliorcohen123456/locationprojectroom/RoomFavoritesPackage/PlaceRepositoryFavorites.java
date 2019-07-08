@@ -94,13 +94,13 @@ public class PlaceRepositoryFavorites {
         }
     }
 
-    public void insert(PlacesFavorites place_) {
+    public void insertPlace(PlacesFavorites place_) {
         new insertAsyncTask(mPLacesDaoFavorites).execute(place_);
     }
 
-    public void insert(List<PlacesFavorites> placeList_) {
+    public void insertPlace(List<PlacesFavorites> placeList_) {
         for (PlacesFavorites p : placeList_) {
-            insert(p);
+            insertPlace(p);
         }
     }
 
