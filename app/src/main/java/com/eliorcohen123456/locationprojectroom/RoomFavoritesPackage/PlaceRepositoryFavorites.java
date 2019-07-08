@@ -8,13 +8,13 @@ import java.util.List;
 
 public class PlaceRepositoryFavorites {
 
-    private PlacesDaoFavorites mPLacesDaoFavorites;
+    private PlacesDaoFavorites mPlacesDaoFavorites;
     private LiveData<List<PlacesFavorites>> mAllPlacesFavorites;
 
     public PlaceRepositoryFavorites(Application application) {
         PlacesRoomDatabaseFavorites db = PlacesRoomDatabaseFavorites.getDatabase(application);
-        mPLacesDaoFavorites = db.placesDao();
-        mAllPlacesFavorites = mPLacesDaoFavorites.getAllPlaces();
+        mPlacesDaoFavorites = db.placesDao();
+        mAllPlacesFavorites = mPlacesDaoFavorites.getAllPlaces();
     }
 
     public LiveData<List<PlacesFavorites>> getAllPlaces() {
@@ -37,7 +37,7 @@ public class PlaceRepositoryFavorites {
     }
 
     void deleteLastSearch() {
-        DeleteLastSearchAsyncTask deleteLastSearchAsyncTask = new DeleteLastSearchAsyncTask(mPLacesDaoFavorites);
+        DeleteLastSearchAsyncTask deleteLastSearchAsyncTask = new DeleteLastSearchAsyncTask(mPlacesDaoFavorites);
         deleteLastSearchAsyncTask.execute();
     }
 
@@ -57,7 +57,7 @@ public class PlaceRepositoryFavorites {
     }
 
     void updatePlace(PlacesFavorites places) {
-        new updatePlaceAsyncTask(mPLacesDaoFavorites).execute(places);
+        new updatePlaceAsyncTask(mPlacesDaoFavorites).execute(places);
     }
 
     private static class deletePlaceAsyncTask extends AsyncTask<PlacesFavorites, Void, Void> {
@@ -76,7 +76,7 @@ public class PlaceRepositoryFavorites {
     }
 
     void deletePlace(PlacesFavorites places) {
-        new deletePlaceAsyncTask(mPLacesDaoFavorites).execute(places);
+        new deletePlaceAsyncTask(mPlacesDaoFavorites).execute(places);
     }
 
     private static class insertAsyncTask extends AsyncTask<PlacesFavorites, Void, Void> {
@@ -95,7 +95,7 @@ public class PlaceRepositoryFavorites {
     }
 
     public void insertPlace(PlacesFavorites place_) {
-        new insertAsyncTask(mPLacesDaoFavorites).execute(place_);
+        new insertAsyncTask(mPlacesDaoFavorites).execute(place_);
     }
 
     public void insertPlace(List<PlacesFavorites> placeList_) {

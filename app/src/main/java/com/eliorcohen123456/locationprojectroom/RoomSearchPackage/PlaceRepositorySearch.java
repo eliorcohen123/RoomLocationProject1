@@ -8,13 +8,13 @@ import java.util.List;
 
 public class PlaceRepositorySearch {
 
-    private PlacesDaoSearch mPLacesDaoSearch;
+    private PlacesDaoSearch mPlacesDaoSearch;
     private LiveData<List<PlacesSearch>> mAllPlaces;
 
     public PlaceRepositorySearch(Application application) {
         PlacesRoomDatabaseSearch db = PlacesRoomDatabaseSearch.getDatabase(application);
-        mPLacesDaoSearch = db.placesDao();
-        mAllPlaces = mPLacesDaoSearch.getAllPlaces();
+        mPlacesDaoSearch = db.placesDao();
+        mAllPlaces = mPlacesDaoSearch.getAllPlaces();
     }
 
     public LiveData<List<PlacesSearch>> getAllPlaces() {
@@ -37,7 +37,7 @@ public class PlaceRepositorySearch {
     }
 
     void deleteLastSearch() {
-        DeleteLastSearchAsyncTask deleteLastSearchAsyncTask = new DeleteLastSearchAsyncTask(mPLacesDaoSearch);
+        DeleteLastSearchAsyncTask deleteLastSearchAsyncTask = new DeleteLastSearchAsyncTask(mPlacesDaoSearch);
         deleteLastSearchAsyncTask.execute();
     }
 
@@ -57,7 +57,7 @@ public class PlaceRepositorySearch {
     }
 
     void updatePlace(PlacesSearch placesSearch) {
-        new updatePlaceAsyncTask(mPLacesDaoSearch).execute(placesSearch);
+        new updatePlaceAsyncTask(mPlacesDaoSearch).execute(placesSearch);
     }
 
     private static class deletePlaceAsyncTask extends AsyncTask<PlacesSearch, Void, Void> {
@@ -76,7 +76,7 @@ public class PlaceRepositorySearch {
     }
 
     void deletePlace(PlacesSearch placesSearch) {
-        new deletePlaceAsyncTask(mPLacesDaoSearch).execute(placesSearch);
+        new deletePlaceAsyncTask(mPlacesDaoSearch).execute(placesSearch);
     }
 
     private static class insertAsyncTask extends AsyncTask<PlacesSearch, Void, Void> {
@@ -95,7 +95,7 @@ public class PlaceRepositorySearch {
     }
 
     public void insertPlace(PlacesSearch place_) {
-        new insertAsyncTask(mPLacesDaoSearch).execute(place_);
+        new insertAsyncTask(mPlacesDaoSearch).execute(place_);
     }
 
     public void insertPlace(List<PlacesSearch> placeList_) {
