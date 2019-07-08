@@ -79,7 +79,7 @@ public class AddPlaceFavorites extends AppCompatActivity {
 
                 PlacesFavorites placesFavorites = new PlacesFavorites(name1, address1, lat2, lng2, photo1);
                 placeViewModelFavorites = ViewModelProviders.of(AddPlaceFavorites.this).get(PlaceViewModelFavorites.class);
-                placeViewModelFavorites.insert(placesFavorites);
+                placeViewModelFavorites.insertPlace(placesFavorites);
 
                 // Pass from AddMapFromInternet to ActivityFavorites
                 Intent intentAddInternetToMain = new Intent(AddPlaceFavorites.this, ActivityFavorites.class);

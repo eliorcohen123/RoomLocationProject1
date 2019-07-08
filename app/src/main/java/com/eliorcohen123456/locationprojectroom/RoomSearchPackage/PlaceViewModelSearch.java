@@ -21,7 +21,7 @@ public class PlaceViewModelSearch extends AndroidViewModel {
         return mAllPlaces;
     }
 
-    public void insert(PlacesSearch placesSearch) {
+    public void insertPlace(PlacesSearch placesSearch) {
         mRepository.insertPlace(placesSearch);
     }
 
