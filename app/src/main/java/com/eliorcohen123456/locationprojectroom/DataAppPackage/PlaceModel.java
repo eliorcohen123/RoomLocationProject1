@@ -10,7 +10,7 @@ public class PlaceModel implements Serializable {
     private String vicinity;
     private Geometry geometry;
     private String distance;
-    private List<Photo> photos;
+    private List<Photos> photos;
     private OpeningHours opening_hours;
     private double rating;
     private int user_ratings_total;
@@ -55,11 +55,11 @@ public class PlaceModel implements Serializable {
         this.geometry = geometry;
     }
 
-    public List<Photo> getPhotos() {
+    public List<Photos> getPhotos() {
         return photos;
     }
 
-    public void setPhotos(List<Photo> photos) {
+    public void setPhotos(List<Photos> photos) {
         this.photos = photos;
     }
 

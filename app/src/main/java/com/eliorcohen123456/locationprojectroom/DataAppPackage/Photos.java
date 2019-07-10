@@ -3,7 +3,7 @@ package com.eliorcohen123456.locationprojectroom.DataAppPackage;
 import java.io.Serializable;
 import java.util.List;
 
-public class Photo implements Serializable {
+public class Photos implements Serializable {
 
     private String photo_reference;
     private List<String> html_attributions;
