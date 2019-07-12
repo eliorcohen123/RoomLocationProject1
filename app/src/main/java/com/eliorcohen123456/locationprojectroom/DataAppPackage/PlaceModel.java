@@ -31,36 +31,12 @@ public class PlaceModel implements Serializable {
         this.name = name;
     }
 
-    public OpeningHours getOpening_hours() {
-        return opening_hours;
-    }
-
-    public void setOpening_hours(OpeningHours opening_hours) {
-        this.opening_hours = opening_hours;
-    }
-
     public String getVicinity() {
         return vicinity;
     }
 
     public void setVicinity(String vicinity) {
         this.vicinity = vicinity;
-    }
-
-    public Geometry getGeometry() {
-        return geometry;
-    }
-
-    public void setGeometry(Geometry geometry) {
-        this.geometry = geometry;
-    }
-
-    public List<Photos> getPhotos() {
-        return photos;
-    }
-
-    public void setPhotos(List<Photos> photos) {
-        this.photos = photos;
     }
 
     public String getDistance() {
@@ -85,6 +61,30 @@ public class PlaceModel implements Serializable {
 
     public void setUser_ratings_total(int user_ratings_total) {
         this.user_ratings_total = user_ratings_total;
+    }
+
+    public List<Photos> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<Photos> photos) {
+        this.photos = photos;
+    }
+
+    public Geometry getGeometry() {
+        return geometry;
+    }
+
+    public void setGeometry(Geometry geometry) {
+        this.geometry = geometry;
+    }
+
+    public OpeningHours getOpening_hours() {
+        return opening_hours;
+    }
+
+    public void setOpening_hours(OpeningHours opening_hours) {
+        this.opening_hours = opening_hours;
     }
 
 }
