@@ -42,11 +42,11 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
 
         private PlaceViewHolder(View itemView) {
             super(itemView);
-            name3 = itemView.findViewById(R.id.name3);
-            address3 = itemView.findViewById(R.id.address3);
-            kmMe3 = itemView.findViewById(R.id.kmMe3);
-            image3 = itemView.findViewById(R.id.image3);
-            relativeLayout3 = itemView.findViewById(R.id.relative3);
+            name3 = itemView.findViewById(R.id.name1);
+            address3 = itemView.findViewById(R.id.address1);
+            kmMe3 = itemView.findViewById(R.id.kmMe1);
+            image3 = itemView.findViewById(R.id.image1);
+            relativeLayout3 = itemView.findViewById(R.id.relative1);
         }
     }
 
@@ -62,7 +62,7 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
 
     @Override
     public PlaceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.recyclerview_item_favorites, parent, false);
+        View itemView = mInflater.inflate(R.layout.recyclerview_item_total, parent, false);
         return new PlaceViewHolder(itemView);
     }
 
