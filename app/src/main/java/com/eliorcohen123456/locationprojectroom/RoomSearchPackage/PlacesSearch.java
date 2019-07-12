@@ -43,12 +43,6 @@ public class PlacesSearch implements Serializable {
     @ColumnInfo(name = "distance")
     private String mDistance;
 
-    @ColumnInfo(name = "isLastSearch")
-    private boolean mIsLastSearch;
-
-    @ColumnInfo(name = "isFavorite")
-    private boolean mIsFavorite;
-
     @ColumnInfo(name = "lat")
     private double mLat;
 
@@ -60,6 +54,13 @@ public class PlacesSearch implements Serializable {
 
     @ColumnInfo(name = "user_ratings_total")
     private int mUser_ratings_total;
+
+    @ColumnInfo(name = "isLastSearch")
+    private boolean mIsLastSearch;
+
+    @ColumnInfo(name = "isFavorite")
+    private boolean mIsFavorite;
+
 
     public long getID() {
         return ID;
@@ -76,23 +77,6 @@ public class PlacesSearch implements Serializable {
 
     public void setName(@NonNull String mName) {
         this.mName = mName;
-    }
-
-    public double getLat() {
-        return mLat;
-    }
-
-    public void setLat(double mLat) {
-        this.mLat = mLat;
-    }
-
-
-    public double getLng() {
-        return mLng;
-    }
-
-    public void setLng(double mLng) {
-        this.mLng = mLng;
     }
 
     @NonNull
@@ -112,22 +96,6 @@ public class PlacesSearch implements Serializable {
         this.mPhoto = mPhoto;
     }
 
-    public boolean isIsLastSearch() {
-        return mIsLastSearch;
-    }
-
-    public void setIsLastSearch(boolean mIsLastSearch) {
-        this.mIsLastSearch = mIsLastSearch;
-    }
-
-    public boolean isIsFavorite() {
-        return mIsFavorite;
-    }
-
-    public void setIsFavorite(boolean mIsFavorite) {
-        this.mIsFavorite = mIsFavorite;
-    }
-
     @NonNull
     public String getDistance() {
         return mDistance;
@@ -135,6 +103,22 @@ public class PlacesSearch implements Serializable {
 
     public void setDistance(@NonNull String mDistance) {
         this.mDistance = mDistance;
+    }
+
+    public double getLat() {
+        return mLat;
+    }
+
+    public void setLat(double mLat) {
+        this.mLat = mLat;
+    }
+
+    public double getLng() {
+        return mLng;
+    }
+
+    public void setLng(double mLng) {
+        this.mLng = mLng;
     }
 
     public double getRating() {
@@ -151,6 +135,22 @@ public class PlacesSearch implements Serializable {
 
     public void setUser_ratings_total(int mUser_ratings_total) {
         this.mUser_ratings_total = mUser_ratings_total;
+    }
+
+    public boolean isIsLastSearch() {
+        return mIsLastSearch;
+    }
+
+    public void setIsLastSearch(boolean mIsLastSearch) {
+        this.mIsLastSearch = mIsLastSearch;
+    }
+
+    public boolean isIsFavorite() {
+        return mIsFavorite;
+    }
+
+    public void setIsFavorite(boolean mIsFavorite) {
+        this.mIsFavorite = mIsFavorite;
     }
 
 }
