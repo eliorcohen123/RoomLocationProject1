@@ -34,17 +34,14 @@ public class PlacesSearch implements Serializable {
     @ColumnInfo(name = "name")
     private String mName;
 
-    @ColumnInfo(name = "lat")
-    private double mLat;
-
-    @ColumnInfo(name = "lng")
-    private double mLng;
-
     @ColumnInfo(name = "address")
     private String mAddress;
 
     @ColumnInfo(name = "photo")
     private String mPhoto;
+
+    @ColumnInfo(name = "distance")
+    private String mDistance;
 
     @ColumnInfo(name = "isLastSearch")
     private boolean mIsLastSearch;
@@ -52,15 +49,17 @@ public class PlacesSearch implements Serializable {
     @ColumnInfo(name = "isFavorite")
     private boolean mIsFavorite;
 
-    @ColumnInfo(name = "distance")
-    private String mDistance;
+    @ColumnInfo(name = "lat")
+    private double mLat;
+
+    @ColumnInfo(name = "lng")
+    private double mLng;
 
     @ColumnInfo(name = "rating")
     private double mRating;
 
     @ColumnInfo(name = "user_ratings_total")
     private int mUser_ratings_total;
-
 
     public long getID() {
         return ID;

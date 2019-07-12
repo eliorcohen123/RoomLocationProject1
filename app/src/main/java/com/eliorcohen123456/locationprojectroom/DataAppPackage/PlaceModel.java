@@ -8,12 +8,12 @@ public class PlaceModel implements Serializable {
     private String id;
     private String name;
     private String vicinity;
-    private Geometry geometry;
-    private List<Photos> photos;
     private String distance;
-    private OpeningHours opening_hours;
     private double rating;
     private int user_ratings_total;
+    private List<Photos> photos;
+    private Geometry geometry;
+    private OpeningHours opening_hours;
 
     public String getId() {
         return id;
