@@ -94,7 +94,10 @@ public class NetWorkDataProviderSearch {
                 location = locationManager.getLastKnownLocation(provider);
                 // Search maps from that URL and put them in the SQLiteHelper
                 if (location != null) {
-                    urlQuery = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + location.getLatitude() + "," + location.getLongitude() + "&radius=" + urls[1] + "&rankby=prominence&types=" + urls[2] + "&keyword=" + urls[0] + "&key=" + NearByApplication.getApplication().getString(R.string.api_key_search);
+                    urlQuery = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="
+                            + location.getLatitude() + "," + location.getLongitude() + "&radius=" + urls[1] +
+                            "&rankby=prominence&types=" + urls[2] + "&keyword=" + urls[0] + "&key=" +
+                            NearByApplication.getApplication().getString(R.string.api_key_search);
                     Request request = new Request.Builder()
                             .url(urlQuery)
                             .build();
@@ -144,12 +147,14 @@ public class NetWorkDataProviderSearch {
         }
 
         public class LocationResponse {
+
             private List<PlaceModel> results;
 
             // public constructor is necessary for collections
             public LocationResponse() {
                 results = new ArrayList<PlaceModel>();
             }
+
         }
 
         @Override
