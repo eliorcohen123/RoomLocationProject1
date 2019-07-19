@@ -169,6 +169,7 @@ public class NetWorkDataProviderSearch {
             if (diagonalInches <= 6.5) {
                 FragmentSearch.stopShowingProgressBar();
             }
+
             try {
                 iPlacesDataReceived_.onPlacesDataReceived(mPlaceModels);
             } catch (Exception e) {
