@@ -60,6 +60,7 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
     private static FragmentSearch mFragmentSearch;
     private PlacesListAdapterSearch mAdapterSearch;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private ItemDecoration itemDecoration;
     private Button btnBank, btnBar, btnBeauty, btnBooks, btnBusStation, btnCars, btnClothing, btnDoctor, btnGasStation,
             btnGym, btnJewelry, btnPark, btnRestaurant, btnSchool, btnSpa;
     private NetWorkDataProviderSearch dataProviderSearch;
@@ -122,7 +123,7 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             mAdapterSearch = new PlacesListAdapterSearch(getContext());
             recyclerView.setAdapter(mAdapterSearch);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            ItemDecoration itemDecoration = new ItemDecoration(20);
+            itemDecoration = new ItemDecoration(20);
             recyclerView.addItemDecoration(itemDecoration);
         } catch (Exception e) {
 

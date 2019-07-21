@@ -52,6 +52,7 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
     private FragmentFavorites fragmentFavorites;
     private Toolbar toolbar;
     private NavigationView navigationView;
+    private ItemDecoration itemDecoration;
     private NetWorkDataProviderFavorites netWorkDataProviderFavorites;
 
     @Nullable
@@ -116,7 +117,7 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
             mAdapterFavorites = new PlacesListAdapterFavorites(getContext());
             recyclerView.setAdapter(mAdapterFavorites);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            ItemDecoration itemDecoration = new ItemDecoration(20);
+            itemDecoration = new ItemDecoration(20);
             recyclerView.addItemDecoration(itemDecoration);
         } catch (Exception e) {
 
