@@ -316,7 +316,7 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    getMyQuery(query);
+                    getQuery(query);
                     return true;
                 }
 
@@ -358,7 +358,7 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
         }
     }
 
-    private void getMyQuery(String query) {
+    private void getQuery(String query) {
         if (!isConnected(getContext())) {
             dataProviderHistory.getPlacesByLocation(mFragmentSearch);
             buildDialog(getContext()).show();
