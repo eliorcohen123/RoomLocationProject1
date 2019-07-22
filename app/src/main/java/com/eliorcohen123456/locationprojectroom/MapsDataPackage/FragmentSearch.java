@@ -169,274 +169,112 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
     }
 
     private void getTypeSearch() {
-        if (!isConnected(getContext())) {
-            dataProviderHistory.getPlacesByLocation(mFragmentSearch);
-            buildDialog(getContext()).show();
-        } else {
-            myRadius = prefsSeek.getInt("seek", 5000);
-
-            editorQuery.putString("mystringquery", "");
-            editorType.putString("mystringtype", "");
-
-            dataProviderSearch.getPlacesByLocation("", myRadius, "", mFragmentSearch);
-        }
+        getTypeQuery("");
 
         btnBank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isConnected(getContext())) {
-                    dataProviderHistory.getPlacesByLocation(mFragmentSearch);
-                    buildDialog(getContext()).show();
-                } else {
-                    myRadius = prefsSeek.getInt("seek", 5000);
-
-                    editorQuery.putString("mystringquery", "");
-                    editorType.putString("mystringtype", "bank");
-
-                    dataProviderSearch.getPlacesByLocation("", myRadius, "bank", mFragmentSearch);
-                }
+                getTypeQuery("bank");
             }
         });
 
         btnBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isConnected(getContext())) {
-                    dataProviderHistory.getPlacesByLocation(mFragmentSearch);
-                    buildDialog(getContext()).show();
-                } else {
-                    myRadius = prefsSeek.getInt("seek", 5000);
-
-                    editorQuery.putString("mystringquery", "");
-                    editorType.putString("mystringtype", "bar|night_club");
-
-                    dataProviderSearch.getPlacesByLocation("", myRadius, "bar|night_club", mFragmentSearch);
-                }
+                getTypeQuery("bar|night_club");
             }
         });
 
         btnBeauty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isConnected(getContext())) {
-                    dataProviderHistory.getPlacesByLocation(mFragmentSearch);
-                    buildDialog(getContext()).show();
-                } else {
-                    myRadius = prefsSeek.getInt("seek", 5000);
-
-                    editorQuery.putString("mystringquery", "");
-                    editorType.putString("mystringtype", "beauty_salon|hair_care");
-
-                    dataProviderSearch.getPlacesByLocation("", myRadius, "beauty_salon|hair_care", mFragmentSearch);
-                }
+                getTypeQuery("beauty_salon|hair_care");
             }
         });
 
         btnBooks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isConnected(getContext())) {
-                    dataProviderHistory.getPlacesByLocation(mFragmentSearch);
-                    buildDialog(getContext()).show();
-                } else {
-                    myRadius = prefsSeek.getInt("seek", 5000);
-
-                    editorQuery.putString("mystringquery", "");
-                    editorType.putString("mystringtype", "book_store|library");
-
-                    dataProviderSearch.getPlacesByLocation("", myRadius, "book_store|library", mFragmentSearch);
-                }
+                getTypeQuery("book_store|library");
             }
         });
 
         btnBusStation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isConnected(getContext())) {
-                    dataProviderHistory.getPlacesByLocation(mFragmentSearch);
-                    buildDialog(getContext()).show();
-                } else {
-                    myRadius = prefsSeek.getInt("seek", 5000);
-
-                    editorQuery.putString("mystringquery", "");
-                    editorType.putString("mystringtype", "bus_station");
-
-                    dataProviderSearch.getPlacesByLocation("", myRadius, "bus_station", mFragmentSearch);
-                }
+                getTypeQuery("bus_station");
             }
         });
 
         btnCars.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isConnected(getContext())) {
-                    dataProviderHistory.getPlacesByLocation(mFragmentSearch);
-                    buildDialog(getContext()).show();
-                } else {
-                    myRadius = prefsSeek.getInt("seek", 5000);
-
-                    editorQuery.putString("mystringquery", "");
-                    editorType.putString("mystringtype", "car_dealer|car_rental|car_repair|car_wash");
-
-                    dataProviderSearch.getPlacesByLocation("", myRadius, "car_dealer|car_rental|car_repair|car_wash", mFragmentSearch);
-                }
+                getTypeQuery("car_dealer|car_rental|car_repair|car_wash");
             }
         });
 
         btnClothing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isConnected(getContext())) {
-                    dataProviderHistory.getPlacesByLocation(mFragmentSearch);
-                    buildDialog(getContext()).show();
-                } else {
-                    myRadius = prefsSeek.getInt("seek", 5000);
-
-                    editorQuery.putString("mystringquery", "");
-                    editorType.putString("mystringtype", "clothing_store");
-
-                    dataProviderSearch.getPlacesByLocation("", myRadius, "clothing_store", mFragmentSearch);
-                }
+                getTypeQuery("clothing_store");
             }
         });
 
         btnDoctor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isConnected(getContext())) {
-                    dataProviderHistory.getPlacesByLocation(mFragmentSearch);
-                    buildDialog(getContext()).show();
-                } else {
-                    myRadius = prefsSeek.getInt("seek", 5000);
-
-                    editorQuery.putString("mystringquery", "");
-                    editorType.putString("mystringtype", "doctor");
-
-                    dataProviderSearch.getPlacesByLocation("", myRadius, "doctor", mFragmentSearch);
-                }
+                getTypeQuery("doctor");
             }
         });
 
         btnGasStation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isConnected(getContext())) {
-                    dataProviderHistory.getPlacesByLocation(mFragmentSearch);
-                    buildDialog(getContext()).show();
-                } else {
-                    myRadius = prefsSeek.getInt("seek", 5000);
-
-                    editorQuery.putString("mystringquery", "");
-                    editorType.putString("mystringtype", "gas_station");
-
-                    dataProviderSearch.getPlacesByLocation("", myRadius, "gas_station", mFragmentSearch);
-                }
+                getTypeQuery("gas_station");
             }
         });
 
         btnGym.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isConnected(getContext())) {
-                    dataProviderHistory.getPlacesByLocation(mFragmentSearch);
-                    buildDialog(getContext()).show();
-                } else {
-                    myRadius = prefsSeek.getInt("seek", 5000);
-
-                    editorQuery.putString("mystringquery", "");
-                    editorType.putString("mystringtype", "gym");
-
-                    dataProviderSearch.getPlacesByLocation("", myRadius, "gym", mFragmentSearch);
-                }
+                getTypeQuery("gym");
             }
         });
 
         btnJewelry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isConnected(getContext())) {
-                    dataProviderHistory.getPlacesByLocation(mFragmentSearch);
-                    buildDialog(getContext()).show();
-                } else {
-                    myRadius = prefsSeek.getInt("seek", 5000);
-
-                    editorQuery.putString("mystringquery", "");
-                    editorType.putString("mystringtype", "jewelry_store");
-
-                    dataProviderSearch.getPlacesByLocation("", myRadius, "jewelry_store", mFragmentSearch);
-                }
+                getTypeQuery("jewelry_store");
             }
         });
 
         btnPark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isConnected(getContext())) {
-                    dataProviderHistory.getPlacesByLocation(mFragmentSearch);
-                    buildDialog(getContext()).show();
-                } else {
-                    myRadius = prefsSeek.getInt("seek", 5000);
-
-                    editorQuery.putString("mystringquery", "");
-                    editorType.putString("mystringtype", "park|amusement_park|parking|rv_park");
-
-                    dataProviderSearch.getPlacesByLocation("", myRadius, "park|amusement_park|parking|rv_park", mFragmentSearch);
-                }
+                getTypeQuery("park|amusement_park|parking|rv_park");
             }
         });
 
         btnRestaurant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isConnected(getContext())) {
-                    dataProviderHistory.getPlacesByLocation(mFragmentSearch);
-                    buildDialog(getContext()).show();
-                } else {
-                    myRadius = prefsSeek.getInt("seek", 5000);
-
-                    editorQuery.putString("mystringquery", "");
-                    editorType.putString("mystringtype", "food|restaurant|cafe|bakery");
-
-                    dataProviderSearch.getPlacesByLocation("", myRadius, "food|restaurant|cafe|bakery", mFragmentSearch);
-                }
+                getTypeQuery("food|restaurant|cafe|bakery");
             }
         });
 
         btnSchool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isConnected(getContext())) {
-                    dataProviderHistory.getPlacesByLocation(mFragmentSearch);
-                    buildDialog(getContext()).show();
-                } else {
-                    myRadius = prefsSeek.getInt("seek", 5000);
-
-                    editorQuery.putString("mystringquery", "");
-                    editorType.putString("mystringtype", "school");
-
-                    dataProviderSearch.getPlacesByLocation("", myRadius, "school", mFragmentSearch);
-                }
+                getTypeQuery("school");
             }
         });
 
         btnSpa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isConnected(getContext())) {
-                    dataProviderHistory.getPlacesByLocation(mFragmentSearch);
-                    buildDialog(getContext()).show();
-                } else {
-                    myRadius = prefsSeek.getInt("seek", 5000);
-
-                    editorQuery.putString("mystringquery", "");
-                    editorType.putString("mystringtype", "spa");
-
-                    dataProviderSearch.getPlacesByLocation("", myRadius, "spa", mFragmentSearch);
-                }
+                getTypeQuery("spa");
             }
         });
-        editorQuery.apply();
-        editorType.apply();
     }
 
     // Sets off the menu of activity_menu
@@ -470,7 +308,7 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
         });
 
         // Continued of SearchView of FragmentSearch
-        final android.support.v7.widget.SearchView searchView = (android.support.v7.widget.SearchView) menuItem.getActionView();
+        android.support.v7.widget.SearchView searchView = (android.support.v7.widget.SearchView) menuItem.getActionView();
         if (searchView != null) {
             searchView.setSearchableInfo(searchManager.getSearchableInfo((getActivity()).getComponentName()));
             searchView.setQueryHint(Html.fromHtml("<font color = #FFEA54>" + getResources().getString(R.string.hint) + "</font>"));
@@ -478,18 +316,7 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    if (!isConnected(getContext())) {
-                        dataProviderHistory.getPlacesByLocation(mFragmentSearch);
-                        buildDialog(getContext()).show();
-                    } else {
-                        editorQuery.putString("mystringquery", query);
-                        editorQuery.apply();
-
-                        editorType.putString("mystringtype", "");
-                        editorType.apply();
-
-                        dataProviderSearch.getPlacesByLocation(query, 50000.0, "", mFragmentSearch);
-                    }
+                    getMyQuery(query);
                     return true;
                 }
 
@@ -508,23 +335,42 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             case R.id.action_search:
                 break;
             case R.id.nearByMe:
-                if (!isConnected(getContext())) {
-                    dataProviderHistory.getPlacesByLocation(mFragmentSearch);
-                    buildDialog(getContext()).show();
-                } else {
-                    myRadius = prefsSeek.getInt("seek", 5000);
-
-                    editorQuery.putString("mystringquery", "");
-                    editorQuery.apply();
-
-                    editorType.putString("mystringtype", "");
-                    editorType.apply();
-
-                    dataProviderSearch.getPlacesByLocation("", myRadius, "", mFragmentSearch);
-                }
+                getTypeQuery("");
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void getTypeQuery(String type) {
+        if (!isConnected(getContext())) {
+            dataProviderHistory.getPlacesByLocation(mFragmentSearch);
+            buildDialog(getContext()).show();
+        } else {
+            myRadius = prefsSeek.getInt("seek", 5000);
+
+            editorQuery.putString("mystringquery", type);
+            editorQuery.apply();
+
+            editorType.putString("mystringtype", "");
+            editorType.apply();
+
+            dataProviderSearch.getPlacesByLocation("", myRadius, type, mFragmentSearch);
+        }
+    }
+
+    private void getMyQuery(String query) {
+        if (!isConnected(getContext())) {
+            dataProviderHistory.getPlacesByLocation(mFragmentSearch);
+            buildDialog(getContext()).show();
+        } else {
+            editorQuery.putString("mystringquery", query);
+            editorQuery.apply();
+
+            editorType.putString("mystringtype", "");
+            editorType.apply();
+
+            dataProviderSearch.getPlacesByLocation(query, 50000.0, "", mFragmentSearch);
+        }
     }
 
     // Check network
