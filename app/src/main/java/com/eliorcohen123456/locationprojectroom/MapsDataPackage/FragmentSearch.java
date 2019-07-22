@@ -169,110 +169,110 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
     }
 
     private void getTypeSearch() {
-        getType("");
+        getTypeQuery("", "");
 
         btnBank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getType("bank");
+                getTypeQuery("bank", "");
             }
         });
 
         btnBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getType("bar|night_club");
+                getTypeQuery("bar|night_club", "");
             }
         });
 
         btnBeauty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getType("beauty_salon|hair_care");
+                getTypeQuery("beauty_salon|hair_care", "");
             }
         });
 
         btnBooks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getType("book_store|library");
+                getTypeQuery("book_store|library", "");
             }
         });
 
         btnBusStation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getType("bus_station");
+                getTypeQuery("bus_station", "");
             }
         });
 
         btnCars.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getType("car_dealer|car_rental|car_repair|car_wash");
+                getTypeQuery("car_dealer|car_rental|car_repair|car_wash", "");
             }
         });
 
         btnClothing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getType("clothing_store");
+                getTypeQuery("clothing_store", "");
             }
         });
 
         btnDoctor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getType("doctor");
+                getTypeQuery("doctor", "");
             }
         });
 
         btnGasStation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getType("gas_station");
+                getTypeQuery("gas_station", "");
             }
         });
 
         btnGym.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getType("gym");
+                getTypeQuery("gym", "");
             }
         });
 
         btnJewelry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getType("jewelry_store");
+                getTypeQuery("jewelry_store", "");
             }
         });
 
         btnPark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getType("park|amusement_park|parking|rv_park");
+                getTypeQuery("park|amusement_park|parking|rv_park", "");
             }
         });
 
         btnRestaurant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getType("food|restaurant|cafe|bakery");
+                getTypeQuery("food|restaurant|cafe|bakery", "");
             }
         });
 
         btnSchool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getType("school");
+                getTypeQuery("school", "");
             }
         });
 
         btnSpa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getType("spa");
+                getTypeQuery("spa", "");
             }
         });
     }
@@ -316,7 +316,7 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    getQuery(query);
+                    getTypeQuery("", query);
                     return true;
                 }
 
@@ -335,41 +335,30 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             case R.id.action_search:
                 break;
             case R.id.nearByMe:
-                getType("");
+                getTypeQuery("", "");
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void getType(String type) {
+    private void getTypeQuery(String type, String query) {
         if (!isConnected(getContext())) {
             dataProviderHistory.getPlacesByLocation(mFragmentSearch);
             buildDialog(getContext()).show();
         } else {
-            myRadius = prefsSeek.getInt("seek", 5000);
+            if (query.equals("")) {
+                myRadius = prefsSeek.getInt("seek", 5000);
+            } else {
+                myRadius = 50000;
+            }
 
-            editorQuery.putString("mystringquery", type);
-            editorQuery.apply();
-
-            editorType.putString("mystringtype", "");
-            editorType.apply();
-
-            dataProviderSearch.getPlacesByLocation("", myRadius, type, mFragmentSearch);
-        }
-    }
-
-    private void getQuery(String query) {
-        if (!isConnected(getContext())) {
-            dataProviderHistory.getPlacesByLocation(mFragmentSearch);
-            buildDialog(getContext()).show();
-        } else {
             editorQuery.putString("mystringquery", query);
             editorQuery.apply();
 
-            editorType.putString("mystringtype", "");
+            editorType.putString("mystringtype", type);
             editorType.apply();
 
-            dataProviderSearch.getPlacesByLocation(query, 50000.0, "", mFragmentSearch);
+            dataProviderSearch.getPlacesByLocation(query, myRadius, type, mFragmentSearch);
         }
     }
 
