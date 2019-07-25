@@ -283,197 +283,25 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                                         moovit.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                                                try {
-                                                    PackageManager pm = getActivity().getPackageManager();
-                                                    pm.getPackageInfo("com.tranzmate", PackageManager.GET_ACTIVITIES);
-                                                    String uri = "moovit://directions?dest_lat=" + placesFavorites.get(finalI1).getLat() + "&dest_lon=" + placesFavorites.get(finalI1).getLng() + "&dest_name=" + placesFavorites.get(finalI1).getName() + "&orig_lat=" + location.getLatitude() + "&orig_lon=" + location.getLongitude() + "&orig_name=Your current location&auto_run=true&partner_id=Room Lovely Favorites Places";
-                                                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                                                    intent.setData(Uri.parse(uri));
-                                                    startActivity(intent);
-                                                } catch (PackageManager.NameNotFoundException e) {
-                                                    String url = "http://app.appsflyer.com/com.tranzmate?pid=DL&c=Room Lovely Favorites Places";
-                                                    Intent i = new Intent(Intent.ACTION_VIEW);
-                                                    i.setData(Uri.parse(url));
-                                                    startActivity(i);
-                                                }
+                                                getMoovit(placesFavorites.get(finalI1).getLat(), placesFavorites.get(finalI1).getLng(), placesFavorites.get(finalI1).getName(), location.getLatitude(), location.getLongitude());
                                             }
                                         });
 
                                         gett.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                                                if (isPackageInstalled(getContext(), "com.gettaxi.android")) {
-                                                    String link = "gett://order?pickup=my_location&dropoff_latitude=" + placesFavorites.get(finalI1).getLat() + "&dropoff_longitude=" + placesFavorites.get(finalI1).getLng() + "&product_id=0c1202f8-6c43-4330-9d8a-3b4fa66505fd";
-                                                    Intent playStoreIntent = new Intent(Intent.ACTION_VIEW);
-                                                    playStoreIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                    playStoreIntent.setData(Uri.parse(link));
-                                                    getActivity().startActivity(playStoreIntent);
-                                                } else {
-                                                    String link = "https://play.google.com/store/apps/details?id=" + "com.gettaxi.android";
-                                                    Intent playStoreIntent = new Intent(Intent.ACTION_VIEW);
-                                                    playStoreIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                    playStoreIntent.setData(Uri.parse(link));
-                                                    getActivity().startActivity(playStoreIntent);
-                                                }
+                                                getGetTaxi(placesFavorites.get(finalI1).getLat(), placesFavorites.get(finalI1).getLng());
                                             }
                                         });
 
                                         waze.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                                                try {
-                                                    String url = "https://www.waze.com/ul?ll=" + placesFavorites.get(finalI1).getLat() + "%2C" + placesFavorites.get(finalI1).getLng() + "&navigate=yes&zoom=17";
-                                                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                                                    startActivity(intent);
-                                                } catch (ActivityNotFoundException ex) {
-                                                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.waze"));
-                                                    startActivity(intent);
-                                                }
+                                                getWaze(placesFavorites.get(finalI1).getLat(), placesFavorites.get(finalI1).getLng());
                                             }
                                         });
 
-                                        locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
-                                        criteria = new Criteria();
-                                        String provider2 = locationManager.getBestProvider(criteria, true);
-                                        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                                            ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
-                                        }// TODO: Consider calling
-//    ActivityCompat#requestPermissions
-// here to request the missing permissions, and then overriding
-//   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//                                          int[] grantResults)
-// to handle the case where the user grants the permission. See the documentation
-// for ActivityCompat#requestPermissions for more details.
-                                        if (provider2 != null) {
-                                            location = locationManager.getLastKnownLocation(provider2);
-                                            if (location != null) {
-                                                PlacesFavorites info = new PlacesFavorites();
-                                                double distanceMe;
-                                                Location locationA = new Location("Point A");
-                                                locationA.setLatitude(placesFavorites.get(finalI1).getLat());
-                                                locationA.setLongitude(placesFavorites.get(finalI1).getLng());
-                                                Location locationB = new Location("Point B");
-                                                locationB.setLatitude(location.getLatitude());
-                                                locationB.setLongitude(location.getLongitude());
-                                                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-                                                String result = prefs.getString("myKm", "1000.0");
-                                                double val = Double.parseDouble(result);
-                                                distanceMe = locationA.distanceTo(locationB) / val;
-
-                                                String distanceKm1;
-                                                String disMile;
-                                                if (val == 1000.0) {
-                                                    if (distanceMe < 1) {
-                                                        int dis = (int) (distanceMe * 1000);
-                                                        distanceKm1 = "\n" + "Meters: " + String.valueOf(dis);
-                                                        info.setName(placesFavorites.get(finalI1).getName());
-                                                        info.setAddress(placesFavorites.get(finalI1).getAddress());
-                                                        info.setDistance(distanceKm1);
-                                                    } else if (distanceMe >= 1) {
-                                                        String disM = String.format("%.2f", distanceMe);
-                                                        distanceKm1 = "\n" + "Km: " + String.valueOf(disM);
-                                                        info.setName(placesFavorites.get(finalI1).getName());
-                                                        info.setAddress(placesFavorites.get(finalI1).getAddress());
-                                                        info.setDistance(distanceKm1);
-                                                    }
-                                                } else if (val == 1609.344) {
-                                                    String distanceMile1 = String.format("%.2f", distanceMe);
-                                                    disMile = "\n" + "Miles: " + String.valueOf(distanceMile1);
-                                                    info.setName(placesFavorites.get(finalI1).getName());
-                                                    info.setAddress(placesFavorites.get(finalI1).getAddress());
-                                                    info.setDistance(disMile);
-                                                }
-
-                                                CustomInfoWindowGoogleMapFavorites customInfoWindow = new CustomInfoWindowGoogleMapFavorites(getActivity());
-                                                mGoogleMap.setInfoWindowAdapter(customInfoWindow);
-
-                                                marker.setTag(info);
-                                                marker.showInfoWindow();
-                                            }
-                                        }
-
-                                        Toast.makeText(getContext(), placesFavorites.get(finalI1).getName(), Toast.LENGTH_LONG).show();
-
-                                        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-                                        criteria = new Criteria();
-                                        String provider = locationManager.getBestProvider(criteria, true);
-                                        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                                                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                                            // TODO: Consider calling
-                                            //    ActivityCompat#requestPermissions
-                                            // here to request the missing permissions, and then overriding
-                                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                            //                                          int[] grantResults)
-                                            // to handle the case where the user grants the permission. See the documentation
-                                            // for ActivityCompat#requestPermissions for more details.
-                                        }
-                                        if (provider != null) {
-                                            location = locationManager.getLastKnownLocation(provider);
-                                            if (location != null) {
-                                                double lat = location.getLatitude();
-                                                double lng = location.getLongitude();
-                                                String lat1 = String.valueOf(lat);
-                                                String lng1 = String.valueOf(lng);
-
-                                                //Define list to get all latLng for the route
-                                                ArrayList<LatLng> path = new ArrayList<LatLng>();
-
-                                                //Execute Directions API request
-                                                GeoApiContext context = new GeoApiContext.Builder()
-                                                        .apiKey(getString(R.string.api_key_search))
-                                                        .build();
-                                                DirectionsApiRequest req = DirectionsApi.getDirections(context, lat1 + ", " + lng1, placesFavorites.get(finalI1).getLat() + ", " + placesFavorites.get(finalI1).getLng());
-                                                try {
-                                                    DirectionsResult res = req.await();
-
-                                                    //Loop through legs and steps to get encoded polyLines of each step
-                                                    if (res.routes != null && res.routes.length > 0) {
-                                                        DirectionsRoute route = res.routes[0];
-
-                                                        if (route.legs != null) {
-                                                            for (int i = 0; i < route.legs.length; i++) {
-                                                                DirectionsLeg leg = route.legs[i];
-                                                                if (leg.steps != null) {
-                                                                    for (int j = 0; j < leg.steps.length; j++) {
-                                                                        DirectionsStep step = leg.steps[j];
-                                                                        if (step.steps != null && step.steps.length > 0) {
-                                                                            for (int k = 0; k < step.steps.length; k++) {
-                                                                                DirectionsStep step1 = step.steps[k];
-                                                                                EncodedPolyline points1 = step1.polyline;
-                                                                                if (points1 != null) {
-                                                                                    //Decode polyline and add points to list of route coordinates
-                                                                                    List<com.google.maps.model.LatLng> coords1 = points1.decodePath();
-                                                                                    for (com.google.maps.model.LatLng coord1 : coords1) {
-                                                                                        path.add(new LatLng(coord1.lat, coord1.lng));
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        } else {
-                                                                            EncodedPolyline points = step.polyline;
-                                                                            if (points != null) {
-                                                                                //Decode polyline and add points to list of route coordinates
-                                                                                List<com.google.maps.model.LatLng> coords = points.decodePath();
-                                                                                for (com.google.maps.model.LatLng coord : coords) {
-                                                                                    path.add(new LatLng(coord.lat, coord.lng));
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                } catch (Exception e) {
-                                                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                                                }
-
-                                                //Draw the polyline
-                                                if (path.size() > 0) {
-                                                    PolylineOptions opts = new PolylineOptions().addAll(path).color(Color.rgb(255, 255, 204)).width(5);
-                                                    mGoogleMap.addPolyline(opts);
-                                                }
-                                            }
-                                        }
+                                        getNavigation(placesFavorites.get(finalI1).getLat(), placesFavorites.get(finalI1).getLng(), placesFavorites.get(finalI1).getName(), placesFavorites.get(finalI1).getAddress(), marker);
                                     } catch (Exception e) {
 
                                     }
@@ -483,197 +311,25 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                                         moovit.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                                                try {
-                                                    PackageManager pm = getActivity().getPackageManager();
-                                                    pm.getPackageInfo("com.tranzmate", PackageManager.GET_ACTIVITIES);
-                                                    String uri = "moovit://directions?dest_lat=" + placeModelFavorites.getLat() + "&dest_lon=" + placeModelFavorites.getLng() + "&dest_name=" + placeModelFavorites.getName() + "&orig_lat=" + location.getLatitude() + "&orig_lon=" + location.getLongitude() + "&orig_name=Your current location&auto_run=true&partner_id=Room Lovely Favorites Places";
-                                                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                                                    intent.setData(Uri.parse(uri));
-                                                    startActivity(intent);
-                                                } catch (PackageManager.NameNotFoundException e) {
-                                                    String url = "http://app.appsflyer.com/com.tranzmate?pid=DL&c=Room Lovely Favorites Places";
-                                                    Intent i = new Intent(Intent.ACTION_VIEW);
-                                                    i.setData(Uri.parse(url));
-                                                    startActivity(i);
-                                                }
+                                                getMoovit(placeModelFavorites.getLat(), placeModelFavorites.getLng(), placeModelFavorites.getName(), location.getLatitude(), location.getLongitude());
                                             }
                                         });
 
                                         gett.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                                                if (isPackageInstalled(getContext(), "com.gettaxi.android")) {
-                                                    String link = "gett://order?pickup=my_location&dropoff_latitude=" + placeModelFavorites.getLat() + "&dropoff_longitude=" + placeModelFavorites.getLng() + "&product_id=0c1202f8-6c43-4330-9d8a-3b4fa66505fd";
-                                                    Intent playStoreIntent = new Intent(Intent.ACTION_VIEW);
-                                                    playStoreIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                    playStoreIntent.setData(Uri.parse(link));
-                                                    getActivity().startActivity(playStoreIntent);
-                                                } else {
-                                                    String link = "https://play.google.com/store/apps/details?id=" + "com.gettaxi.android";
-                                                    Intent playStoreIntent = new Intent(Intent.ACTION_VIEW);
-                                                    playStoreIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                    playStoreIntent.setData(Uri.parse(link));
-                                                    getActivity().startActivity(playStoreIntent);
-                                                }
+                                                getGetTaxi(placeModelFavorites.getLat(), placeModelFavorites.getLng());
                                             }
                                         });
 
                                         waze.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                                                try {
-                                                    String url = "https://www.waze.com/ul?ll=" + placeModelFavorites.getLat() + "%2C" + placeModelFavorites.getLng() + "&navigate=yes&zoom=17";
-                                                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                                                    startActivity(intent);
-                                                } catch (ActivityNotFoundException ex) {
-                                                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.waze"));
-                                                    startActivity(intent);
-                                                }
+                                                getWaze(placeModelFavorites.getLat(), placeModelFavorites.getLng());
                                             }
                                         });
 
-                                        locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
-                                        criteria = new Criteria();
-                                        String provider2 = locationManager.getBestProvider(criteria, true);
-                                        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                                            ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
-                                        }// TODO: Consider calling
-//    ActivityCompat#requestPermissions
-// here to request the missing permissions, and then overriding
-//   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//                                          int[] grantResults)
-// to handle the case where the user grants the permission. See the documentation
-// for ActivityCompat#requestPermissions for more details.
-                                        if (provider2 != null) {
-                                            location = locationManager.getLastKnownLocation(provider2);
-                                            if (location != null) {
-                                                PlacesFavorites info = new PlacesFavorites();
-                                                double distanceMe;
-                                                Location locationA = new Location("Point A");
-                                                locationA.setLatitude(placeModelFavorites.getLat());
-                                                locationA.setLongitude(placeModelFavorites.getLng());
-                                                Location locationB = new Location("Point B");
-                                                locationB.setLatitude(location.getLatitude());
-                                                locationB.setLongitude(location.getLongitude());
-                                                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-                                                String result = prefs.getString("myKm", "1000.0");
-                                                double val = Double.parseDouble(result);
-                                                distanceMe = locationA.distanceTo(locationB) / val;
-
-                                                String distanceKm1;
-                                                String disMile;
-                                                if (val == 1000.0) {
-                                                    if (distanceMe < 1) {
-                                                        int dis = (int) (distanceMe * 1000);
-                                                        distanceKm1 = "\n" + "Meters: " + String.valueOf(dis);
-                                                        info.setName(placeModelFavorites.getName());
-                                                        info.setAddress(placeModelFavorites.getAddress());
-                                                        info.setDistance(distanceKm1);
-                                                    } else if (distanceMe >= 1) {
-                                                        String disM = String.format("%.2f", distanceMe);
-                                                        distanceKm1 = "\n" + "Km: " + String.valueOf(disM);
-                                                        info.setName(placeModelFavorites.getName());
-                                                        info.setAddress(placeModelFavorites.getAddress());
-                                                        info.setDistance(distanceKm1);
-                                                    }
-                                                } else if (val == 1609.344) {
-                                                    String distanceMile1 = String.format("%.2f", distanceMe);
-                                                    disMile = "\n" + "Miles: " + String.valueOf(distanceMile1);
-                                                    info.setName(placeModelFavorites.getName());
-                                                    info.setAddress(placeModelFavorites.getAddress());
-                                                    info.setDistance(disMile);
-                                                }
-
-                                                CustomInfoWindowGoogleMapFavorites customInfoWindow = new CustomInfoWindowGoogleMapFavorites(getActivity());
-                                                mGoogleMap.setInfoWindowAdapter(customInfoWindow);
-
-                                                marker.setTag(info);
-                                                marker.showInfoWindow();
-                                            }
-                                        }
-
-                                        Toast.makeText(getContext(), placeModelFavorites.getName(), Toast.LENGTH_LONG).show();
-
-                                        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-                                        criteria = new Criteria();
-                                        String provider = locationManager.getBestProvider(criteria, true);
-                                        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                                                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                                            // TODO: Consider calling
-                                            //    ActivityCompat#requestPermissions
-                                            // here to request the missing permissions, and then overriding
-                                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                            //                                          int[] grantResults)
-                                            // to handle the case where the user grants the permission. See the documentation
-                                            // for ActivityCompat#requestPermissions for more details.
-                                        }
-                                        if (provider != null) {
-                                            location = locationManager.getLastKnownLocation(provider);
-                                            if (location != null) {
-                                                double lat = location.getLatitude();
-                                                double lng = location.getLongitude();
-                                                String lat1 = String.valueOf(lat);
-                                                String lng1 = String.valueOf(lng);
-
-                                                //Define list to get all latLng for the route
-                                                ArrayList<LatLng> path = new ArrayList<LatLng>();
-
-                                                //Execute Directions API request
-                                                GeoApiContext context = new GeoApiContext.Builder()
-                                                        .apiKey(getString(R.string.api_key_search))
-                                                        .build();
-                                                DirectionsApiRequest req = DirectionsApi.getDirections(context, lat1 + ", " + lng1, placeModelFavorites.getLat() + ", " + placeModelFavorites.getLng());
-                                                try {
-                                                    DirectionsResult res = req.await();
-
-                                                    //Loop through legs and steps to get encoded polyLines of each step
-                                                    if (res.routes != null && res.routes.length > 0) {
-                                                        DirectionsRoute route = res.routes[0];
-
-                                                        if (route.legs != null) {
-                                                            for (int i = 0; i < route.legs.length; i++) {
-                                                                DirectionsLeg leg = route.legs[i];
-                                                                if (leg.steps != null) {
-                                                                    for (int j = 0; j < leg.steps.length; j++) {
-                                                                        DirectionsStep step = leg.steps[j];
-                                                                        if (step.steps != null && step.steps.length > 0) {
-                                                                            for (int k = 0; k < step.steps.length; k++) {
-                                                                                DirectionsStep step1 = step.steps[k];
-                                                                                EncodedPolyline points1 = step1.polyline;
-                                                                                if (points1 != null) {
-                                                                                    //Decode polyline and add points to list of route coordinates
-                                                                                    List<com.google.maps.model.LatLng> coords1 = points1.decodePath();
-                                                                                    for (com.google.maps.model.LatLng coord1 : coords1) {
-                                                                                        path.add(new LatLng(coord1.lat, coord1.lng));
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        } else {
-                                                                            EncodedPolyline points = step.polyline;
-                                                                            if (points != null) {
-                                                                                //Decode polyline and add points to list of route coordinates
-                                                                                List<com.google.maps.model.LatLng> coords = points.decodePath();
-                                                                                for (com.google.maps.model.LatLng coord : coords) {
-                                                                                    path.add(new LatLng(coord.lat, coord.lng));
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                } catch (Exception e) {
-                                                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                                                }
-
-                                                //Draw the polyline
-                                                if (path.size() > 0) {
-                                                    PolylineOptions opts = new PolylineOptions().addAll(path).color(Color.rgb(255, 255, 204)).width(5);
-                                                    mGoogleMap.addPolyline(opts);
-                                                }
-                                            }
-                                        }
+                                        getNavigation(placeModelFavorites.getLat(), placeModelFavorites.getLng(), placeModelFavorites.getName(), placeModelFavorites.getAddress(), marker);
                                     } catch (Exception e) {
 
                                     }
@@ -697,6 +353,194 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
         } catch (PackageManager.NameNotFoundException e) {
         }
         return false;
+    }
+
+    private void getMoovit(double des_lat, double des_lng, String name, double orig_lat, double orig_lng) {
+        try {
+            PackageManager pm = getActivity().getPackageManager();
+            pm.getPackageInfo("com.tranzmate", PackageManager.GET_ACTIVITIES);
+            String uri = "moovit://directions?dest_lat=" + des_lat + "&dest_lon=" + des_lng + "&dest_name=" + name + "&orig_lat=" + orig_lat + "&orig_lon=" + orig_lng + "&orig_name=Your current location&auto_run=true&partner_id=Lovely Favorites Places";
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(uri));
+            startActivity(intent);
+        } catch (PackageManager.NameNotFoundException e) {
+            String url = "http://app.appsflyer.com/com.tranzmate?pid=DL&c=Lovely Favorites Places";
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
+        }
+    }
+
+    private void getGetTaxi(double des_lat, double des_lng) {
+        if (isPackageInstalled(getContext(), "com.gettaxi.android")) {
+            String link = "gett://order?pickup=my_location&dropoff_latitude=" + des_lat + "&dropoff_longitude=" + des_lng + "&product_id=0c1202f8-6c43-4330-9d8a-3b4fa66505fd";
+            Intent playStoreIntent = new Intent(Intent.ACTION_VIEW);
+            playStoreIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            playStoreIntent.setData(Uri.parse(link));
+            getActivity().startActivity(playStoreIntent);
+        } else {
+            String link = "https://play.google.com/store/apps/details?id=" + "com.gettaxi.android";
+            Intent playStoreIntent = new Intent(Intent.ACTION_VIEW);
+            playStoreIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            playStoreIntent.setData(Uri.parse(link));
+            getActivity().startActivity(playStoreIntent);
+        }
+    }
+
+    private void getWaze(double des_lat, double des_lng) {
+        try {
+            String url = "https://www.waze.com/ul?ll=" + des_lat + "%2C" + des_lng + "&navigate=yes&zoom=17";
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(intent);
+        } catch (ActivityNotFoundException ex) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.waze"));
+            startActivity(intent);
+        }
+    }
+
+    private void getNavigation(double getLat, double getLng, String getName, String getVicinity, Marker marker) {
+        locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+        criteria = new Criteria();
+        String provider2 = locationManager.getBestProvider(criteria, true);
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
+        }// TODO: Consider calling
+//    ActivityCompat#requestPermissions
+// here to request the missing permissions, and then overriding
+//   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                                          int[] grantResults)
+// to handle the case where the user grants the permission. See the documentation
+// for ActivityCompat#requestPermissions for more details.
+        if (provider2 != null) {
+            location = locationManager.getLastKnownLocation(provider2);
+            if (location != null) {
+                PlaceModel info = new PlaceModel();
+                double distanceMe;
+                Location locationA = new Location("Point A");
+                locationA.setLatitude(getLat);
+                locationA.setLongitude(getLng);
+                Location locationB = new Location("Point B");
+                locationB.setLatitude(location.getLatitude());
+                locationB.setLongitude(location.getLongitude());
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+                String result = prefs.getString("myKm", "1000.0");
+                double val = Double.parseDouble(result);
+                distanceMe = locationA.distanceTo(locationB) / val;
+
+                String distanceKm1;
+                String disMile;
+                if (val == 1000.0) {
+                    if (distanceMe < 1) {
+                        int dis = (int) (distanceMe * 1000);
+                        distanceKm1 = "\n" + "Meters: " + String.valueOf(dis);
+                        info.setName(getName);
+                        info.setVicinity(getVicinity);
+                        info.setDistance(distanceKm1);
+                    } else if (distanceMe >= 1) {
+                        String disM = String.format("%.2f", distanceMe);
+                        distanceKm1 = "\n" + "Km: " + String.valueOf(disM);
+                        info.setName(getName);
+                        info.setVicinity(getVicinity);
+                        info.setDistance(distanceKm1);
+                    }
+                } else if (val == 1609.344) {
+                    String distanceMile1 = String.format("%.2f", distanceMe);
+                    disMile = "\n" + "Miles: " + String.valueOf(distanceMile1);
+                    info.setName(getName);
+                    info.setVicinity(getVicinity);
+                    info.setDistance(disMile);
+                }
+
+                CustomInfoWindowGoogleMapFavorites customInfoWindow = new CustomInfoWindowGoogleMapFavorites(getActivity());
+                mGoogleMap.setInfoWindowAdapter(customInfoWindow);
+
+                marker.setTag(info);
+                marker.showInfoWindow();
+            }
+        }
+
+        Toast.makeText(getContext(), getName, Toast.LENGTH_LONG).show();
+
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        criteria = new Criteria();
+        String provider = locationManager.getBestProvider(criteria, true);
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+        }
+        if (provider != null) {
+            location = locationManager.getLastKnownLocation(provider);
+            if (location != null) {
+                double lat = location.getLatitude();
+                double lng = location.getLongitude();
+                String lat1 = String.valueOf(lat);
+                String lng1 = String.valueOf(lng);
+
+                //Define list to get all latLng for the route
+                ArrayList<LatLng> path = new ArrayList<LatLng>();
+
+                //Execute Directions API request
+                GeoApiContext context = new GeoApiContext.Builder()
+                        .apiKey(getString(R.string.api_key_search))
+                        .build();
+                DirectionsApiRequest req = DirectionsApi.getDirections(context, lat1 + ", " + lng1, getLat + ", " + getLng);
+                try {
+                    DirectionsResult res = req.await();
+
+                    //Loop through legs and steps to get encoded polyLines of each step
+                    if (res.routes != null && res.routes.length > 0) {
+                        DirectionsRoute route = res.routes[0];
+
+                        if (route.legs != null) {
+                            for (int i = 0; i < route.legs.length; i++) {
+                                DirectionsLeg leg = route.legs[i];
+                                if (leg.steps != null) {
+                                    for (int j = 0; j < leg.steps.length; j++) {
+                                        DirectionsStep step = leg.steps[j];
+                                        if (step.steps != null && step.steps.length > 0) {
+                                            for (int k = 0; k < step.steps.length; k++) {
+                                                DirectionsStep step1 = step.steps[k];
+                                                EncodedPolyline points1 = step1.polyline;
+                                                if (points1 != null) {
+                                                    //Decode polyline and add points to list of route coordinates
+                                                    List<com.google.maps.model.LatLng> coords1 = points1.decodePath();
+                                                    for (com.google.maps.model.LatLng coord1 : coords1) {
+                                                        path.add(new LatLng(coord1.lat, coord1.lng));
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            EncodedPolyline points = step.polyline;
+                                            if (points != null) {
+                                                //Decode polyline and add points to list of route coordinates
+                                                List<com.google.maps.model.LatLng> coords = points.decodePath();
+                                                for (com.google.maps.model.LatLng coord : coords) {
+                                                    path.add(new LatLng(coord.lat, coord.lng));
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+                //Draw the polyline
+                if (path.size() > 0) {
+                    PolylineOptions opts = new PolylineOptions().addAll(path).color(Color.rgb(255, 255, 204)).width(5);
+                    mGoogleMap.addPolyline(opts);
+                }
+            }
+        }
     }
 
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
+import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
@@ -40,14 +41,14 @@ public class CustomInfoWindowGoogleMapSearch implements GoogleMap.InfoWindowAdap
 
         name.setText(marker.getTitle());
 
-        PlacesSearch infoWindowData = (PlacesSearch) marker.getTag();
+        PlaceModel infoWindowData = (PlaceModel) marker.getTag();
 
 //        int imageId = context.getResources().getIdentifier(infoWindowData.getPhoto_reference(),
 //                "drawable", context.getPackageName());
 //        img.setImageResource(imageId);
 
         try {
-            address.setText(infoWindowData.getAddress());
+            address.setText(infoWindowData.getVicinity());
             rating.setText("Rating: " + String.valueOf(infoWindowData.getRating()));
             ratingQua.setText("User ratings total: " + String.valueOf(infoWindowData.getUser_ratings_total()));
             distance.setText(infoWindowData.getDistance());

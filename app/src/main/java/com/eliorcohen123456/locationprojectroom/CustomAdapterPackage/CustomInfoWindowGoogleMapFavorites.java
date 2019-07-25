@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
+import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
 import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlacesFavorites;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
@@ -38,14 +39,14 @@ public class CustomInfoWindowGoogleMapFavorites implements GoogleMap.InfoWindowA
 
         name.setText(marker.getTitle());
 
-        PlacesFavorites infoWindowData = (PlacesFavorites) marker.getTag();
+        PlaceModel infoWindowData = (PlaceModel) marker.getTag();
 
 //        int imageId = context.getResources().getIdentifier(infoWindowData.getPhoto_reference(),
 //                "drawable", context.getPackageName());
 //        img.setImageResource(imageId);
 
         try {
-            address.setText(infoWindowData.getAddress());
+            address.setText(infoWindowData.getVicinity());
             distance.setText(infoWindowData.getDistance());
         } catch (Exception e) {
 
