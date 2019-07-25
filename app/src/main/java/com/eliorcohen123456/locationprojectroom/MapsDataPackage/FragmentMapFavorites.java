@@ -280,26 +280,9 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                                 final int finalI1 = finalI;
                                 if (marker.getTitle().equals(placesFavorites.get(finalI1).getName())) {
                                     try {
-                                        moovit.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                getMoovit(placesFavorites.get(finalI1).getLat(), placesFavorites.get(finalI1).getLng(), placesFavorites.get(finalI1).getName(), location.getLatitude(), location.getLongitude());
-                                            }
-                                        });
-
-                                        gett.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                getGetTaxi(placesFavorites.get(finalI1).getLat(), placesFavorites.get(finalI1).getLng());
-                                            }
-                                        });
-
-                                        waze.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                getWaze(placesFavorites.get(finalI1).getLat(), placesFavorites.get(finalI1).getLng());
-                                            }
-                                        });
+                                        getMoovit(placesFavorites.get(finalI1).getLat(), placesFavorites.get(finalI1).getLng(), placesFavorites.get(finalI1).getName(), location.getLatitude(), location.getLongitude());
+                                        getGetTaxi(placesFavorites.get(finalI1).getLat(), placesFavorites.get(finalI1).getLng());
+                                        getWaze(placesFavorites.get(finalI1).getLat(), placesFavorites.get(finalI1).getLng());
 
                                         getNavigation(placesFavorites.get(finalI1).getLat(), placesFavorites.get(finalI1).getLng(), placesFavorites.get(finalI1).getName(), placesFavorites.get(finalI1).getAddress(), marker);
                                     } catch (Exception e) {
@@ -308,26 +291,9 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                                     break;
                                 } else if (marker.equals(markerFavorites)) {
                                     try {
-                                        moovit.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                getMoovit(placeModelFavorites.getLat(), placeModelFavorites.getLng(), placeModelFavorites.getName(), location.getLatitude(), location.getLongitude());
-                                            }
-                                        });
-
-                                        gett.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                getGetTaxi(placeModelFavorites.getLat(), placeModelFavorites.getLng());
-                                            }
-                                        });
-
-                                        waze.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                getWaze(placeModelFavorites.getLat(), placeModelFavorites.getLng());
-                                            }
-                                        });
+                                        getMoovit(placeModelFavorites.getLat(), placeModelFavorites.getLng(), placeModelFavorites.getName(), location.getLatitude(), location.getLongitude());
+                                        getGetTaxi(placeModelFavorites.getLat(), placeModelFavorites.getLng());
+                                        getWaze(placeModelFavorites.getLat(), placeModelFavorites.getLng());
 
                                         getNavigation(placeModelFavorites.getLat(), placeModelFavorites.getLng(), placeModelFavorites.getName(), placeModelFavorites.getAddress(), marker);
                                     } catch (Exception e) {
@@ -355,47 +321,62 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
         return false;
     }
 
-    private void getMoovit(double des_lat, double des_lng, String name, double orig_lat, double orig_lng) {
-        try {
-            PackageManager pm = getActivity().getPackageManager();
-            pm.getPackageInfo("com.tranzmate", PackageManager.GET_ACTIVITIES);
-            String uri = "moovit://directions?dest_lat=" + des_lat + "&dest_lon=" + des_lng + "&dest_name=" + name + "&orig_lat=" + orig_lat + "&orig_lon=" + orig_lng + "&orig_name=Your current location&auto_run=true&partner_id=Lovely Favorites Places";
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(uri));
-            startActivity(intent);
-        } catch (PackageManager.NameNotFoundException e) {
-            String url = "http://app.appsflyer.com/com.tranzmate?pid=DL&c=Lovely Favorites Places";
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse(url));
-            startActivity(i);
-        }
+    private void getMoovit(final double des_lat, final double des_lng, final String name, final double orig_lat, final double orig_lng) {
+        moovit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    PackageManager pm = getActivity().getPackageManager();
+                    pm.getPackageInfo("com.tranzmate", PackageManager.GET_ACTIVITIES);
+                    String uri = "moovit://directions?dest_lat=" + des_lat + "&dest_lon=" + des_lng + "&dest_name=" + name + "&orig_lat=" + orig_lat + "&orig_lon=" + orig_lng + "&orig_name=Your current location&auto_run=true&partner_id=Lovely Favorites Places";
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(uri));
+                    startActivity(intent);
+                } catch (PackageManager.NameNotFoundException e) {
+                    String url = "http://app.appsflyer.com/com.tranzmate?pid=DL&c=Lovely Favorites Places";
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    startActivity(i);
+                }
+            }
+        });
     }
 
-    private void getGetTaxi(double des_lat, double des_lng) {
-        if (isPackageInstalled(getContext(), "com.gettaxi.android")) {
-            String link = "gett://order?pickup=my_location&dropoff_latitude=" + des_lat + "&dropoff_longitude=" + des_lng + "&product_id=0c1202f8-6c43-4330-9d8a-3b4fa66505fd";
-            Intent playStoreIntent = new Intent(Intent.ACTION_VIEW);
-            playStoreIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            playStoreIntent.setData(Uri.parse(link));
-            getActivity().startActivity(playStoreIntent);
-        } else {
-            String link = "https://play.google.com/store/apps/details?id=" + "com.gettaxi.android";
-            Intent playStoreIntent = new Intent(Intent.ACTION_VIEW);
-            playStoreIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            playStoreIntent.setData(Uri.parse(link));
-            getActivity().startActivity(playStoreIntent);
-        }
+    private void getGetTaxi(final double des_lat, final double des_lng) {
+        gett.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isPackageInstalled(getContext(), "com.gettaxi.android")) {
+                    String link = "gett://order?pickup=my_location&dropoff_latitude=" + des_lat + "&dropoff_longitude=" + des_lng + "&product_id=0c1202f8-6c43-4330-9d8a-3b4fa66505fd";
+                    Intent playStoreIntent = new Intent(Intent.ACTION_VIEW);
+                    playStoreIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    playStoreIntent.setData(Uri.parse(link));
+                    getActivity().startActivity(playStoreIntent);
+                } else {
+                    String link = "https://play.google.com/store/apps/details?id=" + "com.gettaxi.android";
+                    Intent playStoreIntent = new Intent(Intent.ACTION_VIEW);
+                    playStoreIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    playStoreIntent.setData(Uri.parse(link));
+                    getActivity().startActivity(playStoreIntent);
+                }
+            }
+        });
     }
 
-    private void getWaze(double des_lat, double des_lng) {
-        try {
-            String url = "https://www.waze.com/ul?ll=" + des_lat + "%2C" + des_lng + "&navigate=yes&zoom=17";
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            startActivity(intent);
-        } catch (ActivityNotFoundException ex) {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.waze"));
-            startActivity(intent);
-        }
+    private void getWaze(final double des_lat, final double des_lng) {
+        waze.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    String url = "https://www.waze.com/ul?ll=" + des_lat + "%2C" + des_lng + "&navigate=yes&zoom=17";
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(intent);
+                } catch (ActivityNotFoundException ex) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.waze"));
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     private void getNavigation(double getLat, double getLng, String getName, String getAddress, Marker marker) {
