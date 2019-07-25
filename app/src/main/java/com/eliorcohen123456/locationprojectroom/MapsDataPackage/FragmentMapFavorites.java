@@ -398,7 +398,7 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
         }
     }
 
-    private void getNavigation(double getLat, double getLng, String getName, String getVicinity, Marker marker) {
+    private void getNavigation(double getLat, double getLng, String getName, String getAddress, Marker marker) {
         locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
         criteria = new Criteria();
         String provider2 = locationManager.getBestProvider(criteria, true);
@@ -434,20 +434,20 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                         int dis = (int) (distanceMe * 1000);
                         distanceKm1 = "\n" + "Meters: " + String.valueOf(dis);
                         info.setName(getName);
-                        info.setVicinity(getVicinity);
+                        info.setVicinity(getAddress);
                         info.setDistance(distanceKm1);
                     } else if (distanceMe >= 1) {
                         String disM = String.format("%.2f", distanceMe);
                         distanceKm1 = "\n" + "Km: " + String.valueOf(disM);
                         info.setName(getName);
-                        info.setVicinity(getVicinity);
+                        info.setVicinity(getAddress);
                         info.setDistance(distanceKm1);
                     }
                 } else if (val == 1609.344) {
                     String distanceMile1 = String.format("%.2f", distanceMe);
                     disMile = "\n" + "Miles: " + String.valueOf(distanceMile1);
                     info.setName(getName);
-                    info.setVicinity(getVicinity);
+                    info.setVicinity(getAddress);
                     info.setDistance(disMile);
                 }
 
