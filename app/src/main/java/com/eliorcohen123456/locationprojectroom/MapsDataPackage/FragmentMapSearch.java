@@ -1,6 +1,7 @@
 package com.eliorcohen123456.locationprojectroom.MapsDataPackage;
 
 import android.Manifest;
+import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.ActivityNotFoundException;
@@ -414,16 +415,6 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
         }
     }
 
-    private static boolean isPackageInstalled(Context context, String packageId) {
-        PackageManager pm = context.getPackageManager();
-        try {
-            pm.getPackageInfo(packageId, PackageManager.GET_ACTIVITIES);
-            return true;
-        } catch (PackageManager.NameNotFoundException e) {
-        }
-        return false;
-    }
-
     // Check network
     private boolean isConnected(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -478,21 +469,31 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
         gett.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isPackageInstalled(getContext(), "com.gettaxi.android")) {
-                    String link = "gett://order?pickup=my_location&dropoff_latitude=" + des_lat + "&dropoff_longitude=" + des_lng + "&product_id=0c1202f8-6c43-4330-9d8a-3b4fa66505fd";
-                    Intent playStoreIntent = new Intent(Intent.ACTION_VIEW);
-                    playStoreIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    playStoreIntent.setData(Uri.parse(link));
-                    getActivity().startActivity(playStoreIntent);
+                if (isPackageInstalledTetTaxi(getContext(), "com.gettaxi.android")) {
+                    openLinkGetTaxi(getActivity(), "gett://order?pickup=my_location&dropoff_latitude=" + des_lat + "&dropoff_longitude=" + des_lng + "&product_id=0c1202f8-6c43-4330-9d8a-3b4fa66505fd");
                 } else {
-                    String link = "https://play.google.com/store/apps/details?id=" + "com.gettaxi.android";
-                    Intent playStoreIntent = new Intent(Intent.ACTION_VIEW);
-                    playStoreIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    playStoreIntent.setData(Uri.parse(link));
-                    getActivity().startActivity(playStoreIntent);
+                    openLinkGetTaxi(getActivity(), "https://play.google.com/store/apps/details?id=" + "com.gettaxi.android");
                 }
             }
         });
+    }
+
+    private static void openLinkGetTaxi(Activity activity, String link) {
+        Intent playStoreIntent = new Intent(Intent.ACTION_VIEW);
+        playStoreIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        playStoreIntent.setData(Uri.parse(link));
+        activity.startActivity(playStoreIntent);
+    }
+
+    private static boolean isPackageInstalledTetTaxi(Context context, String packageId) {
+        PackageManager pm = context.getPackageManager();
+        try {
+            pm.getPackageInfo(packageId, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+
+        }
+        return false;
     }
 
     private void getWaze(final double des_lat, final double des_lng) {
