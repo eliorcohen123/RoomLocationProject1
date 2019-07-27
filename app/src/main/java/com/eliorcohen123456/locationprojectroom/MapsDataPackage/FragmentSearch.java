@@ -165,10 +165,10 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
     public void onResume() {
         super.onResume();
 
-        getTypeSearch();
+        getSearch();
     }
 
-    private void getTypeSearch() {
+    private void getSearch() {
         getTypeQuery("", "");
 
         btnBank.setOnClickListener(new View.OnClickListener() {
