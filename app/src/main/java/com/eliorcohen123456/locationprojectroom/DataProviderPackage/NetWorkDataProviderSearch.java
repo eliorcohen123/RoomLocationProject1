@@ -52,6 +52,7 @@ public class NetWorkDataProviderSearch {
         private Location location;
         private LocationManager locationManager;
         private Criteria criteria;
+        private String provider;
         private String urlQuery;
         private double diagonalInches;
 
@@ -80,7 +81,7 @@ public class NetWorkDataProviderSearch {
             OkHttpClient client = new OkHttpClient();
             locationManager = (LocationManager) NearByApplication.getApplication().getSystemService(Context.LOCATION_SERVICE);
             criteria = new Criteria();
-            String provider = locationManager.getBestProvider(criteria, true);
+            provider = locationManager.getBestProvider(criteria, true);
             if (ActivityCompat.checkSelfPermission(NearByApplication.getApplication(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.checkSelfPermission(NearByApplication.getApplication(), Manifest.permission.ACCESS_COARSE_LOCATION);
             }// TODO: Consider calling

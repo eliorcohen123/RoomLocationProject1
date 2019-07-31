@@ -72,6 +72,7 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
     private Location location;
     private LocationManager locationManager;
     private Criteria criteria;
+    private String provider;
     private ImageView moovit, gett, waze, num1, num2, num3, num4, num5;
     private FragmentMapFavorites fragmentMapFavorites;
     private List<Marker> markers = new ArrayList<Marker>();
@@ -84,6 +85,7 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
         mView = inflater.inflate(R.layout.fragment_map_layout_favorites, container, false);
 
         initUI();
+        initLocation();
         mapShow();
         getData();
 
@@ -113,6 +115,12 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
         netWorkDataProviderFavorites = new NetWorkDataProviderFavorites();
 
         setHasOptionsMenu(true);
+    }
+
+    private void initLocation() {
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        criteria = new Criteria();
+        provider = locationManager.getBestProvider(criteria, true);
     }
 
     private void mapShow() {
@@ -203,9 +211,6 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
             }
             googleMap.setMyLocationEnabled(true);
             googleMap.getUiSettings().setZoomControlsEnabled(true);
-            locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-            criteria = new Criteria();
-            String provider = locationManager.getBestProvider(criteria, true);
             if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                     ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
@@ -381,9 +386,6 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
     }
 
     private void getNavigation(double getLat, double getLng, String getName, String getAddress, Marker marker) {
-        locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
-        criteria = new Criteria();
-        String provider = locationManager.getBestProvider(criteria, true);
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
         }// TODO: Consider calling

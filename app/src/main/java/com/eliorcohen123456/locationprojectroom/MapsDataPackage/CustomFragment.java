@@ -39,6 +39,7 @@ public class CustomFragment extends Fragment implements OnMapReadyCallback {
     private Location location;
     private Criteria criteria;
     private LocationManager locationManager;
+    private String provider;
     private Toolbar toolbar;
 
     @Nullable
@@ -47,6 +48,7 @@ public class CustomFragment extends Fragment implements OnMapReadyCallback {
         mView = inflater.inflate(R.layout.fragment_custom_layout, container, false);
 
         initUI();
+        initLocation();
         myUI();
 
         return mView;
@@ -54,6 +56,12 @@ public class CustomFragment extends Fragment implements OnMapReadyCallback {
 
     private void initUI() {
         toolbar = mView.findViewById(R.id.toolbar);
+    }
+
+    private void initLocation() {
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        criteria = new Criteria();
+        provider = locationManager.getBestProvider(criteria, true);
     }
 
     private void myUI() {
@@ -100,9 +108,6 @@ public class CustomFragment extends Fragment implements OnMapReadyCallback {
             }
             googleMap.setMyLocationEnabled(true);
             googleMap.getUiSettings().setZoomControlsEnabled(true);
-            locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-            criteria = new Criteria();
-            String provider = locationManager.getBestProvider(criteria, true);
             if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
             }// TODO: Consider calling

@@ -77,6 +77,7 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
     private Location location;
     private LocationManager locationManager;
     private Criteria criteria;
+    private String provider;
     private ImageView moovit, gett, waze, num1, num2, num3, num4, num5;
     private FragmentMapSearch fragmentMapSearch;
     private List<Marker> markers = new ArrayList<Marker>();
@@ -93,6 +94,7 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
         mView = inflater.inflate(R.layout.fragment_map_layout_search, container, false);
 
         initUI();
+        initLocation();
         mapShow();
         getData();
 
@@ -124,6 +126,12 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
 
         dataProviderHistory = new NetWorkDataProviderHistory();
         dataProviderSearch = new NetWorkDataProviderSearch();
+    }
+
+    private void initLocation() {
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        criteria = new Criteria();
+        provider = locationManager.getBestProvider(criteria, true);
     }
 
     private void mapShow() {
@@ -232,9 +240,6 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
             }
             googleMap.setMyLocationEnabled(true);
             googleMap.getUiSettings().setZoomControlsEnabled(true);
-            locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-            criteria = new Criteria();
-            String provider = locationManager.getBestProvider(criteria, true);
             if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                     ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
@@ -330,9 +335,6 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
 
     // Add circle of NearBy
     private void addCircleNearBy() {
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        criteria = new Criteria();
-        String provider = locationManager.getBestProvider(criteria, true);
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -379,9 +381,6 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
 
     // Add Circle of Search
     private void addCircleSearch() {
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        criteria = new Criteria();
-        String provider = locationManager.getBestProvider(criteria, true);
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -513,9 +512,6 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
     }
 
     private void getNavigation(double getLat, double getLng, String getName, String getAddress, double getRating, int getTotalRating, Marker marker) {
-        locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
-        criteria = new Criteria();
-        String provider = locationManager.getBestProvider(criteria, true);
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
         }// TODO: Consider calling

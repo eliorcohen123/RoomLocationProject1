@@ -99,6 +99,7 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
     private Location location;
     private LocationManager locationManager;
     private Criteria criteria;
+    private String provider;
 
     public PlacesListAdapterSearch(Context context) {
         mInflater = LayoutInflater.from(context);
@@ -116,7 +117,7 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
             final PlacesSearch current = mPlacesSearchList.get(position);
             locationManager = (LocationManager) mInflater.getContext().getSystemService(Context.LOCATION_SERVICE);
             criteria = new Criteria();
-            String provider = locationManager.getBestProvider(criteria, true);
+            provider = locationManager.getBestProvider(criteria, true);
             if (ActivityCompat.checkSelfPermission(mInflater.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.checkSelfPermission(mInflater.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
             }// TODO: Consider calling
@@ -207,7 +208,7 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
         mPlacesSearchList = placesSearches;
         locationManager = (LocationManager) mInflater.getContext().getSystemService(Context.LOCATION_SERVICE);
         criteria = new Criteria();
-        String provider = locationManager.getBestProvider(criteria, true);
+        provider = locationManager.getBestProvider(criteria, true);
         if (ActivityCompat.checkSelfPermission(mInflater.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.checkSelfPermission(mInflater.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
         }// TODO: Consider calling
