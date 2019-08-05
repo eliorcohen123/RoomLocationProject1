@@ -117,8 +117,10 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
             mAdapterFavorites = new PlacesListAdapterFavorites(getContext());
             recyclerView.setAdapter(mAdapterFavorites);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            itemDecoration = new ItemDecoration(20);
-            recyclerView.addItemDecoration(itemDecoration);
+            if (itemDecoration == null) {
+                itemDecoration = new ItemDecoration(20);
+                recyclerView.addItemDecoration(itemDecoration);
+            }
         } catch (Exception e) {
 
         }

@@ -123,8 +123,10 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
             mAdapterSearch = new PlacesListAdapterSearch(getContext());
             recyclerView.setAdapter(mAdapterSearch);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            itemDecoration = new ItemDecoration(20);
-            recyclerView.addItemDecoration(itemDecoration);
+            if (itemDecoration == null) {
+                itemDecoration = new ItemDecoration(20);
+                recyclerView.addItemDecoration(itemDecoration);
+            }
         } catch (Exception e) {
 
         }
