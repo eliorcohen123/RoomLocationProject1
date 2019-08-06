@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -198,6 +199,8 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
                     fragmentTransaction.commit();
                 }
             });
+
+            setFadeAnimation(holder.itemView);
         } else {
             // Covers the case of data not being ready yet.
             holder.name1.setText("No Places");
@@ -247,8 +250,10 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
         else return 0;
     }
 
-    public PlacesSearch getPlaceAtPosition(int position) {
-        return mPlacesSearchList.get(position);
+    private void setFadeAnimation(View view) {
+        AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(1500);
+        view.startAnimation(anim);
     }
 
 }

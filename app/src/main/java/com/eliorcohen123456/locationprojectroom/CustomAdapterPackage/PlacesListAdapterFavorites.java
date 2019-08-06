@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -142,6 +143,8 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
                     fragmentTransaction.commit();
                 }
             });
+
+            setFadeAnimation(holder.itemView);
         } else {
             // Covers the case of data not being ready yet.
             holder.name3.setText("No Places");
@@ -180,6 +183,12 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
 
     public PlacesFavorites getPlaceAtPosition(int position) {
         return mPlacesFavoritesList.get(position);
+    }
+
+    private void setFadeAnimation(View view) {
+        AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(1500);
+        view.startAnimation(anim);
     }
 
 }
