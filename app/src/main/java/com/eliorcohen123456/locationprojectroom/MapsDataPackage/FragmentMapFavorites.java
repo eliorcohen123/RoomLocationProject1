@@ -28,7 +28,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
@@ -73,11 +75,14 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
     private LocationManager locationManager;
     private Criteria criteria;
     private String provider;
-    private ImageView moovit, gett, waze, num1, num2, num3, num4, num5;
+    private ImageView moovit, gett, waze, num1, num2, num3, num4, num5, btnOpenList;
     private FragmentMapFavorites fragmentMapFavorites;
     private List<Marker> markers = new ArrayList<Marker>();
     private CoordinatorLayout coordinatorLayout;
     private NetWorkDataProviderFavorites netWorkDataProviderFavorites;
+    private LinearLayout linearList;
+    private boolean isClicked;
+    private AlphaAnimation anim;
 
     @Nullable
     @Override
@@ -105,12 +110,19 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
         num3 = mView.findViewById(R.id.imageMe3);
         num4 = mView.findViewById(R.id.imageMe4);
         num5 = mView.findViewById(R.id.imageMe5);
+        btnOpenList = mView.findViewById(R.id.btnOpenList);
 
         moovit = mView.findViewById(R.id.imageViewMoovit);
         gett = mView.findViewById(R.id.imageViewGett);
         waze = mView.findViewById(R.id.imageViewWaze);
 
+        linearList = mView.findViewById(R.id.listAll);
+
+        linearList.setVisibility(View.GONE);
+
         fragmentMapFavorites = this;
+
+        isClicked = true;
 
         netWorkDataProviderFavorites = new NetWorkDataProviderFavorites();
 
@@ -166,6 +178,21 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 mGoogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            }
+        });
+
+        btnOpenList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isClicked) {
+                    linearList.setVisibility(View.VISIBLE);
+                    setFadeAnimationTrue(linearList);
+                    isClicked = false;
+                } else {
+                    linearList.setVisibility(View.GONE);
+                    setFadeAnimationFalse(linearList);
+                    isClicked = true;
+                }
             }
         });
     }
@@ -522,6 +549,18 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                 }
             }
         }
+    }
+
+    private void setFadeAnimationTrue(LinearLayout linearList) {
+        anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(1500);
+        linearList.startAnimation(anim);
+    }
+
+    private void setFadeAnimationFalse(LinearLayout linearList) {
+        anim = new AlphaAnimation(1.0f, 0.0f);
+        anim.setDuration(1500);
+        linearList.startAnimation(anim);
     }
 
 }

@@ -16,20 +16,38 @@
         android:layout_height="match_parent" />
 
     <LinearLayout
+        android:id="@+id/linearOpenList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/blackTransparent">
+
+        <ImageView
+            android:id="@+id/btnOpenList"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/ic_dehaze_lightblue_24dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/listAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearOpenList"
+        android:background="@color/blackTransparent"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="10dp">
+            android:padding="5dp">
 
             <ImageView
                 android:id="@+id/imageViewMoovit"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:scaleType="fitXY"
                 app:srcCompat="@drawable/moovit" />
 
             <ImageView
@@ -38,6 +56,7 @@
                 android:layout_height="50dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
+                android:scaleType="fitXY"
                 app:srcCompat="@drawable/gettaxi" />
 
             <ImageView
@@ -60,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@color/colorWhite"
+                android:background="@color/whiteTransparent"
                 android:gravity="center"
                 android:text="Map type:"
                 android:textColor="@color/colorBlack"

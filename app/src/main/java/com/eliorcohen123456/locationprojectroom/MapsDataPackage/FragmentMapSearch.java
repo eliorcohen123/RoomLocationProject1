@@ -29,7 +29,9 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -78,7 +80,7 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
     private LocationManager locationManager;
     private Criteria criteria;
     private String provider;
-    private ImageView moovit, gett, waze, num1, num2, num3, num4, num5;
+    private ImageView moovit, gett, waze, num1, num2, num3, num4, num5, btnOpenList;
     private FragmentMapSearch fragmentMapSearch;
     private List<Marker> markers = new ArrayList<Marker>();
     private CoordinatorLayout coordinatorLayout;
@@ -87,6 +89,9 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
     private SharedPreferences prefsSeek, settingsQuery, settingsType;
     private TextView disNearBy, disSearch;
     private String myStringQuery, myStringType;
+    private LinearLayout linearList;
+    private boolean isClicked;
+    private AlphaAnimation anim;
 
     @Nullable
     @Override
@@ -114,6 +119,7 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
         num3 = mView.findViewById(R.id.imageMe3);
         num4 = mView.findViewById(R.id.imageMe4);
         num5 = mView.findViewById(R.id.imageMe5);
+        btnOpenList = mView.findViewById(R.id.btnOpenList);
 
         moovit = mView.findViewById(R.id.imageViewMoovit);
         gett = mView.findViewById(R.id.imageViewGett);
@@ -122,7 +128,13 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
         disNearBy = mView.findViewById(R.id.disNearBy);
         disSearch = mView.findViewById(R.id.disSearch);
 
+        linearList = mView.findViewById(R.id.listAll);
+
+        linearList.setVisibility(View.GONE);
+
         fragmentMapSearch = this;
+
+        isClicked = true;
 
         dataProviderHistory = new NetWorkDataProviderHistory();
         dataProviderSearch = new NetWorkDataProviderSearch();
@@ -177,6 +189,21 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
             @Override
             public void onClick(View v) {
                 mGoogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            }
+        });
+
+        btnOpenList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isClicked) {
+                    linearList.setVisibility(View.VISIBLE);
+                    setFadeAnimationTrue(linearList);
+                    isClicked = false;
+                } else {
+                    linearList.setVisibility(View.GONE);
+                    setFadeAnimationFalse(linearList);
+                    isClicked = true;
+                }
             }
         });
     }
@@ -654,6 +681,18 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, I
                 }
             }
         }
+    }
+
+    private void setFadeAnimationTrue(LinearLayout linearList) {
+        anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(1500);
+        linearList.startAnimation(anim);
+    }
+
+    private void setFadeAnimationFalse(LinearLayout linearList) {
+        anim = new AlphaAnimation(1.0f, 0.0f);
+        anim.setDuration(1500);
+        linearList.startAnimation(anim);
     }
 
 }
