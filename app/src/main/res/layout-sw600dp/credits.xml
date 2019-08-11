@@ -32,7 +32,7 @@
             android:textSize="40sp" />
 
         <Button
-            android:id="@+id/button21"
+            android:id="@+id/btnBack"
             android:layout_width="125dp"
             android:layout_height="50dp"
             android:layout_gravity="center"

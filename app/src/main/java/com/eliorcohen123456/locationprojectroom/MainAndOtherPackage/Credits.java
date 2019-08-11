@@ -7,7 +7,7 @@ import android.widget.Button;
 
 import com.eliorcohen123456.locationprojectroom.R;
 
-public class Credits extends AppCompatActivity {
+public class Credits extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnBack;
 
@@ -17,21 +17,24 @@ public class Credits extends AppCompatActivity {
         setContentView(R.layout.credits);
 
         initUI();
-        btnBack();
+        initListeners();
     }
 
     private void initUI() {
-        btnBack = findViewById(R.id.button21);
+        btnBack = findViewById(R.id.btnBack);
     }
 
-    private void btnBack() {
-        // Button are back to the previous activity
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    private void initListeners() {
+        btnBack.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnBack:
                 onBackPressed();
-            }
-        });
+                break;
+        }
     }
 
 }

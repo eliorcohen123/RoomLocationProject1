@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 
 import com.eliorcohen123456.locationprojectroom.R;
 
-public class EditPlace extends AppCompatActivity {
+public class EditPlace extends AppCompatActivity implements View.OnClickListener {
 
     private PlacesFavorites item;
     private PlaceViewModelFavorites placeViewModelFavorites;
@@ -32,8 +32,8 @@ public class EditPlace extends AppCompatActivity {
         setContentView(R.layout.edit_place);
 
         initUI();
+        initListeners();
         getData();
-        btnBack();
     }
 
     private void initUI() {
@@ -52,6 +52,14 @@ public class EditPlace extends AppCompatActivity {
         imageView = findViewById(R.id.imageViewMe);
 
         btnBack = findViewById(R.id.btnBack);
+
+        placeViewModelFavorites = ViewModelProviders.of(EditPlace.this).get(PlaceViewModelFavorites.class);
+    }
+
+    private void initListeners() {
+        textViewOK.setOnClickListener(this);
+        textViewShow.setOnClickListener(this);
+        btnBack.setOnClickListener(this);
     }
 
     private void getData() {
@@ -62,10 +70,22 @@ public class EditPlace extends AppCompatActivity {
         lng.setText(String.valueOf(item.getLng()));  // GetSerializable of lng
         photo.setText(item.getPhoto());  // GetSerializable of photo
 
-        // Button that does the following:
-        textViewOK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        //Initialize the ImageView
+        try {
+            String picture = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="
+                    + item.getPhoto() +
+                    "&key=" + getString(R.string.api_key_search);
+            Picasso.get().load(picture).into(imageView);
+            imageView.setVisibility(View.INVISIBLE); //Set the ImageView Invisible
+        } catch (Exception e) {
+
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.textViewOK:
                 String name1 = name.getText().toString();  // GetText of the name
                 String address1 = address.getText().toString();  // GetText of the address
                 String lat1 = lat.getText().toString();  // GetText of the lat
@@ -76,40 +96,20 @@ public class EditPlace extends AppCompatActivity {
 
                 PlacesFavorites placesFavorites = new PlacesFavorites(name1, address1, lat2, lng2, photo1);
                 placesFavorites.setID(id);
-                placeViewModelFavorites = ViewModelProviders.of(EditPlace.this).get(PlaceViewModelFavorites.class);
                 placeViewModelFavorites.updatePlace(placesFavorites);
 
                 // Pass from AddMapFromInternet to ActivityFavorites
                 Intent intentAddInternetToMain = new Intent(EditPlace.this, ActivityFavorites.class);
                 startActivity(intentAddInternetToMain);
-            }
-        });
-
-        //Initialize the ImageView
-        String picture = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="
-                + item.getPhoto() +
-                "&key=" + getString(R.string.api_key_search);
-        Picasso.get().load(picture).into(imageView);
-        imageView.setVisibility(View.INVISIBLE); //Set the ImageView Invisible
-
-        // Button to show the ImageView
-        textViewShow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.textViewShow:
                 photo.setVisibility(View.INVISIBLE);  // Canceling the show of URL
                 imageView.setVisibility(View.VISIBLE);  // Show the ImageView
-            }
-        });
-    }
-
-    private void btnBack() {
-        // Button are back to the previous activity
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.btnBack:
                 onBackPressed();
-            }
-        });
+                break;
+        }
     }
 
 }

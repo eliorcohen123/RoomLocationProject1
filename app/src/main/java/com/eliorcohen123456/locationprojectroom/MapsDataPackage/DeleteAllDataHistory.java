@@ -14,7 +14,7 @@ import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplic
 import com.eliorcohen123456.locationprojectroom.R;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceViewModelSearch;
 
-public class DeleteAllDataHistory extends AppCompatActivity {
+public class DeleteAllDataHistory extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnOK, btnCancel;
     private PlaceViewModelSearch placeViewModelSearch;
@@ -25,21 +25,25 @@ public class DeleteAllDataHistory extends AppCompatActivity {
         setContentView(R.layout.delete_all_data_history);
 
         initUI();
-        delData();
-        btnBack();
+        initListeners();
     }
 
     private void initUI() {
-        btnOK = findViewById(R.id.button3);
-        btnCancel = findViewById(R.id.button4);
+        btnOK = findViewById(R.id.btnOK);
+        btnCancel = findViewById(R.id.btnCancel);
+
+        placeViewModelSearch = new PlaceViewModelSearch(NearByApplication.getApplication());
     }
 
-    private void delData() {
-        // Button are delete all the data of the app
-        btnOK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                placeViewModelSearch = new PlaceViewModelSearch(NearByApplication.getApplication());
+    private void initListeners() {
+        btnOK.setOnClickListener(this);
+        btnCancel.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnOK:
                 placeViewModelSearch.deleteAll();
 
                 Toast toast = Toast.makeText(DeleteAllDataHistory.this, "All the data of history are deleted!", Toast.LENGTH_LONG);
@@ -51,18 +55,11 @@ public class DeleteAllDataHistory extends AppCompatActivity {
 
                 Intent intentDeleteAllDataToMain = new Intent(DeleteAllDataHistory.this, MainActivity.class);
                 startActivity(intentDeleteAllDataToMain);
-            }
-        });
-    }
-
-    private void btnBack() {
-        // Button are back to the previous activity
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.btnCancel:
                 onBackPressed();
-            }
-        });
+                break;
+        }
     }
 
 }

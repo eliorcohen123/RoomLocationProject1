@@ -51,7 +51,7 @@ import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetWorkDataP
 import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetWorkDataProviderSearch;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceViewModelSearch;
 
-public class FragmentSearch extends Fragment implements IPlacesDataReceived {
+public class FragmentSearch extends Fragment implements View.OnClickListener, IPlacesDataReceived {
 
     private PlaceViewModelSearch mPlacesViewModelSearch;
     private RecyclerView recyclerView;
@@ -75,6 +75,7 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
         mView = inflater.inflate(R.layout.fragment_search_layout, container, false);
 
         initUI();
+        initListeners();
         myRecyclerView();
         refreshUI();
 
@@ -106,6 +107,7 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
 
         dataProviderHistory = new NetWorkDataProviderHistory();
         dataProviderSearch = new NetWorkDataProviderSearch();
+        mAdapterSearch = new PlacesListAdapterSearch(getContext());
 
         prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
 
@@ -118,9 +120,26 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
         setHasOptionsMenu(true);
     }
 
+    private void initListeners() {
+        btnBank.setOnClickListener(this);
+        btnBar.setOnClickListener(this);
+        btnBeauty.setOnClickListener(this);
+        btnBooks.setOnClickListener(this);
+        btnBusStation.setOnClickListener(this);
+        btnCars.setOnClickListener(this);
+        btnClothing.setOnClickListener(this);
+        btnDoctor.setOnClickListener(this);
+        btnGasStation.setOnClickListener(this);
+        btnGym.setOnClickListener(this);
+        btnJewelry.setOnClickListener(this);
+        btnPark.setOnClickListener(this);
+        btnRestaurant.setOnClickListener(this);
+        btnSchool.setOnClickListener(this);
+        btnSpa.setOnClickListener(this);
+    }
+
     private void myRecyclerView() {
         try {
-            mAdapterSearch = new PlacesListAdapterSearch(getContext());
             recyclerView.setAdapter(mAdapterSearch);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             if (itemDecoration == null) {
@@ -172,111 +191,6 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
 
     private void getSearch() {
         getTypeQuery("", "");
-
-        btnBank.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getTypeQuery("bank", "");
-            }
-        });
-
-        btnBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getTypeQuery("bar|night_club", "");
-            }
-        });
-
-        btnBeauty.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getTypeQuery("beauty_salon|hair_care", "");
-            }
-        });
-
-        btnBooks.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getTypeQuery("book_store|library", "");
-            }
-        });
-
-        btnBusStation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getTypeQuery("bus_station", "");
-            }
-        });
-
-        btnCars.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getTypeQuery("car_dealer|car_rental|car_repair|car_wash", "");
-            }
-        });
-
-        btnClothing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getTypeQuery("clothing_store", "");
-            }
-        });
-
-        btnDoctor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getTypeQuery("doctor", "");
-            }
-        });
-
-        btnGasStation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getTypeQuery("gas_station", "");
-            }
-        });
-
-        btnGym.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getTypeQuery("gym", "");
-            }
-        });
-
-        btnJewelry.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getTypeQuery("jewelry_store", "");
-            }
-        });
-
-        btnPark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getTypeQuery("park|amusement_park|parking|rv_park", "");
-            }
-        });
-
-        btnRestaurant.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getTypeQuery("food|restaurant|cafe|bakery", "");
-            }
-        });
-
-        btnSchool.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getTypeQuery("school", "");
-            }
-        });
-
-        btnSpa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getTypeQuery("spa", "");
-            }
-        });
     }
 
     // Sets off the menu of activity_menu
@@ -341,6 +255,57 @@ public class FragmentSearch extends Fragment implements IPlacesDataReceived {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnBank:
+                getTypeQuery("bank", "");
+                break;
+            case R.id.btnBar:
+                getTypeQuery("bar|night_club", "");
+                break;
+            case R.id.btnBeauty:
+                getTypeQuery("beauty_salon|hair_care", "");
+                break;
+            case R.id.btnBooks:
+                getTypeQuery("book_store|library", "");
+                break;
+            case R.id.btnBusStation:
+                getTypeQuery("bus_station", "");
+                break;
+            case R.id.btnCars:
+                getTypeQuery("car_dealer|car_rental|car_repair|car_wash", "");
+                break;
+            case R.id.btnClothing:
+                getTypeQuery("clothing_store", "");
+                break;
+            case R.id.btnDoctor:
+                getTypeQuery("doctor", "");
+                break;
+            case R.id.btnGasStation:
+                getTypeQuery("gas_station", "");
+                break;
+            case R.id.btnGym:
+                getTypeQuery("gym", "");
+                break;
+            case R.id.btnJewelry:
+                getTypeQuery("jewelry_store", "");
+                break;
+            case R.id.btnPark:
+                getTypeQuery("park|amusement_park|parking|rv_park", "");
+                break;
+            case R.id.btnRestaurant:
+                getTypeQuery("food|restaurant|cafe|bakery", "");
+                break;
+            case R.id.btnSchool:
+                getTypeQuery("school", "");
+                break;
+            case R.id.btnSpa:
+                getTypeQuery("spa", "");
+                break;
+        }
     }
 
     private void getTypeQuery(String type, String query) {

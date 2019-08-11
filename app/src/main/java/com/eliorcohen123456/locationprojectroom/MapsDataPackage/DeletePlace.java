@@ -1,5 +1,6 @@
 package com.eliorcohen123456.locationprojectroom.MapsDataPackage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -7,9 +8,9 @@ import android.widget.Button;
 
 import com.eliorcohen123456.locationprojectroom.R;
 
-public class DeletePlace extends AppCompatActivity {
+public class DeletePlace extends AppCompatActivity implements View.OnClickListener {
 
-    private Button btnBack;
+    private Button btnOK;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,21 +18,25 @@ public class DeletePlace extends AppCompatActivity {
         setContentView(R.layout.delete_place);
 
         initUI();
-        btnBack();
+        initListeners();
     }
 
     private void initUI() {
-        btnBack = findViewById(R.id.button13);
+        btnOK = findViewById(R.id.btnOK);
     }
 
-    private void btnBack() {
-        // A button are passes from DeletePlace to Favorites
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+    private void initListeners() {
+        btnOK.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnOK:
+                Intent intent = new Intent(DeletePlace.this, ActivityFavorites.class);
+                startActivity(intent);
+                break;
+        }
     }
 
 }

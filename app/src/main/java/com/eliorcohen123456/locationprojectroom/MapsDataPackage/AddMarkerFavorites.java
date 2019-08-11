@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 
 import com.eliorcohen123456.locationprojectroom.R;
 
-public class AddMarkerFavorites extends AppCompatActivity {
+public class AddMarkerFavorites extends AppCompatActivity implements View.OnClickListener {
 
     private double latS;
     private double lngS;
@@ -32,8 +32,8 @@ public class AddMarkerFavorites extends AppCompatActivity {
         setContentView(R.layout.add_marker_me);
 
         initUI();
+        initListeners();
         getData();
-        btnBack();
     }
 
     private void initUI() {
@@ -54,14 +54,33 @@ public class AddMarkerFavorites extends AppCompatActivity {
         btnBack = findViewById(R.id.btnBack);
     }
 
+    private void initListeners() {
+        textViewOK.setOnClickListener(this);
+        textViewShow.setOnClickListener(this);
+        btnBack.setOnClickListener(this);
+    }
+
     private void getData() {
         lat.setText(String.valueOf(latS));
         lng.setText(String.valueOf(lngS));
 
-        // Button that does the following:
-        textViewOK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        //Initialize the ImageView
+        try {
+            String picture = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="
+                    + photo.getText().toString() +
+                    "&key=" +
+                    getString(R.string.api_key_search);
+            Picasso.get().load(picture).into(imageView);
+            imageView.setVisibility(View.INVISIBLE); //Set the ImageView Invisible
+        } catch (Exception e) {
+
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.textViewOK:
                 String name1 = name.getText().toString();  // GetText of the name
                 String address1 = address.getText().toString();  // GetText of the address
                 String lat1 = lat.getText().toString();  // GetText of the lat
@@ -77,35 +96,15 @@ public class AddMarkerFavorites extends AppCompatActivity {
                 // Pass from AddMapFromInternet to ActivityFavorites
                 Intent intentAddInternetToMain = new Intent(AddMarkerFavorites.this, ActivityFavorites.class);
                 startActivity(intentAddInternetToMain);
-            }
-        });
-
-        //Initialize the ImageView
-        String picture = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="
-                + photo.getText().toString() +
-                "&key=" +
-                getString(R.string.api_key_search);
-        Picasso.get().load(picture).into(imageView);
-        imageView.setVisibility(View.INVISIBLE); //Set the ImageView Invisible
-
-        // Button to show the ImageView
-        textViewShow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.textViewShow:
                 photo.setVisibility(View.INVISIBLE);  // Canceling the show of URL
                 imageView.setVisibility(View.VISIBLE);  // Show the ImageView
-            }
-        });
-    }
-
-    private void btnBack() {
-        // Button are back to the previous activity
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.btnBack:
                 onBackPressed();
-            }
-        });
+                break;
+        }
     }
 
 }

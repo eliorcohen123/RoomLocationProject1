@@ -63,7 +63,7 @@ import java.util.List;
 import com.eliorcohen123456.locationprojectroom.CustomAdapterPackage.CustomInfoWindowGoogleMapFavorites;
 import com.eliorcohen123456.locationprojectroom.R;
 
-public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback, IPlacesDataReceived {
+public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback, View.OnClickListener, IPlacesDataReceived {
 
     private PlaceViewModelFavorites mPlacesViewModel;
     private GoogleMap mGoogleMap;
@@ -129,6 +129,15 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
         setHasOptionsMenu(true);
     }
 
+    private void initListeners() {
+        num1.setOnClickListener(this);
+        num2.setOnClickListener(this);
+        num3.setOnClickListener(this);
+        num4.setOnClickListener(this);
+        num5.setOnClickListener(this);
+        btnOpenList.setOnClickListener(this);
+    }
+
     private void initLocation() {
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         criteria = new Criteria();
@@ -145,56 +154,6 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                     }
                 })
                 .show();
-
-        num1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NONE);
-            }
-        });
-
-        num2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-            }
-        });
-
-        num3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mGoogleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-            }
-        });
-
-        num4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mGoogleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-            }
-        });
-
-        num5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mGoogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-            }
-        });
-
-        btnOpenList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isClicked) {
-                    linearList.setVisibility(View.VISIBLE);
-                    setFadeAnimationTrue(linearList);
-                    isClicked = false;
-                } else {
-                    linearList.setVisibility(View.GONE);
-                    setFadeAnimationFalse(linearList);
-                    isClicked = true;
-                }
-            }
-        });
     }
 
     private void getData() {
@@ -561,6 +520,38 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
         anim = new AlphaAnimation(1.0f, 0.0f);
         anim.setDuration(1500);
         linearList.startAnimation(anim);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.imageMe1:
+                mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NONE);
+                break;
+            case R.id.imageMe2:
+                mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                break;
+            case R.id.imageMe3:
+                mGoogleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                break;
+            case R.id.imageMe4:
+                mGoogleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                break;
+            case R.id.imageMe5:
+                mGoogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                break;
+            case R.id.btnOpenList:
+                if (isClicked) {
+                    linearList.setVisibility(View.VISIBLE);
+                    setFadeAnimationTrue(linearList);
+                    isClicked = false;
+                } else {
+                    linearList.setVisibility(View.GONE);
+                    setFadeAnimationFalse(linearList);
+                    isClicked = true;
+                }
+                break;
+        }
     }
 
 }
