@@ -60,6 +60,7 @@ public class NetWorkDataProviderSearch {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
             // Tablet/Phone mode
             DisplayMetrics metrics = new DisplayMetrics();
             ((WindowManager) NearByApplication.getApplication().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(metrics);
@@ -134,6 +135,7 @@ public class NetWorkDataProviderSearch {
                     }
                 }
             }
+
             return mIPlacesDataReceived;
         }
 
@@ -144,10 +146,11 @@ public class NetWorkDataProviderSearch {
             stuLocationData = response.results;
             ArrayList<PlaceModel> arrList = new ArrayList<>();
             arrList.addAll(stuLocationData);
+
             return arrList;
         }
 
-        public class LocationResponse {
+        private class LocationResponse {
 
             private List<PlaceModel> results;
 

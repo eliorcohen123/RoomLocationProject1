@@ -47,6 +47,7 @@ public class NetWorkDataProviderFavorites {
                 }
             }
             placeRepository.insertPlace(listPlaces);
+
             return mIPlacesDataReceived;
         }
 

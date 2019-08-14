@@ -46,6 +46,7 @@ public class NetWorkDataProviderHistory {
                 }
             }
             placeRepositorySearch.insertPlace(listPlaces);
+
             return mIPlacesDataReceived;
         }
 
