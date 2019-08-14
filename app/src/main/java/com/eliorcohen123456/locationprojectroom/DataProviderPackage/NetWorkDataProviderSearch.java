@@ -140,7 +140,7 @@ public class NetWorkDataProviderSearch {
         }
 
         private ArrayList<PlaceModel> getLocationListFromJson(String jsonResponse) {
-            List<PlaceModel> stuLocationData = new ArrayList<PlaceModel>();
+            List<PlaceModel> stuLocationData;
             Gson gson = new GsonBuilder().create();
             LocationResponse response = gson.fromJson(jsonResponse, LocationResponse.class);
             stuLocationData = response.results;
