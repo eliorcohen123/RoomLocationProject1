@@ -79,7 +79,7 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
     private FragmentMapFavorites fragmentMapFavorites;
     private List<Marker> markers = new ArrayList<Marker>();
     private CoordinatorLayout coordinatorLayout;
-    private NetworkDataProviderFavorites netWorkDataProviderFavorites;
+    private NetworkDataProviderFavorites networkDataProviderFavorites;
     private LinearLayout linearList;
     private boolean isClicked;
     private AlphaAnimation anim;
@@ -124,7 +124,7 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
 
         isClicked = true;
 
-        netWorkDataProviderFavorites = new NetworkDataProviderFavorites();
+        networkDataProviderFavorites = new NetworkDataProviderFavorites();
 
         setHasOptionsMenu(true);
     }
@@ -158,7 +158,7 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
 
     private void getData() {
         try {
-            netWorkDataProviderFavorites.getPlacesByLocation(fragmentMapFavorites);
+            networkDataProviderFavorites.getPlacesByLocation(fragmentMapFavorites);
         } catch (Exception e) {
 
         }
