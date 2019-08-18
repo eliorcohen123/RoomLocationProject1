@@ -39,7 +39,7 @@ import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlacesFavor
 import com.eliorcohen123456.locationprojectroom.CustomAdapterPackage.PlacesListAdapterFavorites;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.IPlacesDataReceived;
 import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
-import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetWorkDataProviderFavorites;
+import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetworkDataProviderFavorites;
 
 public class FragmentFavorites extends Fragment implements IPlacesDataReceived, NavigationView.OnNavigationItemSelectedListener {
 
@@ -53,7 +53,7 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
     private Toolbar toolbar;
     private NavigationView navigationView;
     private ItemDecoration itemDecoration;
-    private NetWorkDataProviderFavorites netWorkDataProviderFavorites;
+    private NetworkDataProviderFavorites netWorkDataProviderFavorites;
 
     @Nullable
     @Override
@@ -78,7 +78,7 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
 
         fragmentFavorites = this;
 
-        netWorkDataProviderFavorites = new NetWorkDataProviderFavorites();
+        netWorkDataProviderFavorites = new NetworkDataProviderFavorites();
 
         p = new Paint();
     }

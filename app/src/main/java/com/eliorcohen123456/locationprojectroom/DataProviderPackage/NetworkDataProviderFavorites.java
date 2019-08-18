@@ -11,7 +11,7 @@ import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.IPlacesDataRec
 import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
 import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplication;
 
-public class NetWorkDataProviderFavorites {
+public class NetworkDataProviderFavorites {
 
     public void getPlacesByLocation(IPlacesDataReceived resultListener_) {
 

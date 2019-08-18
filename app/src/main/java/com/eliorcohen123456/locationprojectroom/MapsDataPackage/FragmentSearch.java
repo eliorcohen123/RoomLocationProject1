@@ -47,8 +47,8 @@ import com.eliorcohen123456.locationprojectroom.R;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlacesSearch;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.IPlacesDataReceived;
 import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
-import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetWorkDataProviderHistory;
-import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetWorkDataProviderSearch;
+import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetworkDataProviderHistory;
+import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetworkDataProviderSearch;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceViewModelSearch;
 
 public class FragmentSearch extends Fragment implements View.OnClickListener, IPlacesDataReceived {
@@ -63,8 +63,8 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
     private ItemDecoration itemDecoration;
     private Button btnBank, btnBar, btnBeauty, btnBooks, btnBusStation, btnCars, btnClothing, btnDoctor, btnGasStation,
             btnGym, btnJewelry, btnPark, btnRestaurant, btnSchool, btnSpa;
-    private NetWorkDataProviderSearch dataProviderSearch;
-    private NetWorkDataProviderHistory dataProviderHistory;
+    private NetworkDataProviderSearch dataProviderSearch;
+    private NetworkDataProviderHistory dataProviderHistory;
     private SharedPreferences prefsSeek, settingsQuery, settingsType;
     private SharedPreferences.Editor editorQuery, editorType;
     private int myRadius;
@@ -105,8 +105,8 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
 
         mFragmentSearch = this;
 
-        dataProviderHistory = new NetWorkDataProviderHistory();
-        dataProviderSearch = new NetWorkDataProviderSearch();
+        dataProviderHistory = new NetworkDataProviderHistory();
+        dataProviderSearch = new NetworkDataProviderSearch();
         mAdapterSearch = new PlacesListAdapterSearch(getContext());
 
         prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());

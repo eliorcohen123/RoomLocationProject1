@@ -10,7 +10,7 @@ import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceRepositorySearch;
 import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplication;
 
-public class NetWorkDataProviderHistory {
+public class NetworkDataProviderHistory {
 
     public void getPlacesByLocation(IPlacesDataReceived resultListener_) {
 

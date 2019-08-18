@@ -40,8 +40,8 @@ import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplic
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.IPlacesDataReceived;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceViewModelSearch;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlacesSearch;
-import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetWorkDataProviderHistory;
-import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetWorkDataProviderSearch;
+import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetworkDataProviderHistory;
+import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetworkDataProviderSearch;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -84,8 +84,8 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
     private FragmentMapSearch fragmentMapSearch;
     private List<Marker> markers = new ArrayList<Marker>();
     private CoordinatorLayout coordinatorLayout;
-    private NetWorkDataProviderSearch dataProviderSearch;
-    private NetWorkDataProviderHistory dataProviderHistory;
+    private NetworkDataProviderSearch dataProviderSearch;
+    private NetworkDataProviderHistory dataProviderHistory;
     private SharedPreferences prefsSeek, settingsQuery, settingsType;
     private TextView disNearBy, disSearch;
     private String myStringQuery, myStringType;
@@ -137,8 +137,8 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
 
         isClicked = true;
 
-        dataProviderHistory = new NetWorkDataProviderHistory();
-        dataProviderSearch = new NetWorkDataProviderSearch();
+        dataProviderHistory = new NetworkDataProviderHistory();
+        dataProviderSearch = new NetworkDataProviderSearch();
     }
 
     private void initListeners() {

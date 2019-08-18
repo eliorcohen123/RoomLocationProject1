@@ -31,7 +31,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class NetWorkDataProviderSearch {
+public class NetworkDataProviderSearch {
 
     public void getPlacesByLocation(String url, double radius, String type, IPlacesDataReceived resultListener_) {
 
