@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Entity(tableName = "places_table_search")
 public class PlacesSearch implements Serializable {
 
-    public PlacesSearch(@NonNull String mName, double mLat, double mLng, @NonNull String mAddress, String mPhoto, boolean mIsLastSearch, boolean mIsFavorite, String mDistance, double mRating, int mUser_ratings_total) {
+    public PlacesSearch(@NonNull String mName, double mLat, double mLng, @NonNull String mAddress, String mPhoto, boolean mIsLastSearch, boolean mIsFavorite, String mDistance, double mRating, int mUser_ratings_total, boolean mIs_open) {
         this.mName = mName;
         this.mLat = mLat;
         this.mLng = mLng;
@@ -21,6 +21,7 @@ public class PlacesSearch implements Serializable {
         this.mDistance = mDistance;
         this.mRating = mRating;
         this.mUser_ratings_total = mUser_ratings_total;
+        this.mIs_open = mIs_open;
     }
 
     public PlacesSearch() {
@@ -60,6 +61,9 @@ public class PlacesSearch implements Serializable {
 
     @ColumnInfo(name = "isFavorite")
     private boolean mIsFavorite;
+
+    @ColumnInfo(name = "opening_hours")
+    boolean mIs_open;
 
 
     public long getID() {
@@ -151,6 +155,14 @@ public class PlacesSearch implements Serializable {
 
     public void setIsFavorite(boolean mIsFavorite) {
         this.mIsFavorite = mIsFavorite;
+    }
+
+    public boolean getmIs_open() {
+        return mIs_open;
+    }
+
+    public void setmIs_open(boolean mIs_open) {
+        this.mIs_open = mIs_open;
     }
 
 }

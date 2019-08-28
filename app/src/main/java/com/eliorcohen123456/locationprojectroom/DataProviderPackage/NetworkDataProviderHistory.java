@@ -39,7 +39,7 @@ public class NetworkDataProviderHistory {
             ArrayList<PlacesSearch> listPlaces = new ArrayList<>();
             for (PlaceModel placeModel : mPlaceModels) {
                 try {
-                    PlacesSearch place = new PlacesSearch(placeModel.getName(), placeModel.getGeometry().getLocation().getLat(), placeModel.getGeometry().getLocation().getLng(), placeModel.getVicinity(), placeModel.getPhotos().get(0).getPhoto_reference(), false, true, placeModel.getDistance(), placeModel.getRating(), placeModel.getUser_ratings_total());
+                    PlacesSearch place = new PlacesSearch(placeModel.getName(), placeModel.getGeometry().getLocation().getLat(), placeModel.getGeometry().getLocation().getLng(), placeModel.getVicinity(), placeModel.getPhotos().get(0).getPhoto_reference(), false, true, placeModel.getDistance(), placeModel.getRating(), placeModel.getUser_ratings_total(), placeModel.getOpening_hours());
                     listPlaces.add(place);
                 } catch (Exception e) {
 

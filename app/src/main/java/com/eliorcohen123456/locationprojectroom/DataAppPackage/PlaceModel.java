@@ -79,12 +79,12 @@ public class PlaceModel implements Serializable {
         this.geometry = geometry;
     }
 
-    public OpeningHours getOpening_hours() {
-        return opening_hours;
+    public boolean getOpening_hours() {
+        return opening_hours.isOpen_now();
     }
 
     public void setOpening_hours(OpeningHours opening_hours) {
-        this.opening_hours = opening_hours;
+        this.opening_hours.isOpen_now();
     }
 
 }
