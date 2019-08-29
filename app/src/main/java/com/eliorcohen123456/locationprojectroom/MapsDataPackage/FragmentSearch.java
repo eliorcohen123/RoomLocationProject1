@@ -85,11 +85,10 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
     private int myRadius, myPage = 1;
     private ImageView imagePre, imageNext, imagePreFirst;
     private TextView textPage;
-    private String hasPage, myStringQuery1, myStringQuery2, myStringQuery3, pageTokenPre;
-    private static Location location;
-    private static LocationManager locationManager;
-    private static Criteria criteria;
-    private static String provider;
+    private String hasPage, myStringQuery1, myStringQuery2, myStringQuery3, pageTokenPre, provider;
+    private Location location;
+    private LocationManager locationManager;
+    private Criteria criteria;
 
     @Nullable
     @Override
