@@ -79,7 +79,6 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
     private Location location;
     private LocationManager locationManager;
     private Criteria criteria;
-    private String provider;
     private ImageView moovit, gett, waze, num1, num2, num3, num4, num5, btnOpenList;
     private FragmentMapSearch fragmentMapSearch;
     private List<Marker> markers = new ArrayList<Marker>();
@@ -88,7 +87,7 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
     private NetworkDataProviderHistory dataProviderHistory;
     private SharedPreferences prefsSeek, settingsQuery, settingsType, settingsPage;
     private TextView disNearBy, disSearch;
-    private String myStringQuery, myStringType, myStringPage;
+    private String myStringQuery, myStringType, myStringPage, provider;
     private LinearLayout linearList;
     private boolean isClicked;
     private AlphaAnimation anim;
