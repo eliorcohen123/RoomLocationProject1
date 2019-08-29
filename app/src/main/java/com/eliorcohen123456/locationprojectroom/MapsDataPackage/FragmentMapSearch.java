@@ -186,9 +186,9 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
                 myStringPage = settingsPage.getString("mystringpagepass", "");
 
                 if (settingsQuery.contains("mystringquery") && settingsType.contains("mystringtype") && settingsPage.contains("mystringpagepass")) {
-                    dataProviderSearch.getPlacesByLocation(myStringQuery, myRadius, myStringType, myStringPage, fragmentMapSearch);
+                    dataProviderSearch.getPlacesByLocation(myRadius, myStringPage, myStringType, myStringQuery, fragmentMapSearch);
                 } else {
-                    dataProviderSearch.getPlacesByLocation("", myRadius, "", "", fragmentMapSearch);
+                    dataProviderSearch.getPlacesByLocation(myRadius, "", "", "", fragmentMapSearch);
                 }
             }
         } catch (Exception e) {

@@ -453,7 +453,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
             editorPagePass.putString("mystringpagepass", pageToken);
             editorPagePass.apply();
 
-            dataProviderSearch.getPlacesByLocation(query, myRadius, type, pageToken, mFragmentSearch);
+            dataProviderSearch.getPlacesByLocation(myRadius, pageToken, type, query, mFragmentSearch);
 
             locationManager = (LocationManager) NearByApplication.getApplication().getSystemService(Context.LOCATION_SERVICE);
             criteria = new Criteria();
