@@ -86,9 +86,9 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
     private CoordinatorLayout coordinatorLayout;
     private NetworkDataProviderSearch dataProviderSearch;
     private NetworkDataProviderHistory dataProviderHistory;
-    private SharedPreferences prefsSeek, settingsQuery, settingsType;
+    private SharedPreferences prefsSeek, settingsQuery, settingsType, settingsPage;
     private TextView disNearBy, disSearch;
-    private String myStringQuery, myStringType;
+    private String myStringQuery, myStringType, myStringPage;
     private LinearLayout linearList;
     private boolean isClicked;
     private AlphaAnimation anim;
@@ -183,10 +183,13 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
                 settingsType = getActivity().getSharedPreferences("mysettingstype", Context.MODE_PRIVATE);
                 myStringType = settingsType.getString("mystringtype", "");
 
-                if (settingsQuery.contains("mystringquery") && settingsType.contains("mystringtype")) {
-                    dataProviderSearch.getPlacesByLocation(myStringQuery, myRadius, myStringType, fragmentMapSearch);
+                settingsPage = getActivity().getSharedPreferences("mysettingspagepass", Context.MODE_PRIVATE);
+                myStringPage = settingsPage.getString("mystringpagepass", "");
+
+                if (settingsQuery.contains("mystringquery") && settingsType.contains("mystringtype") && settingsPage.contains("mystringpagepass")) {
+                    dataProviderSearch.getPlacesByLocation(myStringQuery, myRadius, myStringType, myStringPage, fragmentMapSearch);
                 } else {
-                    dataProviderSearch.getPlacesByLocation("", myRadius, "", fragmentMapSearch);
+                    dataProviderSearch.getPlacesByLocation("", myRadius, "", "", fragmentMapSearch);
                 }
             }
         } catch (Exception e) {

@@ -1,5 +1,6 @@
 package com.eliorcohen123456.locationprojectroom.MapsDataPackage;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.arch.lifecycle.Observer;
@@ -7,9 +8,13 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -19,6 +24,7 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -34,12 +40,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.eliorcohen123456.locationprojectroom.CustomAdapterPackage.PlacesListAdapterSearch;
 import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.ItemDecoration;
 import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplication;
@@ -50,6 +63,8 @@ import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
 import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetworkDataProviderHistory;
 import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetworkDataProviderSearch;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceViewModelSearch;
+
+import org.json.JSONObject;
 
 public class FragmentSearch extends Fragment implements View.OnClickListener, IPlacesDataReceived {
 
@@ -65,9 +80,16 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
             btnGym, btnJewelry, btnPark, btnRestaurant, btnSchool, btnSpa;
     private NetworkDataProviderSearch dataProviderSearch;
     private NetworkDataProviderHistory dataProviderHistory;
-    private SharedPreferences prefsSeek, settingsQuery, settingsType;
-    private SharedPreferences.Editor editorQuery, editorType;
-    private int myRadius;
+    private SharedPreferences prefsSeek, settingsQuery, settingsType, settingsPagePass, prefsPage, prefsPre;
+    private SharedPreferences.Editor editorQuery, editorType, editorPagePass, editorPage, editorPre;
+    private int myRadius, myPage = 1;
+    private ImageView imagePre, imageNext, imagePreFirst;
+    private TextView textPage;
+    private String hasPage, myStringQuery1, myStringQuery2, myStringQuery3, pageTokenPre;
+    private static Location location;
+    private static LocationManager locationManager;
+    private static Criteria criteria;
+    private static String provider;
 
     @Nullable
     @Override
@@ -98,10 +120,16 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
         btnRestaurant = mView.findViewById(R.id.btnRestaurant);
         btnSchool = mView.findViewById(R.id.btnSchool);
         btnSpa = mView.findViewById(R.id.btnSpa);
+        imagePre = mView.findViewById(R.id.imagePre);
+        imageNext = mView.findViewById(R.id.imageNext);
+        imagePreFirst = mView.findViewById(R.id.imagePreFirst);
+        textPage = mView.findViewById(R.id.textPage);
 
         swipeRefreshLayout = mView.findViewById(R.id.swipe_containerFrag);  // ID of the SwipeRefreshLayout of FragmentSearch
 
         recyclerView = mView.findViewById(R.id.places_list_search);
+
+        getClearPrefs();
 
         mFragmentSearch = this;
 
@@ -116,6 +144,9 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
 
         settingsType = getActivity().getSharedPreferences("mysettingstype", Context.MODE_PRIVATE);
         editorType = settingsType.edit();
+
+        settingsPagePass = getActivity().getSharedPreferences("mysettingspagepass", Context.MODE_PRIVATE);
+        editorPagePass = settingsPagePass.edit();
 
         setHasOptionsMenu(true);
     }
@@ -136,6 +167,21 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
         btnRestaurant.setOnClickListener(this);
         btnSchool.setOnClickListener(this);
         btnSpa.setOnClickListener(this);
+        imageNext.setOnClickListener(this);
+        imagePre.setOnClickListener(this);
+        imagePreFirst.setOnClickListener(this);
+    }
+
+    private void getClearPrefs() {
+        prefsPage = getContext().getSharedPreferences("mysettingsquery", Context.MODE_PRIVATE);
+        prefsPage.edit().clear().apply();
+
+        editorPage = prefsPage.edit();
+
+        prefsPre = getContext().getSharedPreferences("mysettingsquerypre", Context.MODE_PRIVATE);
+        prefsPre.edit().clear().apply();
+
+        editorPre = prefsPre.edit();
     }
 
     private void myRecyclerView() {
@@ -186,11 +232,17 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
     public void onResume() {
         super.onResume();
 
-        getSearch();
+        getResumeTypeQuery();
     }
 
-    private void getSearch() {
-        getTypeQuery("", "");
+    private void getResumeTypeQuery() {
+        getCheckBtnSearch("", "");
+    }
+
+    private void getDataPrefsPage(String type, String query) {
+        editorPage.putString("mystringquery2", type);
+        editorPage.putString("mystringquery3", query);
+        editorPage.apply();
     }
 
     // Sets off the menu of activity_menu
@@ -232,12 +284,14 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    getTypeQuery("", query);
                     return true;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
+                    getCheckBtnSearch("", newText);
+
+                    stopShowingProgressBar();
                     return true;
                 }
             });
@@ -251,7 +305,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
             case R.id.action_search:
                 break;
             case R.id.nearByMe:
-                getTypeQuery("", "");
+                getCheckBtnSearch("", "");
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -259,56 +313,128 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
 
     @Override
     public void onClick(View v) {
+        myStringQuery1 = prefsPage.getString("mystringquery1", "");
+        myStringQuery2 = prefsPage.getString("mystringquery2", "");
+        myStringQuery3 = prefsPage.getString("mystringquery3", "");
         switch (v.getId()) {
             case R.id.btnBank:
-                getTypeQuery("bank", "");
+                getCheckBtnSearch("bank", "");
                 break;
             case R.id.btnBar:
-                getTypeQuery("bar|night_club", "");
+                getCheckBtnSearch("bar|night_club", "");
                 break;
             case R.id.btnBeauty:
-                getTypeQuery("beauty_salon|hair_care", "");
+                getCheckBtnSearch("beauty_salon|hair_care", "");
                 break;
             case R.id.btnBooks:
-                getTypeQuery("book_store|library", "");
+                getCheckBtnSearch("book_store|library", "");
                 break;
             case R.id.btnBusStation:
-                getTypeQuery("bus_station", "");
+                getCheckBtnSearch("bus_station", "");
                 break;
             case R.id.btnCars:
-                getTypeQuery("car_dealer|car_rental|car_repair|car_wash", "");
+                getCheckBtnSearch("car_dealer|car_rental|car_repair|car_wash", "");
                 break;
             case R.id.btnClothing:
-                getTypeQuery("clothing_store", "");
+                getCheckBtnSearch("clothing_store", "");
                 break;
             case R.id.btnDoctor:
-                getTypeQuery("doctor", "");
+                getCheckBtnSearch("doctor", "");
                 break;
             case R.id.btnGasStation:
-                getTypeQuery("gas_station", "");
+                getCheckBtnSearch("gas_station", "");
                 break;
             case R.id.btnGym:
-                getTypeQuery("gym", "");
+                getCheckBtnSearch("gym", "");
                 break;
             case R.id.btnJewelry:
-                getTypeQuery("jewelry_store", "");
+                getCheckBtnSearch("jewelry_store", "");
                 break;
             case R.id.btnPark:
-                getTypeQuery("park|amusement_park|parking|rv_park", "");
+                getCheckBtnSearch("park|amusement_park|parking|rv_park", "");
                 break;
             case R.id.btnRestaurant:
-                getTypeQuery("food|restaurant|cafe|bakery", "");
+                getCheckBtnSearch("food|restaurant|cafe|bakery", "");
                 break;
             case R.id.btnSchool:
-                getTypeQuery("school", "");
+                getCheckBtnSearch("school", "");
                 break;
             case R.id.btnSpa:
-                getTypeQuery("spa", "");
+                getCheckBtnSearch("spa", "");
+                break;
+            case R.id.imageNext:
+                getTypeQuery(myStringQuery2, myStringQuery3, myStringQuery1);
+
+                myPage++;
+
+                getAllCheckPage(myPage);
+                break;
+            case R.id.imagePre:
+                if (myPage == 2) {
+                    pageTokenPre = "";
+                } else {
+                    pageTokenPre = prefsPre.getString("mystringquerypre1", "");
+                }
+
+                getTypeQuery(myStringQuery2, myStringQuery3, pageTokenPre);
+
+                myPage--;
+
+                getAllCheckPage(myPage);
+                break;
+            case R.id.imagePreFirst:
+                getTypeQuery(myStringQuery2, myStringQuery3, "");
+
+                myPage = 1;
+
+                getAllCheckPage(myPage);
                 break;
         }
     }
 
-    private void getTypeQuery(String type, String query) {
+    private void getCheckBtnSearch(String type, String query) {
+        getClearPrefs();
+        getTypeQuery(type, query, "");
+        getDataPrefsPage(type, query);
+
+        myPage = 1;
+
+        getAllCheckPage(myPage);
+    }
+
+    private void getAllCheckPage(int page) {
+        getPage0();
+        getPage1();
+        getPageText(page);
+    }
+
+    private void getPage0() {
+        if (myPage <= 0) {
+            myPage = 1;
+        } else {
+            imagePre.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void getPage1() {
+        if (myPage == 1) {
+            imagePre.setVisibility(View.GONE);
+        } else {
+            imagePre.setVisibility(View.VISIBLE);
+        }
+
+        if (myPage > 2) {
+            imagePreFirst.setVisibility(View.VISIBLE);
+        } else {
+            imagePreFirst.setVisibility(View.GONE);
+        }
+    }
+
+    private void getPageText(int page) {
+        textPage.setText(String.valueOf(page));
+    }
+
+    private void getTypeQuery(String type, String query, String pageToken) {
         if (!isConnected(getContext())) {
             dataProviderHistory.getPlacesByLocation(mFragmentSearch);
             buildDialog(getContext()).show();
@@ -325,7 +451,71 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
             editorType.putString("mystringtype", type);
             editorType.apply();
 
-            dataProviderSearch.getPlacesByLocation(query, myRadius, type, mFragmentSearch);
+            editorPagePass.putString("mystringpagepass", pageToken);
+            editorPagePass.apply();
+
+            dataProviderSearch.getPlacesByLocation(query, myRadius, type, pageToken, mFragmentSearch);
+
+            locationManager = (LocationManager) NearByApplication.getApplication().getSystemService(Context.LOCATION_SERVICE);
+            criteria = new Criteria();
+            provider = locationManager.getBestProvider(criteria, true);
+            if (ActivityCompat.checkSelfPermission(NearByApplication.getApplication(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.checkSelfPermission(NearByApplication.getApplication(), Manifest.permission.ACCESS_COARSE_LOCATION);
+            }// TODO: Consider calling
+//    ActivityCompat#requestPermissions
+// here to request the missing permissions, and then overriding
+//   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                                          int[] grantResults)
+// to handle the case where the user grants the permission. See the documentation
+// for ActivityCompat#requestPermissions for more details.
+            if (provider != null) {
+                location = locationManager.getLastKnownLocation(provider);
+                // Search maps from that URL and put them in the SQLiteHelper
+                if (location != null) {
+                    // Get Pages
+                    StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                            "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
+                                    location.getLatitude() + "," + location.getLongitude() +
+                                    "&radius=" + myRadius + "&sensor=true&rankby=prominence&pagetoken="
+                                    + pageToken +
+                                    "&types="
+                                    + type +
+                                    "&keyword="
+                                    + query +
+                                    "&key=" +
+                                    getString(R.string.api_key_search), new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject mainObj = new JSONObject(response);
+                                if (mainObj.has("next_page_token")) {
+                                    imageNext.setVisibility(View.VISIBLE);
+                                    hasPage = mainObj.getString("next_page_token");
+                                } else {
+                                    imageNext.setVisibility(View.GONE);
+                                    hasPage = "";
+                                }
+                                editorPage.putString("mystringquery1", hasPage);
+                                editorPage.apply();
+
+                                if (myPage == 1) {
+                                    editorPre.putString("mystringquerypre1", hasPage);
+                                    editorPre.apply();
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    });
+                    RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+                    requestQueue.add(stringRequest);
+                }
+            }
         }
     }
 

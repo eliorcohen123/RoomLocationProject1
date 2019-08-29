@@ -33,7 +33,7 @@ import okhttp3.Response;
 
 public class NetworkDataProviderSearch {
 
-    public void getPlacesByLocation(String url, double radius, String type, IPlacesDataReceived resultListener_) {
+    public void getPlacesByLocation(String url, double radius, String type, String page, IPlacesDataReceived resultListener_) {
 
         //go get data from google API
         //take time...
@@ -41,7 +41,7 @@ public class NetworkDataProviderSearch {
         //Data received -> resultListener_
 
         GetPlacesByLocationAsyncTask getPlacesByLocationAsyncTask = new GetPlacesByLocationAsyncTask(resultListener_);
-        getPlacesByLocationAsyncTask.execute(url, String.valueOf(radius), type);
+        getPlacesByLocationAsyncTask.execute(url, String.valueOf(radius), type, page);
     }
 
     private class GetPlacesByLocationAsyncTask extends AsyncTask<String, Integer, IPlacesDataReceived> {
@@ -98,7 +98,8 @@ public class NetworkDataProviderSearch {
                 if (location != null) {
                     urlQuery = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="
                             + location.getLatitude() + "," + location.getLongitude() + "&radius=" + urls[1] +
-                            "&rankby=prominence&types=" + urls[2] + "&keyword=" + urls[0] + "&key=" +
+                            "&rankby=prominence&pagetoken="
+                            + urls[3] + "&types=" + urls[2] + "&keyword=" + urls[0] + "&key=" +
                             NearByApplication.getApplication().getString(R.string.api_key_search);
                     Request request = new Request.Builder()
                             .url(urlQuery)
