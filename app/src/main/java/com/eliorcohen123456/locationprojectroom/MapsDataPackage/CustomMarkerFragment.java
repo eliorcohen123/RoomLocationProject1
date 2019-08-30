@@ -31,7 +31,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import com.eliorcohen123456.locationprojectroom.R;
 
-public class CustomFragment extends Fragment implements OnMapReadyCallback {
+public class CustomMarkerFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mGoogleMap;
     private MapView mMapView;
