@@ -85,12 +85,14 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
     private CoordinatorLayout coordinatorLayout;
     private NetworkDataProviderSearch dataProviderSearch;
     private NetworkDataProviderHistory dataProviderHistory;
-    private SharedPreferences prefsSeek, settingsQuery, settingsType, settingsPage;
+    private SharedPreferences prefsSeek, settingsQuery, settingsType, settingsPage, prefsOpen;
     private TextView disNearBy, disSearch;
     private String myStringQuery, myStringType, myStringPage, provider;
     private LinearLayout linearList;
     private boolean isClicked;
     private AlphaAnimation anim;
+    private int myRadius;
+    private String myOpen;
 
     @Nullable
     @Override
@@ -173,11 +175,15 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
                 dataProviderHistory.getPlacesByLocation(fragmentMapSearch);
                 buildDialog(getContext()).show();
             } else {
-                prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
-                int myRadius = prefsSeek.getInt("seek", 5000);
-
                 settingsQuery = getActivity().getSharedPreferences("mysettingsquery", Context.MODE_PRIVATE);
                 myStringQuery = settingsQuery.getString("mystringquery", "");
+
+                if (myStringQuery.equals("")) {
+                    prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
+                    myRadius = prefsSeek.getInt("seek", 5000);
+                } else {
+                    myRadius = 50000;
+                }
 
                 settingsType = getActivity().getSharedPreferences("mysettingstype", Context.MODE_PRIVATE);
                 myStringType = settingsType.getString("mystringtype", "");
@@ -185,10 +191,13 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
                 settingsPage = getActivity().getSharedPreferences("mysettingspagepass", Context.MODE_PRIVATE);
                 myStringPage = settingsPage.getString("mystringpagepass", "");
 
+                prefsOpen = PreferenceManager.getDefaultSharedPreferences(getContext());
+                myOpen = prefsOpen.getString("open", "");
+
                 if (settingsQuery.contains("mystringquery") && settingsType.contains("mystringtype") && settingsPage.contains("mystringpagepass")) {
-                    dataProviderSearch.getPlacesByLocation(myRadius, myStringPage, myStringType, myStringQuery, fragmentMapSearch);
+                    dataProviderSearch.getPlacesByLocation(myRadius, myStringPage, myOpen, myStringType, myStringQuery, fragmentMapSearch);
                 } else {
-                    dataProviderSearch.getPlacesByLocation(myRadius, "", "", "", fragmentMapSearch);
+                    dataProviderSearch.getPlacesByLocation(myRadius, "", myOpen, "", "", fragmentMapSearch);
                 }
             }
         } catch (Exception e) {

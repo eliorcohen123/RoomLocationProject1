@@ -66,6 +66,8 @@ import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceViewModel
 
 import org.json.JSONObject;
 
+import eliorcohen.com.googlemapsapi.GoogleMapsApi;
+
 public class FragmentSearch extends Fragment implements View.OnClickListener, IPlacesDataReceived {
 
     private PlaceViewModelSearch mPlacesViewModelSearch;
@@ -80,15 +82,16 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
             btnGym, btnJewelry, btnPark, btnRestaurant, btnSchool, btnSpa;
     private NetworkDataProviderSearch dataProviderSearch;
     private NetworkDataProviderHistory dataProviderHistory;
-    private SharedPreferences prefsSeek, settingsQuery, settingsType, settingsPagePass, prefsPage, prefsPre;
+    private SharedPreferences prefsSeek, settingsQuery, settingsType, settingsPagePass, prefsPage, prefsPre, prefsOpen;
     private SharedPreferences.Editor editorQuery, editorType, editorPagePass, editorPage, editorPre;
     private int myRadius, myPage = 1;
     private ImageView imagePre, imageNext, imagePreFirst;
     private TextView textPage;
-    private String hasPage, myStringQueryPage, myStringQueryType, myStringQueryQuery, pageTokenPre, provider;
+    private String hasPage, myStringQueryPage, myStringQueryType, myStringQueryQuery, pageTokenPre, provider, myOpen;
     private Location location;
     private LocationManager locationManager;
     private Criteria criteria;
+    private GoogleMapsApi googleMapsApi;
 
     @Nullable
     @Override
@@ -135,8 +138,10 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
         dataProviderHistory = new NetworkDataProviderHistory();
         dataProviderSearch = new NetworkDataProviderSearch();
         mAdapterSearch = new PlacesListAdapterSearch(getContext());
+        googleMapsApi = new GoogleMapsApi();
 
         prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
+        prefsOpen = PreferenceManager.getDefaultSharedPreferences(getContext());
 
         settingsQuery = getActivity().getSharedPreferences("mysettingsquery", Context.MODE_PRIVATE);
         editorQuery = settingsQuery.edit();
@@ -444,6 +449,8 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
                 myRadius = 50000;
             }
 
+            myOpen = prefsOpen.getString("open", "");
+
             editorQuery.putString("mystringquery", query);
             editorQuery.apply();
 
@@ -453,7 +460,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
             editorPagePass.putString("mystringpagepass", pageToken);
             editorPagePass.apply();
 
-            dataProviderSearch.getPlacesByLocation(myRadius, pageToken, type, query, mFragmentSearch);
+            dataProviderSearch.getPlacesByLocation(myRadius, pageToken, myOpen, type, query, mFragmentSearch);
 
             locationManager = (LocationManager) NearByApplication.getApplication().getSystemService(Context.LOCATION_SERVICE);
             criteria = new Criteria();
@@ -473,16 +480,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
                 if (location != null) {
                     // Get Pages
                     StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                            "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
-                                    location.getLatitude() + "," + location.getLongitude() +
-                                    "&radius=" + myRadius + "&sensor=true&rankby=prominence&pagetoken="
-                                    + pageToken +
-                                    "&types="
-                                    + type +
-                                    "&keyword="
-                                    + query +
-                                    "&key=" +
-                                    getString(R.string.api_key_search), new Response.Listener<String>() {
+                            googleMapsApi.getStringGoogleMapsApi(location.getLatitude(), location.getLongitude(), myRadius, pageToken, myOpen, type, query, getString(R.string.api_key_search)), new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             try {

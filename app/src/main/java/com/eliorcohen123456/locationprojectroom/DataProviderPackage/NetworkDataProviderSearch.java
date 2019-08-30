@@ -34,7 +34,7 @@ import okhttp3.Response;
 
 public class NetworkDataProviderSearch {
 
-    public void getPlacesByLocation(int radius, String page, String type, String query, IPlacesDataReceived resultListener_) {
+    public void getPlacesByLocation(int radius, String page, String open, String type, String query, IPlacesDataReceived resultListener_) {
 
         //go get data from google API
         //take time...
@@ -42,7 +42,7 @@ public class NetworkDataProviderSearch {
         //Data received -> resultListener_
 
         GetPlacesByLocationAsyncTask getPlacesByLocationAsyncTask = new GetPlacesByLocationAsyncTask(resultListener_);
-        getPlacesByLocationAsyncTask.execute(String.valueOf(radius), page, type, query);
+        getPlacesByLocationAsyncTask.execute(String.valueOf(radius), page, open, type, query);
     }
 
     private class GetPlacesByLocationAsyncTask extends AsyncTask<String, Integer, IPlacesDataReceived> {
@@ -98,7 +98,7 @@ public class NetworkDataProviderSearch {
                 location = locationManager.getLastKnownLocation(provider);
                 // Search maps from that URL and put them in the SQLiteHelper
                 if (location != null) {
-                    urlQuery = googleMapsApi.getStringGoogleMapsApi(location.getLatitude(), location.getLongitude(), Integer.parseInt(urls[0]), urls[1], urls[2], urls[3], NearByApplication.getApplication().getString(R.string.api_key_search));
+                    urlQuery = googleMapsApi.getStringGoogleMapsApi(location.getLatitude(), location.getLongitude(), Integer.parseInt(urls[0]), urls[1], urls[2], urls[3], urls[4], NearByApplication.getApplication().getString(R.string.api_key_search));
                     Request request = new Request.Builder()
                             .url(urlQuery)
                             .build();

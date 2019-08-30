@@ -42,7 +42,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.9'
     implementation 'com.google.firebase:firebase-messaging:17.6.0'
     implementation 'com.android.support:multidex:1.0.3'
-    implementation project(':googlemapsapi')
+    implementation 'com.github.eliorcohen123:LocationProject1:1.04'
+//    implementation project(':googlemapsapi')
 
     // Room components
     implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
