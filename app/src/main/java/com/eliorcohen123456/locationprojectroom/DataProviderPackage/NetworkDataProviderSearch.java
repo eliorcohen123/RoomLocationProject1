@@ -58,7 +58,7 @@ public class NetworkDataProviderSearch {
         private double diagonalInches;
         private GoogleMapsApi googleMapsApi = new GoogleMapsApi();
 
-        // startShowingProgressBar of FragmentSearch
+        // startShowingProgressDialog of FragmentSearch
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -71,7 +71,7 @@ public class NetworkDataProviderSearch {
             float xInches = metrics.widthPixels / metrics.xdpi;
             diagonalInches = Math.sqrt(xInches * xInches + yInches * yInches);
             if (diagonalInches < 6.5) {
-                FragmentSearch.startShowingProgressBar();
+                FragmentSearch.startShowingProgressDialog();
             }
         }
 
@@ -170,7 +170,7 @@ public class NetworkDataProviderSearch {
             float xInches = metrics.widthPixels / metrics.xdpi;
             diagonalInches = Math.sqrt(xInches * xInches + yInches * yInches);
             if (diagonalInches <= 6.5) {
-                FragmentSearch.stopShowingProgressBar();
+                FragmentSearch.stopShowingProgressDialog();
             }
 
             try {
