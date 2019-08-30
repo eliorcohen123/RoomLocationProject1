@@ -27,13 +27,14 @@ import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceRepositor
 import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplication;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceViewModelSearch;
 
+import eliorcohen.com.googlemapsapi.GoogleMapsApi;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 public class NetworkDataProviderSearch {
 
-    public void getPlacesByLocation(double radius, String page, String type, String query, IPlacesDataReceived resultListener_) {
+    public void getPlacesByLocation(int radius, String page, String type, String query, IPlacesDataReceived resultListener_) {
 
         //go get data from google API
         //take time...
@@ -55,6 +56,7 @@ public class NetworkDataProviderSearch {
         private String provider;
         private String urlQuery;
         private double diagonalInches;
+        private GoogleMapsApi googleMapsApi;
 
         // startShowingProgressBar of FragmentSearch
         @Override
@@ -96,11 +98,8 @@ public class NetworkDataProviderSearch {
                 location = locationManager.getLastKnownLocation(provider);
                 // Search maps from that URL and put them in the SQLiteHelper
                 if (location != null) {
-                    urlQuery = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="
-                            + location.getLatitude() + "," + location.getLongitude() + "&radius=" + urls[0] +
-                            "&rankby=prominence&pagetoken="
-                            + urls[1] + "&types=" + urls[2] + "&keyword=" + urls[3] + "&key=" +
-                            NearByApplication.getApplication().getString(R.string.api_key_search);
+                    googleMapsApi = new GoogleMapsApi();
+                    urlQuery = googleMapsApi.getStringGoogleMapsApi(location.getLatitude(), location.getLongitude(), Integer.parseInt(urls[0]), urls[1], urls[2], urls[3], NearByApplication.getApplication().getString(R.string.api_key_search));
                     Request request = new Request.Builder()
                             .url(urlQuery)
                             .build();
