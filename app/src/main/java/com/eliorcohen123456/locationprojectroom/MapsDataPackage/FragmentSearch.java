@@ -85,7 +85,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
     private int myRadius, myPage = 1;
     private ImageView imagePre, imageNext, imagePreFirst;
     private TextView textPage;
-    private String hasPage, myStringQuery1, myStringQuery2, myStringQuery3, pageTokenPre, provider;
+    private String hasPage, myStringQueryPage, myStringQueryType, myStringQueryQuery, pageTokenPre, provider;
     private Location location;
     private LocationManager locationManager;
     private Criteria criteria;
@@ -239,8 +239,8 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
     }
 
     private void getDataPrefsPage(String type, String query) {
-        editorPage.putString("mystringquery2", type);
-        editorPage.putString("mystringquery3", query);
+        editorPage.putString("myStringQueryType", type);
+        editorPage.putString("myStringQueryQuery", query);
         editorPage.apply();
     }
 
@@ -312,9 +312,9 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
 
     @Override
     public void onClick(View v) {
-        myStringQuery1 = prefsPage.getString("mystringquery1", "");
-        myStringQuery2 = prefsPage.getString("mystringquery2", "");
-        myStringQuery3 = prefsPage.getString("mystringquery3", "");
+        myStringQueryPage = prefsPage.getString("myStringQueryPage", "");
+        myStringQueryType = prefsPage.getString("myStringQueryType", "");
+        myStringQueryQuery = prefsPage.getString("myStringQueryQuery", "");
         switch (v.getId()) {
             case R.id.btnBank:
                 getCheckBtnSearch("bank", "");
@@ -362,7 +362,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
                 getCheckBtnSearch("spa", "");
                 break;
             case R.id.imageNext:
-                getTypeQuery(myStringQuery2, myStringQuery3, myStringQuery1);
+                getTypeQuery(myStringQueryPage, myStringQueryType, myStringQueryQuery);
 
                 myPage++;
 
@@ -375,14 +375,14 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
                     pageTokenPre = prefsPre.getString("mystringquerypre1", "");
                 }
 
-                getTypeQuery(myStringQuery2, myStringQuery3, pageTokenPre);
+                getTypeQuery(pageTokenPre, myStringQueryType, myStringQueryQuery);
 
                 myPage--;
 
                 getAllCheckPage(myPage);
                 break;
             case R.id.imagePreFirst:
-                getTypeQuery(myStringQuery2, myStringQuery3, "");
+                getTypeQuery("", myStringQueryType, myStringQueryQuery);
 
                 myPage = 1;
 
@@ -393,7 +393,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
 
     private void getCheckBtnSearch(String type, String query) {
         getClearPrefs();
-        getTypeQuery(type, query, "");
+        getTypeQuery("", type, query);
         getDataPrefsPage(type, query);
 
         myPage = 1;
@@ -433,7 +433,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
         textPage.setText(String.valueOf(page));
     }
 
-    private void getTypeQuery(String type, String query, String pageToken) {
+    private void getTypeQuery(String pageToken, String type, String query) {
         if (!isConnected(getContext())) {
             dataProviderHistory.getPlacesByLocation(mFragmentSearch);
             buildDialog(getContext()).show();
@@ -494,7 +494,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
                                     imageNext.setVisibility(View.GONE);
                                     hasPage = "";
                                 }
-                                editorPage.putString("mystringquery1", hasPage);
+                                editorPage.putString("myStringQueryPage", hasPage);
                                 editorPage.apply();
 
                                 if (myPage == 1) {
