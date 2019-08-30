@@ -56,7 +56,7 @@ public class NetworkDataProviderSearch {
         private String provider;
         private String urlQuery;
         private double diagonalInches;
-        private GoogleMapsApi googleMapsApi;
+        private GoogleMapsApi googleMapsApi = new GoogleMapsApi();
 
         // startShowingProgressBar of FragmentSearch
         @Override
@@ -98,7 +98,6 @@ public class NetworkDataProviderSearch {
                 location = locationManager.getLastKnownLocation(provider);
                 // Search maps from that URL and put them in the SQLiteHelper
                 if (location != null) {
-                    googleMapsApi = new GoogleMapsApi();
                     urlQuery = googleMapsApi.getStringGoogleMapsApi(location.getLatitude(), location.getLongitude(), Integer.parseInt(urls[0]), urls[1], urls[2], urls[3], NearByApplication.getApplication().getString(R.string.api_key_search));
                     Request request = new Request.Builder()
                             .url(urlQuery)
