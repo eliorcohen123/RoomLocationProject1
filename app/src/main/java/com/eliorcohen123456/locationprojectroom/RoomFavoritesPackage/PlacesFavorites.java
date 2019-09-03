@@ -2,12 +2,13 @@ package com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
 import java.io.Serializable;
 
-@Entity(tableName = "places_table_favorites")
+@Entity(tableName = "places_table_favorites", indices = @Index(value = {"name"}, unique = true))
 public class PlacesFavorites implements Serializable {
 
     public PlacesFavorites(@NonNull String name1, @NonNull String address1, double lat2, double lng2, String photo1) {
