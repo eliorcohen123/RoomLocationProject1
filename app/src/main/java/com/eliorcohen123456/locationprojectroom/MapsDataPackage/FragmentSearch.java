@@ -106,6 +106,13 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
         return mView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getResumeTypeQuery();
+    }
+
     private void initUI() {
         btnBank = mView.findViewById(R.id.btnBank);
         btnBar = mView.findViewById(R.id.btnBar);
@@ -230,13 +237,6 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        getResumeTypeQuery();
     }
 
     private void getResumeTypeQuery() {
