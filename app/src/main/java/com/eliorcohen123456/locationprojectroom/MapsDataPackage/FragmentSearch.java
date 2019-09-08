@@ -535,9 +535,9 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
     private AlertDialog.Builder buildDialog(Context c) {
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
         builder.setTitle("No Internet Connection");
-        builder.setMessage("You need to have Mobile Data or wifi to access this. Press ok to Resume");
+        builder.setMessage("You need to have Mobile Data or Wi-Fi to access this. Press OK to Resume");
 
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
