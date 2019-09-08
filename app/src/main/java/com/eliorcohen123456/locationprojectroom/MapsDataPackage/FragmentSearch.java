@@ -540,6 +540,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
             }
         });
         return builder;
