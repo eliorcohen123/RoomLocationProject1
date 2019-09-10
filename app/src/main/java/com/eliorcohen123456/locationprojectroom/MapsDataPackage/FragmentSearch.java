@@ -114,6 +114,8 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
     }
 
     private void initUI() {
+        recyclerView = mView.findViewById(R.id.places_list_search);
+
         btnBank = mView.findViewById(R.id.btnBank);
         btnBar = mView.findViewById(R.id.btnBar);
         btnBeauty = mView.findViewById(R.id.btnBeauty);
@@ -129,14 +131,13 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
         btnRestaurant = mView.findViewById(R.id.btnRestaurant);
         btnSchool = mView.findViewById(R.id.btnSchool);
         btnSpa = mView.findViewById(R.id.btnSpa);
+
         imagePre = mView.findViewById(R.id.imagePre);
         imageNext = mView.findViewById(R.id.imageNext);
         imagePreFirst = mView.findViewById(R.id.imagePreFirst);
         textPage = mView.findViewById(R.id.textPage);
 
-        swipeRefreshLayout = mView.findViewById(R.id.swipe_containerFrag);  // ID of the SwipeRefreshLayout of FragmentSearch
-
-        recyclerView = mView.findViewById(R.id.places_list_search);
+        swipeRefreshLayout = mView.findViewById(R.id.swipe_containerFrag);
 
         getClearPrefs();
 
