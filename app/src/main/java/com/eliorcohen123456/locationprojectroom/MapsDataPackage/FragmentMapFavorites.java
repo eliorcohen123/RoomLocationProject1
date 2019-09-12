@@ -2,7 +2,6 @@ package com.eliorcohen123456.locationprojectroom.MapsDataPackage;
 
 import android.Manifest;
 import android.app.Activity;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.ActivityNotFoundException;
 import android.content.Context;

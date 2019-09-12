@@ -3,10 +3,8 @@ package com.eliorcohen123456.locationprojectroom.MapsDataPackage;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -44,27 +42,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.eliorcohen123456.locationprojectroom.CustomAdapterPackage.PlacesListAdapterSearch;
-import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.ItemDecoration;
-import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplication;
-import com.eliorcohen123456.locationprojectroom.R;
-import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlacesSearch;
-import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.IPlacesDataReceived;
 import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
 import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetworkDataProviderHistory;
 import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetworkDataProviderSearch;
+import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.ItemDecoration;
+import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplication;
+import com.eliorcohen123456.locationprojectroom.R;
+import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.IPlacesDataReceived;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceViewModelSearch;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import eliorcohen.com.googlemapsapi.GoogleMapsApi;
 

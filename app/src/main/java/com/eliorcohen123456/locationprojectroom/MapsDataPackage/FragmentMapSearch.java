@@ -2,11 +2,9 @@ package com.eliorcohen123456.locationprojectroom.MapsDataPackage;
 
 import android.Manifest;
 import android.app.Activity;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -35,13 +33,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.eliorcohen123456.locationprojectroom.CustomAdapterPackage.CustomInfoWindowGoogleMapSearch;
 import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
+import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetworkDataProviderHistory;
+import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetworkDataProviderSearch;
 import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplication;
+import com.eliorcohen123456.locationprojectroom.R;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.IPlacesDataReceived;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceViewModelSearch;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlacesSearch;
-import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetworkDataProviderHistory;
-import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetworkDataProviderSearch;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -64,9 +64,6 @@ import com.google.maps.model.EncodedPolyline;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.eliorcohen123456.locationprojectroom.CustomAdapterPackage.CustomInfoWindowGoogleMapSearch;
-import com.eliorcohen123456.locationprojectroom.R;
 
 public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, View.OnClickListener, IPlacesDataReceived {
 

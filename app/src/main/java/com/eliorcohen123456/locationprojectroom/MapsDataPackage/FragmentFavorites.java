@@ -1,6 +1,5 @@
 package com.eliorcohen123456.locationprojectroom.MapsDataPackage;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -28,18 +27,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.eliorcohen123456.locationprojectroom.CustomAdapterPackage.PlacesListAdapterFavorites;
+import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
+import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetworkDataProviderFavorites;
 import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.ItemDecoration;
 import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.MainActivity;
 import com.eliorcohen123456.locationprojectroom.R;
 import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlaceViewModelFavorites;
 import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlacesFavorites;
-import com.eliorcohen123456.locationprojectroom.CustomAdapterPackage.PlacesListAdapterFavorites;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.IPlacesDataReceived;
-import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
-import com.eliorcohen123456.locationprojectroom.DataProviderPackage.NetworkDataProviderFavorites;
+
+import java.util.ArrayList;
 
 public class FragmentFavorites extends Fragment implements IPlacesDataReceived, NavigationView.OnNavigationItemSelectedListener {
 
