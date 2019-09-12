@@ -2,6 +2,7 @@ package com.eliorcohen123456.locationprojectroom.MainAndOtherPackage;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Handler;
 import android.provider.Settings;
@@ -54,6 +55,8 @@ import com.eliorcohen123456.locationprojectroom.MapsDataPackage.FragmentSearch;
 import com.eliorcohen123456.locationprojectroom.MapsDataPackage.PlaceCustomActivity;
 import com.eliorcohen123456.locationprojectroom.R;
 
+import guy4444.smartrate.SmartRate;
+
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener {
 
     private static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -77,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         getMyLocation();
         initUI();
+        initAppRater();
         drawerLayout();
         frg();
     }
@@ -113,8 +117,24 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         toolbar = findViewById(R.id.toolbar);
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+    }
 
-        AppRater.app_launched(this);
+    private void initAppRater() {
+        SmartRate.Rate(MainActivity.this
+                , "Rate Us"
+                , "Tell others what you think about this app"
+                , "Continue"
+                , "Please take a moment and rate us on Google Play"
+                , "click here"
+                , "Ask me later"
+                , "Never ask again"
+                , "Cancel"
+                , "Thanks for the feedback"
+                , Color.parseColor("#2196F3")
+                , 5
+                , 1
+                , 1
+        );
     }
 
     private void drawerLayout() {

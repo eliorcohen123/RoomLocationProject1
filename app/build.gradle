@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.eliorcohen123456.locationprojectroom"
-        minSdkVersion 14
+        minSdkVersion 18
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -43,6 +43,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:17.6.0'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.github.eliorcohen123:LocationProject1:1.04'
+    implementation 'com.github.guy-4444:SmartRateUsDialog-Android:1.00.08'
 //    implementation project(':googlemapsapi')
 
     // Room components
