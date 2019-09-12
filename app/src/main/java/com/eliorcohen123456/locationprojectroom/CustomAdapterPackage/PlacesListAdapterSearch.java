@@ -185,31 +185,28 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
                     }
                 }
             }
-            holder.relativeLayout1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Tablet/Phone mode
-                    DisplayMetrics metrics = new DisplayMetrics();
-                    ((AppCompatActivity) mInflater.getContext()).getWindowManager().getDefaultDisplay().getMetrics(metrics);
+            holder.relativeLayout1.setOnClickListener(v -> {
+                // Tablet/Phone mode
+                DisplayMetrics metrics = new DisplayMetrics();
+                ((AppCompatActivity) mInflater.getContext()).getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-                    float yInches = metrics.heightPixels / metrics.ydpi;
-                    float xInches = metrics.widthPixels / metrics.xdpi;
-                    diagonalInches = Math.sqrt(xInches * xInches + yInches * yInches);
+                float yInches = metrics.heightPixels / metrics.ydpi;
+                float xInches = metrics.widthPixels / metrics.xdpi;
+                diagonalInches = Math.sqrt(xInches * xInches + yInches * yInches);
 
-                    FragmentMapSearch fragmentMapSearch = new FragmentMapSearch();
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable(mInflater.getContext().getString(R.string.map_search_key), current);
-                    fragmentMapSearch.setArguments(bundle);
-                    FragmentManager fragmentManager = ((AppCompatActivity) mInflater.getContext()).getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    if (diagonalInches >= 6.5) {
-                        fragmentTransaction.replace(R.id.fragmentLt, fragmentMapSearch);
-                    } else {
-                        fragmentTransaction.replace(R.id.fragmentContainer, fragmentMapSearch);
-                    }
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
+                FragmentMapSearch fragmentMapSearch = new FragmentMapSearch();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(mInflater.getContext().getString(R.string.map_search_key), current);
+                fragmentMapSearch.setArguments(bundle);
+                FragmentManager fragmentManager = ((AppCompatActivity) mInflater.getContext()).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                if (diagonalInches >= 6.5) {
+                    fragmentTransaction.replace(R.id.fragmentLt, fragmentMapSearch);
+                } else {
+                    fragmentTransaction.replace(R.id.fragmentContainer, fragmentMapSearch);
                 }
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             });
 
             setFadeAnimation(holder.itemView);
@@ -236,17 +233,15 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
         if (provider != null) {
             location = locationManager.getLastKnownLocation(provider);
             if (location != null) {
-                Collections.sort(mPlacesSearchList, new Comparator<PlacesSearch>() {
-                    public int compare(PlacesSearch obj1, PlacesSearch obj2) {
-                        // ## Ascending order
+                Collections.sort(mPlacesSearchList, (obj1, obj2) -> {
+                    // ## Ascending order
 //                return obj1.getDistance().compareToIgnoreCase(obj2.getDistance()); // To compare string values
-                        return Double.compare(Math.sqrt(Math.pow(obj1.getLat() - location.getLatitude(), 2) + Math.pow(obj1.getLng() - location.getLongitude(), 2)),
-                                Math.sqrt(Math.pow(obj2.getLat() - location.getLatitude(), 2) + Math.pow(obj2.getLng() - location.getLongitude(), 2))); // To compare integer values
+                    return Double.compare(Math.sqrt(Math.pow(obj1.getLat() - location.getLatitude(), 2) + Math.pow(obj1.getLng() - location.getLongitude(), 2)),
+                            Math.sqrt(Math.pow(obj2.getLat() - location.getLatitude(), 2) + Math.pow(obj2.getLng() - location.getLongitude(), 2))); // To compare integer values
 
-                        // ## Descending order
-                        // return obj2.getCompanyName().compareToIgnoreCase(obj1.getCompanyName()); // To compare string values
-                        // return Integer.valueOf(obj2.getId()).compareTo(obj1.getId()); // To compare integer values
-                    }
+                    // ## Descending order
+                    // return obj2.getCompanyName().compareToIgnoreCase(obj1.getCompanyName()); // To compare string values
+                    // return Integer.valueOf(obj2.getId()).compareTo(obj1.getId()); // To compare integer values
                 });
             }
         }

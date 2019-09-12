@@ -9,6 +9,7 @@ public class NearByApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
         mApplication = this;
     }
 

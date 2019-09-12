@@ -214,29 +214,26 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
     private void refreshUI() {
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorOrange));  // Colors of the SwipeRefreshLayout of FragmentSearch
         // Refresh the MapDBHelper of app in ListView of MainActivity
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Vibration for 0.1 second
-                Vibrator vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    vibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
-                } else {
-                    vibrator.vibrate(100);
-                }
-
-                getActivity().finish();
-                startActivity(getActivity().getIntent());  // Refresh activity
-
-                Toast toast = Toast.makeText(getContext(), "The list are refreshed!", Toast.LENGTH_SHORT);
-                View view = toast.getView();
-                view.getBackground().setColorFilter(getResources().getColor(R.color.colorLightBlue), PorterDuff.Mode.SRC_IN);
-                TextView text = view.findViewById(android.R.id.message);
-                text.setTextColor(getResources().getColor(R.color.colorDarkBrown));
-                toast.show();  // Toast
-
-                swipeRefreshLayout.setRefreshing(false);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            // Vibration for 0.1 second
+            Vibrator vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else {
+                vibrator.vibrate(100);
             }
+
+            getActivity().finish();
+            startActivity(getActivity().getIntent());  // Refresh activity
+
+            Toast toast = Toast.makeText(getContext(), "The list are refreshed!", Toast.LENGTH_SHORT);
+            View view = toast.getView();
+            view.getBackground().setColorFilter(getResources().getColor(R.color.colorLightBlue), PorterDuff.Mode.SRC_IN);
+            TextView text = view.findViewById(android.R.id.message);
+            text.setTextColor(getResources().getColor(R.color.colorDarkBrown));
+            toast.show();  // Toast
+
+            swipeRefreshLayout.setRefreshing(false);
         });
     }
 
@@ -481,34 +478,28 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
                 if (location != null) {
                     // Get Pages
                     StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                            googleMapsApi.getStringGoogleMapsApi(location.getLatitude(), location.getLongitude(), myRadius, pageToken, myOpen, type, query, getString(R.string.api_key_search)), new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            try {
-                                JSONObject mainObj = new JSONObject(response);
-                                if (mainObj.has("next_page_token")) {
-                                    imageNext.setVisibility(View.VISIBLE);
-                                    hasPage = mainObj.getString("next_page_token");
-                                } else {
-                                    imageNext.setVisibility(View.GONE);
-                                    hasPage = "";
-                                }
-                                editorPage.putString("myStringQueryPage", hasPage);
-                                editorPage.apply();
+                            googleMapsApi.getStringGoogleMapsApi(location.getLatitude(), location.getLongitude(), myRadius, pageToken, myOpen, type, query, getString(R.string.api_key_search)), response -> {
+                                try {
+                                    JSONObject mainObj = new JSONObject(response);
+                                    if (mainObj.has("next_page_token")) {
+                                        imageNext.setVisibility(View.VISIBLE);
+                                        hasPage = mainObj.getString("next_page_token");
+                                    } else {
+                                        imageNext.setVisibility(View.GONE);
+                                        hasPage = "";
+                                    }
+                                    editorPage.putString("myStringQueryPage", hasPage);
+                                    editorPage.apply();
 
-                                if (myPage == 1) {
-                                    editorPre.putString("mystringquerypre1", hasPage);
-                                    editorPre.apply();
+                                    if (myPage == 1) {
+                                        editorPre.putString("mystringquerypre1", hasPage);
+                                        editorPre.apply();
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
+                            }, error -> {
 
-                        }
                     });
                     RequestQueue requestQueue = Volley.newRequestQueue(getContext());
                     requestQueue.add(stringRequest);
@@ -538,11 +529,8 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
         builder.setTitle("No Internet Connection");
         builder.setMessage("You need to have Mobile Data or Wi-Fi to access this. Press OK to Resume");
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        builder.setPositiveButton("OK", (dialog, which) -> {
 
-            }
         });
         return builder;
     }
@@ -550,12 +538,9 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
     @Override
     public void onPlacesDataReceived(ArrayList<PlaceModel> results_) {
         // pass data result to mAdapterSearch
-        mPlacesViewModelSearch.getAllPlaces().observe(this, new Observer<List<PlacesSearch>>() {
-            @Override
-            public void onChanged(@Nullable final List<PlacesSearch> placesSearches) {
-                // Update the cached copy of the words in the mAdapterSearch.
-                mAdapterSearch.setPlaces(placesSearches);
-            }
+        mPlacesViewModelSearch.getAllPlaces().observe(this, placesSearches -> {
+            // Update the cached copy of the words in the mAdapterSearch.
+            mAdapterSearch.setPlaces(placesSearches);
         });
     }
 

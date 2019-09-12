@@ -129,19 +129,16 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
                     }
                 }
             }
-            holder.relativeLayout3.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FragmentMapFavorites fragmentMapFavorites = new FragmentMapFavorites();
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable(mInflater.getContext().getString(R.string.map_favorites_key), current);
-                    fragmentMapFavorites.setArguments(bundle);
-                    FragmentManager fragmentManager = ((AppCompatActivity) mInflater.getContext()).getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.fragmentFavoritesContainer, fragmentMapFavorites);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
-                }
+            holder.relativeLayout3.setOnClickListener(v -> {
+                FragmentMapFavorites fragmentMapFavorites = new FragmentMapFavorites();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(mInflater.getContext().getString(R.string.map_favorites_key), current);
+                fragmentMapFavorites.setArguments(bundle);
+                FragmentManager fragmentManager = ((AppCompatActivity) mInflater.getContext()).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragmentFavoritesContainer, fragmentMapFavorites);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             });
 
             setFadeAnimation(holder.itemView);
@@ -154,17 +151,15 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
     public void setPlaces(List<PlacesFavorites> placesFavorites) {
         mPlacesFavoritesList = placesFavorites;
         try {
-            Collections.sort(mPlacesFavoritesList, new Comparator<PlacesFavorites>() {
-                public int compare(PlacesFavorites obj1, PlacesFavorites obj2) {
-                    // ## Ascending order
+            Collections.sort(mPlacesFavoritesList, (obj1, obj2) -> {
+                // ## Ascending order
 //                return obj1.getDistance().compareToIgnoreCase(obj2.getDistance()); // To compare string values
-                    return Double.compare(Math.sqrt(Math.pow(obj1.getLat() - location.getLatitude(), 2) + Math.pow(obj1.getLng() - location.getLongitude(), 2)),
-                            Math.sqrt(Math.pow(obj2.getLat() - location.getLatitude(), 2) + Math.pow(obj2.getLng() - location.getLongitude(), 2))); // To compare integer values
+                return Double.compare(Math.sqrt(Math.pow(obj1.getLat() - location.getLatitude(), 2) + Math.pow(obj1.getLng() - location.getLongitude(), 2)),
+                        Math.sqrt(Math.pow(obj2.getLat() - location.getLatitude(), 2) + Math.pow(obj2.getLng() - location.getLongitude(), 2))); // To compare integer values
 
-                    // ## Descending order
-                    // return obj2.getCompanyName().compareToIgnoreCase(obj1.getCompanyName()); // To compare string values
-                    // return Integer.valueOf(obj2.getId()).compareTo(obj1.getId()); // To compare integer values
-                }
+                // ## Descending order
+                // return obj2.getCompanyName().compareToIgnoreCase(obj1.getCompanyName()); // To compare string values
+                // return Integer.valueOf(obj2.getId()).compareTo(obj1.getId()); // To compare integer values
             });
         } catch (Exception e) {
 

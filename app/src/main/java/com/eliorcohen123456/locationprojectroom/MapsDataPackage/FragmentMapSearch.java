@@ -159,12 +159,9 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
 
     private void mapShow() {
         Snackbar.make(coordinatorLayout, R.string.item_removed_message, Snackbar.LENGTH_LONG)
-                .setAction(R.string.undo, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Respond to the click, such as by undoing the modification that caused
-                        // this message to be displayed
-                    }
+                .setAction(R.string.undo, v -> {
+                    // Respond to the click, such as by undoing the modification that caused
+                    // this message to be displayed
                 })
                 .show();
     }
@@ -262,72 +259,66 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
     @Override
     public void onPlacesDataReceived(ArrayList<PlaceModel> results_) {
         // pass data result to adapter
-        mPlacesViewModel.getAllPlaces().observe(this, new Observer<List<PlacesSearch>>() {
-            @Override
-            public void onChanged(@Nullable final List<PlacesSearch> placesSearches) {
-                if (mGoogleMap != null) {
-                    mGoogleMap.clear();
-                }
-                try {
-                    addCircleNearBy();
-                    addCircleSearch();
-                    for (int i = 0; i <= placesSearches.size(); i++) {
-                        if (placeModelSearch != null) {
-                            markerSearch = mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(placeModelSearch.getLat(), placeModelSearch.getLng())).title(placeModelSearch.getName()).icon(BitmapDescriptorFactory
-                                    .defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
-                            markers.add(markerSearch);
+        mPlacesViewModel.getAllPlaces().observe(this, placesSearches -> {
+            if (mGoogleMap != null) {
+                mGoogleMap.clear();
+            }
+            try {
+                addCircleNearBy();
+                addCircleSearch();
+                for (int i = 0; i <= placesSearches.size(); i++) {
+                    if (placeModelSearch != null) {
+                        markerSearch = mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(placeModelSearch.getLat(), placeModelSearch.getLng())).title(placeModelSearch.getName()).icon(BitmapDescriptorFactory
+                                .defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+                        markers.add(markerSearch);
+                    }
+
+                    try {
+                        markerAllSearch[i] = mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(placesSearches.get(i).getLat(), placesSearches.get(i).getLng())).title(placesSearches.get(i).getName()).icon(BitmapDescriptorFactory
+                                .defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
+                        if (!markerAllSearch[i].getTitle().equals(markerSearch.getTitle())) {
+                            markers.add(markerAllSearch[i]);
                         }
+                    } catch (Exception e) {
 
-                        try {
-                            markerAllSearch[i] = mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(placesSearches.get(i).getLat(), placesSearches.get(i).getLng())).title(placesSearches.get(i).getName()).icon(BitmapDescriptorFactory
-                                    .defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
-                            if (!markerAllSearch[i].getTitle().equals(markerSearch.getTitle())) {
-                                markers.add(markerAllSearch[i]);
+                    }
+                }
+            } catch (Exception e) {
+
+            }
+
+            mGoogleMap.setOnMarkerClickListener(marker -> {
+                try {
+                    for (int finalI = 0; finalI <= placesSearches.size(); finalI++) {
+                        final int finalI1 = finalI;
+                        if (marker.getTitle().equals(placesSearches.get(finalI1).getName())) {
+                            try {
+                                getMoovit(placesSearches.get(finalI1).getLat(), placesSearches.get(finalI1).getLng(), placesSearches.get(finalI1).getName(), location.getLatitude(), location.getLongitude());
+                                getGetTaxi(placesSearches.get(finalI1).getLat(), placesSearches.get(finalI1).getLng());
+                                getWaze(placesSearches.get(finalI1).getLat(), placesSearches.get(finalI1).getLng());
+
+                                getNavigation(placesSearches.get(finalI1).getLat(), placesSearches.get(finalI1).getLng(), placesSearches.get(finalI1).getName(), placesSearches.get(finalI1).getAddress(), placesSearches.get(finalI1).getRating(), placesSearches.get(finalI1).getUser_ratings_total(), marker);
+                            } catch (Exception e) {
+
                             }
-                        } catch (Exception e) {
+                            break;
+                        } else if (marker.equals(markerSearch)) {
+                            try {
+                                getMoovit(placeModelSearch.getLat(), placeModelSearch.getLng(), placeModelSearch.getName(), location.getLatitude(), location.getLongitude());
+                                getGetTaxi(placeModelSearch.getLat(), placeModelSearch.getLng());
+                                getWaze(placeModelSearch.getLat(), placeModelSearch.getLng());
 
+                                getNavigation(placeModelSearch.getLat(), placeModelSearch.getLng(), placeModelSearch.getName(), placeModelSearch.getAddress(), placeModelSearch.getRating(), placeModelSearch.getUser_ratings_total(), marker);
+                            } catch (Exception e) {
+
+                            }
                         }
                     }
                 } catch (Exception e) {
 
                 }
-
-                mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                    @Override
-                    public boolean onMarkerClick(Marker marker) {
-                        try {
-                            for (int finalI = 0; finalI <= placesSearches.size(); finalI++) {
-                                final int finalI1 = finalI;
-                                if (marker.getTitle().equals(placesSearches.get(finalI1).getName())) {
-                                    try {
-                                        getMoovit(placesSearches.get(finalI1).getLat(), placesSearches.get(finalI1).getLng(), placesSearches.get(finalI1).getName(), location.getLatitude(), location.getLongitude());
-                                        getGetTaxi(placesSearches.get(finalI1).getLat(), placesSearches.get(finalI1).getLng());
-                                        getWaze(placesSearches.get(finalI1).getLat(), placesSearches.get(finalI1).getLng());
-
-                                        getNavigation(placesSearches.get(finalI1).getLat(), placesSearches.get(finalI1).getLng(), placesSearches.get(finalI1).getName(), placesSearches.get(finalI1).getAddress(), placesSearches.get(finalI1).getRating(), placesSearches.get(finalI1).getUser_ratings_total(), marker);
-                                    } catch (Exception e) {
-
-                                    }
-                                    break;
-                                } else if (marker.equals(markerSearch)) {
-                                    try {
-                                        getMoovit(placeModelSearch.getLat(), placeModelSearch.getLng(), placeModelSearch.getName(), location.getLatitude(), location.getLongitude());
-                                        getGetTaxi(placeModelSearch.getLat(), placeModelSearch.getLng());
-                                        getWaze(placeModelSearch.getLat(), placeModelSearch.getLng());
-
-                                        getNavigation(placeModelSearch.getLat(), placeModelSearch.getLng(), placeModelSearch.getName(), placeModelSearch.getAddress(), placeModelSearch.getRating(), placeModelSearch.getUser_ratings_total(), marker);
-                                    } catch (Exception e) {
-
-                                    }
-                                }
-                            }
-                        } catch (Exception e) {
-
-                        }
-                        return false;
-                    }
-                });
-            }
+                return false;
+            });
         });
     }
 
@@ -433,44 +424,35 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
         builder.setTitle("No Internet Connection");
         builder.setMessage("You need to have Mobile Data or wifi to access this. Press ok to Resume");
 
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
+        builder.setPositiveButton("Ok", (dialog, which) -> {
         });
         return builder;
     }
 
     private void getMoovit(final double des_lat, final double des_lng, final String name, final double orig_lat, final double orig_lng) {
-        moovit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    PackageManager pm = getActivity().getPackageManager();
-                    pm.getPackageInfo("com.tranzmate", PackageManager.GET_ACTIVITIES);
-                    String uri = "moovit://directions?dest_lat=" + des_lat + "&dest_lon=" + des_lng + "&dest_name=" + name + "&orig_lat=" + orig_lat + "&orig_lon=" + orig_lng + "&orig_name=Your current location&auto_run=true&partner_id=Lovely Favorites Places";
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(uri));
-                    startActivity(intent);
-                } catch (PackageManager.NameNotFoundException e) {
-                    String url = "http://app.appsflyer.com/com.tranzmate?pid=DL&c=Lovely Favorites Places";
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse(url));
-                    startActivity(i);
-                }
+        moovit.setOnClickListener(v -> {
+            try {
+                PackageManager pm = getActivity().getPackageManager();
+                pm.getPackageInfo("com.tranzmate", PackageManager.GET_ACTIVITIES);
+                String uri = "moovit://directions?dest_lat=" + des_lat + "&dest_lon=" + des_lng + "&dest_name=" + name + "&orig_lat=" + orig_lat + "&orig_lon=" + orig_lng + "&orig_name=Your current location&auto_run=true&partner_id=Lovely Favorites Places";
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(uri));
+                startActivity(intent);
+            } catch (PackageManager.NameNotFoundException e) {
+                String url = "http://app.appsflyer.com/com.tranzmate?pid=DL&c=Lovely Favorites Places";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
             }
         });
     }
 
     private void getGetTaxi(final double des_lat, final double des_lng) {
-        gett.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isPackageInstalledTetTaxi(getContext(), "com.gettaxi.android")) {
-                    openLinkGetTaxi(getActivity(), "gett://order?pickup=my_location&dropoff_latitude=" + des_lat + "&dropoff_longitude=" + des_lng + "&product_id=0c1202f8-6c43-4330-9d8a-3b4fa66505fd");
-                } else {
-                    openLinkGetTaxi(getActivity(), "https://play.google.com/store/apps/details?id=" + "com.gettaxi.android");
-                }
+        gett.setOnClickListener(v -> {
+            if (isPackageInstalledTetTaxi(getContext(), "com.gettaxi.android")) {
+                openLinkGetTaxi(getActivity(), "gett://order?pickup=my_location&dropoff_latitude=" + des_lat + "&dropoff_longitude=" + des_lng + "&product_id=0c1202f8-6c43-4330-9d8a-3b4fa66505fd");
+            } else {
+                openLinkGetTaxi(getActivity(), "https://play.google.com/store/apps/details?id=" + "com.gettaxi.android");
             }
         });
     }
@@ -494,17 +476,14 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
     }
 
     private void getWaze(final double des_lat, final double des_lng) {
-        waze.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    String url = "https://www.waze.com/ul?ll=" + des_lat + "%2C" + des_lng + "&navigate=yes&zoom=17";
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                    startActivity(intent);
-                } catch (ActivityNotFoundException ex) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.waze"));
-                    startActivity(intent);
-                }
+        waze.setOnClickListener(v -> {
+            try {
+                String url = "https://www.waze.com/ul?ll=" + des_lat + "%2C" + des_lng + "&navigate=yes&zoom=17";
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(intent);
+            } catch (ActivityNotFoundException ex) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.waze"));
+                startActivity(intent);
             }
         });
     }

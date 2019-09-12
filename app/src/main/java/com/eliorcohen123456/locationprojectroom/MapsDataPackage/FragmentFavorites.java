@@ -86,16 +86,12 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
     private void drawerLayout() {
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
-        mView.findViewById(R.id.myButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // open right drawer
-
-                if (drawer.isDrawerOpen(GravityCompat.END)) {
-                    drawer.closeDrawer(GravityCompat.END);
-                } else
-                    drawer.openDrawer(GravityCompat.END);
-            }
+        mView.findViewById(R.id.myButton).setOnClickListener(v -> {
+            // open right drawer
+            if (drawer.isDrawerOpen(GravityCompat.END)) {
+                drawer.closeDrawer(GravityCompat.END);
+            } else
+                drawer.openDrawer(GravityCompat.END);
         });
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -211,12 +207,9 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
     @Override
     public void onPlacesDataReceived(ArrayList<PlaceModel> results_) {
         // pass data result to mAdapterFavorites
-        mPlacesViewModelFavorites.getAllPlaces().observe(this, new Observer<List<PlacesFavorites>>() {
-            @Override
-            public void onChanged(@Nullable final List<PlacesFavorites> placesFavorites) {
-                // Update the cached copy of the words in the mAdapterFavorites.
-                mAdapterFavorites.setPlaces(placesFavorites);
-            }
+        mPlacesViewModelFavorites.getAllPlaces().observe(this, placesFavorites -> {
+            // Update the cached copy of the words in the mAdapterFavorites.
+            mAdapterFavorites.setPlaces(placesFavorites);
         });
     }
 
