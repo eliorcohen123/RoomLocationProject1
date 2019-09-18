@@ -2,7 +2,9 @@ package com.eliorcohen123456.locationprojectroom.MapsDataPackage;
 
 import android.Manifest;
 import android.app.Activity;
-import android.arch.lifecycle.ViewModelProviders;
+
+import androidx.lifecycle.ViewModelProviders;
+
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -15,12 +17,16 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
+import com.google.android.material.snackbar.Snackbar;
+
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -76,12 +82,13 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
     private String provider;
     private ImageView moovit, gett, waze, num1, num2, num3, num4, num5, btnOpenList;
     private FragmentMapFavorites fragmentMapFavorites;
-    private List<Marker> markers = new ArrayList<Marker>();
+    private List<Marker> markers;
     private CoordinatorLayout coordinatorLayout;
     private NetworkDataProviderFavorites networkDataProviderFavorites;
     private LinearLayout linearList;
     private boolean isClicked;
     private AlphaAnimation anim;
+    private static LinearLayout linearLayoutYes, linearLayoutNo;
 
     @Nullable
     @Override
@@ -91,6 +98,7 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
         initUI();
         initListeners();
         initLocation();
+        setButtonsEnabledState();
         mapShow();
         getData();
 
@@ -118,6 +126,9 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
 
         linearList = mView.findViewById(R.id.listAll);
 
+        linearLayoutYes = mView.findViewById(R.id.linYes);
+        linearLayoutNo = mView.findViewById(R.id.linNo);
+
         linearList.setVisibility(View.GONE);
 
         fragmentMapFavorites = this;
@@ -125,6 +136,7 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
         isClicked = true;
 
         networkDataProviderFavorites = new NetworkDataProviderFavorites();
+        markers = new ArrayList<Marker>();
 
         setHasOptionsMenu(true);
     }
@@ -489,6 +501,16 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                     mGoogleMap.addPolyline(opts);
                 }
             }
+        }
+    }
+
+    public static void setButtonsEnabledState() {
+        if (ActivityFavorites.getGeofencesAdded()) {
+            linearLayoutYes.setVisibility(View.GONE);
+            linearLayoutNo.setVisibility(View.VISIBLE);
+        } else {
+            linearLayoutYes.setVisibility(View.VISIBLE);
+            linearLayoutNo.setVisibility(View.GONE);
         }
     }
 

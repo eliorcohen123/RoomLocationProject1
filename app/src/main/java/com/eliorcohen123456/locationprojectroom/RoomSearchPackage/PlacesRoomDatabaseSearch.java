@@ -1,8 +1,8 @@
 package com.eliorcohen123456.locationprojectroom.RoomSearchPackage;
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.Room;
-import android.arch.persistence.room.RoomDatabase;
+import androidx.room.Database;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
 import android.content.Context;
 
 @Database(entities = {PlacesSearch.class}, version = 1, exportSchema = false)

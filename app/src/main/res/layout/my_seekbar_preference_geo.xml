@@ -16,10 +16,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
         <SeekBar
-            android:id="@+id/seekBar"
+            android:id="@+id/seekBarGeo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -31,17 +32,17 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/summary"
+                android:id="@+id/summaryGeo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
             <TextView
-                android:id="@+id/textKm"
+                android:id="@+id/textKmGeo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Km"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="Km" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

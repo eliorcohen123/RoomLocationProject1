@@ -21,5 +21,9 @@
             android:defaultValue="5000"
             android:key="seek"
             android:title="Radius" />
+        <com.eliorcohen123456.locationprojectroom.GeofencePackage.MySeekBarGeofence
+            android:defaultValue="500"
+            android:key="seek_geo"
+            android:title="Geofence" />
     </PreferenceCategory>
 </PreferenceScreen>

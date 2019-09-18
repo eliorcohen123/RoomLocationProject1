@@ -2,7 +2,7 @@ package com.eliorcohen123456.locationprojectroom.MapsDataPackage;
 
 import android.Manifest;
 import android.app.Activity;
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProviders;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -17,13 +17,13 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +78,7 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
     private Criteria criteria;
     private ImageView moovit, gett, waze, num1, num2, num3, num4, num5, btnOpenList;
     private FragmentMapSearch fragmentMapSearch;
-    private List<Marker> markers = new ArrayList<Marker>();
+    private List<Marker> markers;
     private CoordinatorLayout coordinatorLayout;
     private NetworkDataProviderSearch dataProviderSearch;
     private NetworkDataProviderHistory dataProviderHistory;
@@ -137,6 +137,7 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
 
         dataProviderHistory = new NetworkDataProviderHistory();
         dataProviderSearch = new NetworkDataProviderSearch();
+        markers = new ArrayList<Marker>();
     }
 
     private void initListeners() {
