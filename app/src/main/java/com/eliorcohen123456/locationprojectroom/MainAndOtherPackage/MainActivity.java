@@ -10,9 +10,12 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.google.android.material.navigation.NavigationView;
+
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -23,6 +26,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MenuItem;
@@ -84,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     public void onStart() {
         super.onStart();
+
         if (!checkPermissions()) {
             Log.i(TAG, "Inside onStart function; requesting permission when permission is not available");
             requestPermissions();
@@ -97,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     protected void onResume() {
         super.onResume();
+
         startLocationUpdates();
     }
 
@@ -104,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     protected void onPause() {
         super.onPause();
+
         startLocationUpdates();
 //        stopLocationUpdates();
     }
@@ -172,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         } else {
             fragmentTransaction.replace(R.id.fragmentContainer, fragmentSearch);
         }
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
@@ -304,6 +312,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     // Resume all of check location
     @Override
     protected void onActivityResult(final int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case REQUEST_CHECK_SETTINGS:
 //                Toast.makeText(MainActivity.this, "REQUEST_CHECK_SETTINGS result" + requestCode, Toast.LENGTH_LONG).show();

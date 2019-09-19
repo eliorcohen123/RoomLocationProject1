@@ -23,7 +23,9 @@
         android:roundIcon="@drawable/mapsicon"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
-        <activity android:name="com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.MainActivity">
+        <activity
+            android:name="com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.MainActivity"
+            android:configChanges="orientation|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
