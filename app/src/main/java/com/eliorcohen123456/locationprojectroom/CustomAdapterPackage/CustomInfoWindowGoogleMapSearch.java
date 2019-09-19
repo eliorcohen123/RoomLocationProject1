@@ -10,7 +10,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
 import com.eliorcohen123456.locationprojectroom.R;
-import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlacesSearch;
 
 public class CustomInfoWindowGoogleMapSearch implements GoogleMap.InfoWindowAdapter {
 
@@ -28,7 +27,7 @@ public class CustomInfoWindowGoogleMapSearch implements GoogleMap.InfoWindowAdap
     @Override
     public View getInfoContents(Marker marker) {
         View view = ((Activity) context).getLayoutInflater()
-                .inflate(R.layout.map_custom_infowindow, null);
+                .inflate(R.layout.map_custom_infowindow_search, null);
 
         TextView name = view.findViewById(R.id.nameInfo);
 
