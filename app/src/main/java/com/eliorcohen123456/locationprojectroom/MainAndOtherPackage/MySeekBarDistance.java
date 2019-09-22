@@ -17,14 +17,14 @@ import android.widget.TextView;
 import com.eliorcohen123456.locationprojectroom.R;
 
 // The main class of the seekBar
-public class MySeekBar extends Preference implements OnSeekBarChangeListener, OnPreferenceChangeListener {
+public class MySeekBarDistance extends Preference implements OnSeekBarChangeListener, OnPreferenceChangeListener {
 
   private SeekBar seekBar;
   private SharedPreferences sharedPreferences;
   private TextView txtSummary;
   private String units;
 
-  public MySeekBar(Context context, AttributeSet attrs) {
+  public MySeekBarDistance(Context context, AttributeSet attrs) {
       super(context, attrs);
   }
 
@@ -50,12 +50,9 @@ public class MySeekBar extends Preference implements OnSeekBarChangeListener, On
   }
 
   public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-      StringBuilder result = new StringBuilder();
-      result.append(progress);
-      txtSummary.setText(result.toString());
+      txtSummary.setText(String.valueOf(progress));
       Editor editor = sharedPreferences.edit();
-      editor.putInt(getKey(), progress);
-      editor.apply();
+      editor.putInt(getKey(), progress).apply();
   }
 
   public void onStartTrackingTouch(SeekBar seekBar) {
