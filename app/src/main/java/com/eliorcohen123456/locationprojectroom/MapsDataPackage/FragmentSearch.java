@@ -139,7 +139,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
 
         swipeRefreshLayout = mView.findViewById(R.id.swipe_containerFrag);
 
-        getClearPrefs();
+        initPrefs();
 
         mFragmentSearch = this;
 
@@ -184,7 +184,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
         imagePreFirst.setOnClickListener(this);
     }
 
-    private void getClearPrefs() {
+    private void initPrefs() {
         prefsPage = getContext().getSharedPreferences("mysettingsquery", Context.MODE_PRIVATE);
         prefsPage.edit().clear().apply();
 
@@ -440,7 +440,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
     }
 
     private void getCheckBtnSearch(String type, String query) {
-        getClearPrefs();
+        initPrefs();
         getTypeQuery("", type, query);
         getDataPrefsPage(type, query);
 
