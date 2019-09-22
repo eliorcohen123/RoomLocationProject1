@@ -146,22 +146,7 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
         }
     }
 
-    public void setPlaces(List<PlacesFavorites> placesFavorites) {
-        mPlacesFavoritesList = placesFavorites;
-        try {
-            Collections.sort(mPlacesFavoritesList, (obj1, obj2) -> {
-                // ## Ascending order
-//                return obj1.getDistance().compareToIgnoreCase(obj2.getDistance()); // To compare string values
-                return Double.compare(Math.sqrt(Math.pow(obj1.getLat() - location.getLatitude(), 2) + Math.pow(obj1.getLng() - location.getLongitude(), 2)),
-                        Math.sqrt(Math.pow(obj2.getLat() - location.getLatitude(), 2) + Math.pow(obj2.getLng() - location.getLongitude(), 2))); // To compare integer values
-
-                // ## Descending order
-                // return obj2.getCompanyName().compareToIgnoreCase(obj1.getCompanyName()); // To compare string values
-                // return Integer.valueOf(obj2.getId()).compareTo(obj1.getId()); // To compare integer values
-            });
-        } catch (Exception e) {
-
-        }
+    public void setPlaces() {
         notifyDataSetChanged();
     }
 
