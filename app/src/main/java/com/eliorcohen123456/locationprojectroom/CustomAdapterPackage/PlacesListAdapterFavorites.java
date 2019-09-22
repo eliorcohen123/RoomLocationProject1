@@ -134,10 +134,7 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
                 bundle.putSerializable(mInflater.getContext().getString(R.string.map_favorites_key), current);
                 fragmentMapFavorites.setArguments(bundle);
                 FragmentManager fragmentManager = ((AppCompatActivity) mInflater.getContext()).getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragmentFavoritesContainer, fragmentMapFavorites);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                fragmentManager.beginTransaction().replace(R.id.fragmentFavoritesContainer, fragmentMapFavorites).addToBackStack(null).commit();
             });
 
             setFadeAnimation(holder.itemView);

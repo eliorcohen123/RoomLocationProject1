@@ -204,8 +204,7 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
                 } else {
                     fragmentTransaction.replace(R.id.fragmentContainer, fragmentMapSearch);
                 }
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                fragmentTransaction.addToBackStack(null).commit();
             });
 
             setFadeAnimation(holder.itemView);

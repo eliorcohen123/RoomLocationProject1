@@ -125,10 +125,7 @@ public class ActivityFavorites extends AppCompatActivity implements IPlacesDataR
     private void frg() {
         FragmentFavorites fragmentFavorites = new FragmentFavorites();
         FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentFavoritesContainer, fragmentFavorites);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        fragmentManager.beginTransaction().replace(R.id.fragmentFavoritesContainer, fragmentFavorites).addToBackStack(null).commit();
     }
 
     private void fn_permission() {

@@ -179,8 +179,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         } else {
             fragmentTransaction.replace(R.id.fragmentContainer, fragmentSearch);
         }
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        fragmentTransaction.addToBackStack(null).commit();
     }
 
     private void getMyLocation() {

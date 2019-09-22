@@ -443,14 +443,9 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
 
             myOpen = prefsOpen.getString("open", "");
 
-            editorQuery.putString("mystringquery", query);
-            editorQuery.apply();
-
-            editorType.putString("mystringtype", type);
-            editorType.apply();
-
-            editorPagePass.putString("mystringpagepass", pageToken);
-            editorPagePass.apply();
+            editorQuery.putString("mystringquery", query).apply();
+            editorType.putString("mystringtype", type).apply();
+            editorPagePass.putString("mystringpagepass", pageToken).apply();
 
             dataProviderSearch.getPlacesByLocation(myRadius, pageToken, myOpen, type, query, mFragmentSearch);
 
@@ -482,12 +477,10 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
                                         imageNext.setVisibility(View.GONE);
                                         hasPage = "";
                                     }
-                                    editorPage.putString("myStringQueryPage", hasPage);
-                                    editorPage.apply();
+                                    editorPage.putString("myStringQueryPage", hasPage).apply();
 
                                     if (myPage == 1) {
-                                        editorPre.putString("mystringquerypre1", hasPage);
-                                        editorPre.apply();
+                                        editorPre.putString("mystringquerypre1", hasPage).apply();
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
