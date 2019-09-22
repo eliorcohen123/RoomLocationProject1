@@ -3,7 +3,9 @@ package com.eliorcohen123456.locationprojectroom.MapsDataPackage;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
+
 import androidx.lifecycle.ViewModelProviders;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -20,6 +22,7 @@ import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -30,6 +33,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
+
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -76,12 +80,12 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
             btnGym, btnJewelry, btnPark, btnRestaurant, btnSchool, btnSpa;
     private NetworkDataProviderSearch dataProviderSearch;
     private NetworkDataProviderHistory dataProviderHistory;
-    private SharedPreferences prefsSeek, settingsQuery, settingsType, settingsPagePass, prefsPage, prefsPre, prefsOpen;
-    private SharedPreferences.Editor editorQuery, editorType, editorPagePass, editorPage, editorPre;
+    private SharedPreferences prefsSeek, settingsQuery, settingsType, settingsPagePass, prefsPage, prefsPre, prefsOpen, prefsTypeQuerySearch;
+    private SharedPreferences.Editor editorQuery, editorType, editorPagePass, editorPage, editorPre, editorTypeQuerySearch;
     private int myRadius, myPage = 1;
     private ImageView imagePre, imageNext, imagePreFirst;
     private TextView textPage;
-    private String hasPage, myStringQueryPage, myStringQueryType, myStringQueryQuery, pageTokenPre, provider, myOpen;
+    private String hasPage, myStringQueryPage, myStringQueryType, myStringQueryQuery, pageTokenPre, provider, myQuery, myType, myTypeSearch, myQuerySearch, myOpen;
     private Location location;
     private LocationManager locationManager;
     private Criteria criteria;
@@ -104,7 +108,9 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
     public void onResume() {
         super.onResume();
 
-        getResumeTypeQuery();
+        myType = prefsTypeQuerySearch.getString("mystringtypesearch", "");
+        myQuery = prefsTypeQuerySearch.getString("mystringquerysearch", "");
+        getCheckBtnSearch(myType, myQuery);
     }
 
     private void initUI() {
@@ -188,6 +194,10 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
         prefsPre.edit().clear().apply();
 
         editorPre = prefsPre.edit();
+
+        prefsTypeQuerySearch = getContext().getSharedPreferences("mysettingssearch", Context.MODE_PRIVATE);
+
+        editorTypeQuerySearch = prefsTypeQuerySearch.edit();
     }
 
     private void myRecyclerView() {
@@ -229,10 +239,6 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
 
             swipeRefreshLayout.setRefreshing(false);
         });
-    }
-
-    private void getResumeTypeQuery() {
-        getCheckBtnSearch("", "");
     }
 
     private void getDataPrefsPage(String type, String query) {
@@ -300,6 +306,8 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
                 break;
             case R.id.nearByMe:
                 getCheckBtnSearch("", "");
+
+                editorTypeQuerySearch.putString("mystringtypesearch", "").putString("mystringquerysearch", "").apply();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -313,48 +321,92 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
         switch (v.getId()) {
             case R.id.btnBank:
                 getCheckBtnSearch("bank", "");
+
+                myTypeSearch = "bank";
+                myQuerySearch = "";
                 break;
             case R.id.btnBar:
                 getCheckBtnSearch("bar|night_club", "");
+
+                myTypeSearch = "bar|night_club";
+                myQuerySearch = "";
                 break;
             case R.id.btnBeauty:
                 getCheckBtnSearch("beauty_salon|hair_care", "");
+
+                myTypeSearch = "beauty_salon|hair_care";
+                myQuerySearch = "";
                 break;
             case R.id.btnBooks:
                 getCheckBtnSearch("book_store|library", "");
+
+                myTypeSearch = "book_store|library";
+                myQuerySearch = "";
                 break;
             case R.id.btnBusStation:
                 getCheckBtnSearch("bus_station", "");
+
+                myTypeSearch = "bus_station";
+                myQuerySearch = "";
                 break;
             case R.id.btnCars:
                 getCheckBtnSearch("car_dealer|car_rental|car_repair|car_wash", "");
+
+                myTypeSearch = "car_dealer|car_rental|car_repair|car_wash";
+                myQuerySearch = "";
                 break;
             case R.id.btnClothing:
                 getCheckBtnSearch("clothing_store", "");
+
+                myTypeSearch = "clothing_store";
+                myQuerySearch = "";
                 break;
             case R.id.btnDoctor:
                 getCheckBtnSearch("doctor", "");
+
+                myTypeSearch = "doctor";
                 break;
             case R.id.btnGasStation:
                 getCheckBtnSearch("gas_station", "");
+
+                myTypeSearch = "gas_station";
+                myQuerySearch = "";
                 break;
             case R.id.btnGym:
                 getCheckBtnSearch("gym", "");
+
+                myTypeSearch = "gym";
+                myQuerySearch = "";
                 break;
             case R.id.btnJewelry:
                 getCheckBtnSearch("jewelry_store", "");
+
+                myTypeSearch = "jewelry_store";
+                myQuerySearch = "";
                 break;
             case R.id.btnPark:
                 getCheckBtnSearch("park|amusement_park|parking|rv_park", "");
+
+                myTypeSearch = "park|amusement_park|parking|rv_park";
+                myQuerySearch = "";
                 break;
             case R.id.btnRestaurant:
                 getCheckBtnSearch("food|restaurant|cafe|bakery", "");
+
+                myTypeSearch = "food|restaurant|cafe|bakery";
+                myQuerySearch = "";
                 break;
             case R.id.btnSchool:
                 getCheckBtnSearch("school", "");
+
+                myTypeSearch = "school";
+                myQuerySearch = "";
                 break;
             case R.id.btnSpa:
                 getCheckBtnSearch("spa", "");
+
+                myTypeSearch = "spa";
+                myQuerySearch = "";
                 break;
             case R.id.imageNext:
                 getTypeQuery(myStringQueryPage, myStringQueryType, myStringQueryQuery);
@@ -384,6 +436,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
                 getAllCheckPage(myPage);
                 break;
         }
+        editorTypeQuerySearch.putString("mystringtypesearch", myTypeSearch).putString("mystringquerysearch", myQuerySearch).apply();
     }
 
     private void getCheckBtnSearch(String type, String query) {
@@ -466,24 +519,24 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
                     // Get Pages
                     StringRequest stringRequest = new StringRequest(Request.Method.GET,
                             googleMapsApi.getStringGoogleMapsApi(location.getLatitude(), location.getLongitude(), myRadius, pageToken, myOpen, type, query, getString(R.string.api_key_search)), response -> {
-                                try {
-                                    JSONObject mainObj = new JSONObject(response);
-                                    if (mainObj.has("next_page_token")) {
-                                        imageNext.setVisibility(View.VISIBLE);
-                                        hasPage = mainObj.getString("next_page_token");
-                                    } else {
-                                        imageNext.setVisibility(View.GONE);
-                                        hasPage = "";
-                                    }
-                                    editorPage.putString("myStringQueryPage", hasPage).apply();
+                        try {
+                            JSONObject mainObj = new JSONObject(response);
+                            if (mainObj.has("next_page_token")) {
+                                imageNext.setVisibility(View.VISIBLE);
+                                hasPage = mainObj.getString("next_page_token");
+                            } else {
+                                imageNext.setVisibility(View.GONE);
+                                hasPage = "";
+                            }
+                            editorPage.putString("myStringQueryPage", hasPage).apply();
 
-                                    if (myPage == 1) {
-                                        editorPre.putString("mystringquerypre1", hasPage).apply();
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }, error -> {
+                            if (myPage == 1) {
+                                editorPre.putString("mystringquerypre1", hasPage).apply();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }, error -> {
 
                     });
                     RequestQueue requestQueue = Volley.newRequestQueue(getContext());
