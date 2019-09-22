@@ -276,7 +276,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
         });
 
         // Continued of SearchView of FragmentSearch
-        androidx.appcompat.widget.SearchView searchView = (androidx.appcompat.widget.SearchView) menuItem.getActionView();
+        SearchView searchView = (SearchView) menuItem.getActionView();
         if (searchView != null) {
             searchView.setSearchableInfo(searchManager.getSearchableInfo((getActivity()).getComponentName()));
             searchView.setQueryHint(Html.fromHtml("<font color = #FFEA54>" + getResources().getString(R.string.hint) + "</font>"));
