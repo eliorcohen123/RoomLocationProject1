@@ -577,7 +577,6 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
     public void onPlacesDataReceived(ArrayList<PlaceModel> results_) {
         // pass data result to mAdapterSearch
         mPlacesViewModelSearch.getAllPlaces().observe(this, placesSearches -> {
-            // Update the cached copy of the words in the mAdapterSearch.
             mAdapterSearch.setPlaces(placesSearches);
         });
     }
