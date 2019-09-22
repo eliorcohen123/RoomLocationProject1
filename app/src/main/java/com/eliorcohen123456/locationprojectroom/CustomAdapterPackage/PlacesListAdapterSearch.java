@@ -10,11 +10,13 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.DisplayMetrics;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -131,6 +133,8 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
             if (provider != null) {
                 location = locationManager.getLastKnownLocation(provider);
                 if (location != null) {
+                    holder.name1.setText(current.getName());
+                    holder.address1.setText(current.getAddress());
                     double distanceMe;
                     Location locationA = new Location("Point A");
                     locationA.setLatitude(current.getLat());
@@ -143,8 +147,6 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
                     assert result != null;
                     double val = Double.parseDouble(result);
                     distanceMe = locationA.distanceTo(locationB) / val;   // in km
-                    holder.name1.setText(current.getName());
-                    holder.address1.setText(current.getAddress());
                     String distanceKm1;
                     String disMile;
                     if (val == 1000.0) {
@@ -180,7 +182,7 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
                                 + current.getPhoto() +
                                 "&key=" + mInflater.getContext().getString(R.string.api_key_search)).into(holder.image1);
                     } catch (Exception e) {
-
+                        holder.image1.setImageResource(R.drawable.no_image_available);
                     }
                 }
             }

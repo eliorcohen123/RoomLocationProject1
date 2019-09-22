@@ -9,11 +9,13 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 
 import android.view.View;
@@ -86,6 +88,8 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
             if (provider != null) {
                 location = locationManager.getLastKnownLocation(provider);
                 if (location != null) {
+                    holder.name3.setText(current.getName());
+                    holder.address3.setText(current.getAddress());
                     double distanceMe;
                     Location locationA = new Location("Point A");
                     locationA.setLatitude(current.getLat());
@@ -98,8 +102,6 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
                     assert result != null;
                     double val = Double.parseDouble(result);
                     distanceMe = locationA.distanceTo(locationB) / val;   // in km
-                    holder.name3.setText(current.getName());
-                    holder.address3.setText(current.getAddress());
                     String distanceKm1;
                     String disMile;
                     if (val == 1000.0) {
@@ -119,12 +121,12 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
                         // Put the text in kmMe3
                         holder.kmMe3.setText(disMile);
                     }
-                    try {
+                    if (!current.getPhoto().equals("")) {
                         Picasso.get().load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="
                                 + current.getPhoto() +
                                 "&key=" + mInflater.getContext().getString(R.string.api_key_search)).into(holder.image3);
-                    } catch (Exception e) {
-
+                    } else {
+                        holder.image3.setImageResource(R.drawable.no_image_available);
                     }
                 }
             }
