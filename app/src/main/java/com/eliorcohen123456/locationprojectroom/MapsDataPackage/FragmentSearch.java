@@ -80,12 +80,12 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
             btnGym, btnJewelry, btnPark, btnRestaurant, btnSchool, btnSpa;
     private NetworkDataProviderSearch dataProviderSearch;
     private NetworkDataProviderHistory dataProviderHistory;
-    private SharedPreferences prefsSeek, settingsQuery, settingsType, settingsPagePass, prefsPage, prefsPre, prefsOpen, prefsTypeQuerySearch;
+    private SharedPreferences prefsSeek, settingsQuery, settingsType, settingsPagePass, prefsPage, prefsPre, prefsOpen, prefsTypeSearch;
     private SharedPreferences.Editor editorQuery, editorType, editorPagePass, editorPage, editorPre, editorTypeQuerySearch;
     private int myRadius, myPage = 1;
     private ImageView imagePre, imageNext, imagePreFirst;
     private TextView textPage;
-    private String hasPage, myStringQueryPage, myStringQueryType, myStringQueryQuery, pageTokenPre, provider, myQuery, myType, myTypeSearch, myQuerySearch, myOpen;
+    private String hasPage, myStringQueryPage, myStringQueryType, myStringQueryQuery, pageTokenPre, provider, myType, myTypeSearch, myOpen;
     private Location location;
     private LocationManager locationManager;
     private Criteria criteria;
@@ -108,9 +108,8 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
     public void onResume() {
         super.onResume();
 
-        myType = prefsTypeQuerySearch.getString("mystringtypesearch", "");
-        myQuery = prefsTypeQuerySearch.getString("mystringquerysearch", "");
-        getCheckBtnSearch(myType, myQuery);
+        myType = prefsTypeSearch.getString("mystringtypesearch", "");
+        getCheckBtnSearch(myType, "");
     }
 
     private void initUI() {
@@ -195,9 +194,9 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
 
         editorPre = prefsPre.edit();
 
-        prefsTypeQuerySearch = getContext().getSharedPreferences("mysettingssearch", Context.MODE_PRIVATE);
+        prefsTypeSearch = getContext().getSharedPreferences("mysettingssearch", Context.MODE_PRIVATE);
 
-        editorTypeQuerySearch = prefsTypeQuerySearch.edit();
+        editorTypeQuerySearch = prefsTypeSearch.edit();
     }
 
     private void myRecyclerView() {
@@ -307,7 +306,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
             case R.id.nearByMe:
                 getCheckBtnSearch("", "");
 
-                editorTypeQuerySearch.putString("mystringtypesearch", "").putString("mystringquerysearch", "").apply();
+                editorTypeQuerySearch.putString("mystringtypesearch", "").apply();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -323,43 +322,36 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
                 getCheckBtnSearch("bank", "");
 
                 myTypeSearch = "bank";
-                myQuerySearch = "";
                 break;
             case R.id.btnBar:
                 getCheckBtnSearch("bar|night_club", "");
 
                 myTypeSearch = "bar|night_club";
-                myQuerySearch = "";
                 break;
             case R.id.btnBeauty:
                 getCheckBtnSearch("beauty_salon|hair_care", "");
 
                 myTypeSearch = "beauty_salon|hair_care";
-                myQuerySearch = "";
                 break;
             case R.id.btnBooks:
                 getCheckBtnSearch("book_store|library", "");
 
                 myTypeSearch = "book_store|library";
-                myQuerySearch = "";
                 break;
             case R.id.btnBusStation:
                 getCheckBtnSearch("bus_station", "");
 
                 myTypeSearch = "bus_station";
-                myQuerySearch = "";
                 break;
             case R.id.btnCars:
                 getCheckBtnSearch("car_dealer|car_rental|car_repair|car_wash", "");
 
                 myTypeSearch = "car_dealer|car_rental|car_repair|car_wash";
-                myQuerySearch = "";
                 break;
             case R.id.btnClothing:
                 getCheckBtnSearch("clothing_store", "");
 
                 myTypeSearch = "clothing_store";
-                myQuerySearch = "";
                 break;
             case R.id.btnDoctor:
                 getCheckBtnSearch("doctor", "");
@@ -370,43 +362,36 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
                 getCheckBtnSearch("gas_station", "");
 
                 myTypeSearch = "gas_station";
-                myQuerySearch = "";
                 break;
             case R.id.btnGym:
                 getCheckBtnSearch("gym", "");
 
                 myTypeSearch = "gym";
-                myQuerySearch = "";
                 break;
             case R.id.btnJewelry:
                 getCheckBtnSearch("jewelry_store", "");
 
                 myTypeSearch = "jewelry_store";
-                myQuerySearch = "";
                 break;
             case R.id.btnPark:
                 getCheckBtnSearch("park|amusement_park|parking|rv_park", "");
 
                 myTypeSearch = "park|amusement_park|parking|rv_park";
-                myQuerySearch = "";
                 break;
             case R.id.btnRestaurant:
                 getCheckBtnSearch("food|restaurant|cafe|bakery", "");
 
                 myTypeSearch = "food|restaurant|cafe|bakery";
-                myQuerySearch = "";
                 break;
             case R.id.btnSchool:
                 getCheckBtnSearch("school", "");
 
                 myTypeSearch = "school";
-                myQuerySearch = "";
                 break;
             case R.id.btnSpa:
                 getCheckBtnSearch("spa", "");
 
                 myTypeSearch = "spa";
-                myQuerySearch = "";
                 break;
             case R.id.imageNext:
                 getTypeQuery(myStringQueryPage, myStringQueryType, myStringQueryQuery);
@@ -436,7 +421,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
                 getAllCheckPage(myPage);
                 break;
         }
-        editorTypeQuerySearch.putString("mystringtypesearch", myTypeSearch).putString("mystringquerysearch", myQuerySearch).apply();
+        editorTypeQuerySearch.putString("mystringtypesearch", myTypeSearch).apply();
     }
 
     private void getCheckBtnSearch(String type, String query) {
