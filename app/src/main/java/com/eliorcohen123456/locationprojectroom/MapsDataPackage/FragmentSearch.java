@@ -81,7 +81,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
     private NetworkDataProviderSearch dataProviderSearch;
     private NetworkDataProviderHistory dataProviderHistory;
     private SharedPreferences prefsSeek, settingsQuery, settingsType, settingsPagePass, prefsPage, prefsPre, prefsOpen, prefsTypeSearch;
-    private SharedPreferences.Editor editorQuery, editorType, editorPagePass, editorPage, editorPre, editorTypeQuerySearch;
+    private SharedPreferences.Editor editorQuery, editorType, editorPagePass, editorPage, editorPre, editorTypeSearch;
     private int myRadius, myPage = 1;
     private ImageView imagePre, imageNext, imagePreFirst;
     private TextView textPage;
@@ -196,7 +196,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
 
         prefsTypeSearch = getContext().getSharedPreferences("mysettingssearch", Context.MODE_PRIVATE);
 
-        editorTypeQuerySearch = prefsTypeSearch.edit();
+        editorTypeSearch = prefsTypeSearch.edit();
     }
 
     private void myRecyclerView() {
@@ -306,7 +306,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
             case R.id.nearByMe:
                 getCheckBtnSearch("", "");
 
-                editorTypeQuerySearch.putString("mystringtypesearch", "").apply();
+                editorTypeSearch.putString("mystringtypesearch", "").apply();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -421,7 +421,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
                 getAllCheckPage(myPage);
                 break;
         }
-        editorTypeQuerySearch.putString("mystringtypesearch", myTypeSearch).apply();
+        editorTypeSearch.putString("mystringtypesearch", myTypeSearch).apply();
     }
 
     private void getCheckBtnSearch(String type, String query) {
