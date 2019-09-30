@@ -63,6 +63,7 @@ import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceViewModel
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import eliorcohen.com.googlemapsapi.GoogleMapsApi;
 
@@ -80,12 +81,13 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
             btnGym, btnJewelry, btnPark, btnRestaurant, btnSchool, btnSpa;
     private NetworkDataProviderSearch dataProviderSearch;
     private NetworkDataProviderHistory dataProviderHistory;
-    private SharedPreferences prefsSeek, settingsQuery, settingsType, settingsPagePass, prefsPage, prefsPre, prefsOpen, prefsTypeSearch;
-    private SharedPreferences.Editor editorQuery, editorType, editorPagePass, editorPage, editorPre, editorTypeSearch;
-    private int myRadius, myPage = 1;
+    private SharedPreferences prefsSeek, settingsQuery, settingsType, settingsPagePass, prefsOpen, prefsPage, prefsPre,
+            prefsQuery, prefsType, prefsPageMe, prefsPageMy;
+    private SharedPreferences.Editor editorQuery, editorType, editorPagePass, editorPage, editorPre, editorPageMe, editorPageMy;
+    private int myRadius, myPage, myPageMy;
     private ImageView imagePre, imageNext, imagePreFirst;
     private TextView textPage;
-    private String hasPage, myStringQueryPage, myStringQueryType, myStringQueryQuery, pageTokenPre, provider, myType, myTypeSearch, myOpen;
+    private String hasPage, pageTokenPre, provider, myType, myTypeSearch, myOpen, myStringPage, myStringQuery, myStringPageMe, myPageMeString, myQuery;
     private Location location;
     private LocationManager locationManager;
     private Criteria criteria;
@@ -108,8 +110,9 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
     public void onResume() {
         super.onResume();
 
-        myType = prefsTypeSearch.getString("mystringtypesearch", "");
-        getCheckBtnSearch(myType, "");
+        myType = prefsType.getString("mystringtypesearch", "");
+        myStringQuery = prefsQuery.getString("mystringquerysearch", "");
+        getCheckBtnSearch(myPage, myType, myStringQuery);
     }
 
     private void initUI() {
@@ -147,17 +150,14 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
         mAdapterSearch = new PlacesListAdapterSearch(getContext());
         googleMapsApi = new GoogleMapsApi();
 
-        prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
-        prefsOpen = PreferenceManager.getDefaultSharedPreferences(getContext());
-
-        settingsQuery = getActivity().getSharedPreferences("mysettingsquery", Context.MODE_PRIVATE);
-        editorQuery = settingsQuery.edit();
-
-        settingsType = getActivity().getSharedPreferences("mysettingstype", Context.MODE_PRIVATE);
-        editorType = settingsType.edit();
-
-        settingsPagePass = getActivity().getSharedPreferences("mysettingspagepass", Context.MODE_PRIVATE);
-        editorPagePass = settingsPagePass.edit();
+        myPageMy = prefsPageMy.getInt("mystringpagemy", 1);
+        if (myPageMy == 1) {
+            myPage = 1;
+        } else if (myPageMy == 2) {
+            myPage = 2;
+        } else {
+            myPage = 3;
+        }
 
         setHasOptionsMenu(true);
     }
@@ -184,19 +184,28 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
     }
 
     private void initPrefs() {
-        prefsPage = getContext().getSharedPreferences("mysettingsquery", Context.MODE_PRIVATE);
-        prefsPage.edit().clear().apply();
+        prefsSeek = PreferenceManager.getDefaultSharedPreferences(NearByApplication.getApplication());
+        prefsOpen = PreferenceManager.getDefaultSharedPreferences(getContext());
 
+        settingsQuery = getActivity().getSharedPreferences("mysettingsquery", Context.MODE_PRIVATE);
+        settingsType = getActivity().getSharedPreferences("mysettingstype", Context.MODE_PRIVATE);
+        settingsPagePass = getActivity().getSharedPreferences("mysettingspagepass", Context.MODE_PRIVATE);
+        prefsQuery = Objects.requireNonNull(getContext()).getSharedPreferences("mysettingsquery", Context.MODE_PRIVATE);
+        prefsPage = Objects.requireNonNull(getContext()).getSharedPreferences("mysettingspage", Context.MODE_PRIVATE);
+        prefsPre = getContext().getSharedPreferences("mysettingspre", Context.MODE_PRIVATE);
+        prefsType = getContext().getSharedPreferences("mysettingstype", Context.MODE_PRIVATE);
+        prefsPageMe = getContext().getSharedPreferences("mysettingspageme", Context.MODE_PRIVATE);
+        prefsPageMy = getContext().getSharedPreferences("mysettingspagemy", Context.MODE_PRIVATE);
+
+        editorQuery = settingsQuery.edit();
+        editorType = settingsType.edit();
+        editorPagePass = settingsPagePass.edit();
+        editorQuery = prefsQuery.edit();
         editorPage = prefsPage.edit();
-
-        prefsPre = getContext().getSharedPreferences("mysettingsquerypre", Context.MODE_PRIVATE);
-        prefsPre.edit().clear().apply();
-
         editorPre = prefsPre.edit();
-
-        prefsTypeSearch = getContext().getSharedPreferences("mysettingssearch", Context.MODE_PRIVATE);
-
-        editorTypeSearch = prefsTypeSearch.edit();
+        editorType = prefsType.edit();
+        editorPageMe = prefsPageMe.edit();
+        editorPageMy = prefsPageMy.edit();
     }
 
     private void myRecyclerView() {
@@ -238,10 +247,6 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
 
             swipeRefreshLayout.setRefreshing(false);
         });
-    }
-
-    private void getDataPrefsPage(String type, String query) {
-        editorPage.putString("myStringQueryType", type).putString("myStringQueryQuery", query).apply();
     }
 
     // Sets off the menu of activity_menu
@@ -288,7 +293,18 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    getCheckBtnSearch("", newText);
+                    prefsPageMe.edit().clear().apply();
+                    prefsPageMy.edit().clear().apply();
+
+                    myPage = 1;
+                    getCheckBtnSearch(myPage, "", newText);
+
+                    myPageMeString = "";
+
+                    editorType.putString("mystringtypesearch", "").apply();
+                    editorQuery.putString("mystringquerysearch", newText).apply();
+                    editorPageMe.putString("mystringpageme", myPageMeString).apply();
+                    editorPageMy.putInt("mystringpagemy", myPage).apply();
 
                     stopShowingProgressDialog();
                     return true;
@@ -304,9 +320,18 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
             case R.id.action_search:
                 break;
             case R.id.nearByMe:
-                getCheckBtnSearch("", "");
+                prefsPageMe.edit().clear().apply();
+                prefsPageMy.edit().clear().apply();
 
-                editorTypeSearch.putString("mystringtypesearch", "").apply();
+                myPage = 1;
+                getCheckBtnSearch(myPage, "", "");
+
+                myPageMeString = "";
+
+                editorType.putString("mystringtypesearch", "").apply();
+                editorQuery.putString("mystringquerysearch", "").apply();
+                editorPageMe.putString("mystringpageme", myPageMeString).apply();
+                editorPageMy.putInt("mystringpagemy", myPage).apply();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -314,159 +339,261 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
 
     @Override
     public void onClick(View v) {
-        myStringQueryPage = prefsPage.getString("myStringQueryPage", "");
-        myStringQueryType = prefsPage.getString("myStringQueryType", "");
-        myStringQueryQuery = prefsPage.getString("myStringQueryQuery", "");
+        myStringQuery = prefsQuery.getString("mystringquerysearch", "");
+        myType = prefsType.getString("mystringtypesearch", "");
+        myPageMy = prefsPageMy.getInt("mystringpagemy", 1);
         switch (v.getId()) {
             case R.id.btnBank:
-                getCheckBtnSearch("bank", "");
+                prefsPageMe.edit().clear().apply();
+                prefsPageMy.edit().clear().apply();
+
+                myPage = 1;
+                getCheckBtnSearch(myPage, "bank", "");
 
                 myTypeSearch = "bank";
+                myPageMeString = "";
+                myQuery = "";
                 break;
             case R.id.btnBar:
-                getCheckBtnSearch("bar|night_club", "");
+                prefsPageMe.edit().clear().apply();
+                prefsPageMy.edit().clear().apply();
+
+                myPage = 1;
+                getCheckBtnSearch(myPage, "bar|night_club", "");
 
                 myTypeSearch = "bar|night_club";
+                myPageMeString = "";
+                myQuery = "";
                 break;
             case R.id.btnBeauty:
-                getCheckBtnSearch("beauty_salon|hair_care", "");
+                prefsPageMe.edit().clear().apply();
+                prefsPageMy.edit().clear().apply();
+
+                myPage = 1;
+                getCheckBtnSearch(myPage, "beauty_salon|hair_care", "");
 
                 myTypeSearch = "beauty_salon|hair_care";
+                myPageMeString = "";
+                myQuery = "";
                 break;
             case R.id.btnBooks:
-                getCheckBtnSearch("book_store|library", "");
+                prefsPageMe.edit().clear().apply();
+                prefsPageMy.edit().clear().apply();
+
+                myPage = 1;
+                getCheckBtnSearch(myPage, "book_store|library", "");
 
                 myTypeSearch = "book_store|library";
+                myPageMeString = "";
+                myQuery = "";
                 break;
             case R.id.btnBusStation:
-                getCheckBtnSearch("bus_station", "");
+                prefsPageMe.edit().clear().apply();
+                prefsPageMy.edit().clear().apply();
+
+                myPage = 1;
+                getCheckBtnSearch(myPage, "bus_station", "");
 
                 myTypeSearch = "bus_station";
+                myPageMeString = "";
+                myQuery = "";
                 break;
             case R.id.btnCars:
-                getCheckBtnSearch("car_dealer|car_rental|car_repair|car_wash", "");
+                prefsPageMe.edit().clear().apply();
+                prefsPageMy.edit().clear().apply();
+
+                myPage = 1;
+                getCheckBtnSearch(myPage, "car_dealer|car_rental|car_repair|car_wash", "");
 
                 myTypeSearch = "car_dealer|car_rental|car_repair|car_wash";
+                myPageMeString = "";
+                myQuery = "";
                 break;
             case R.id.btnClothing:
-                getCheckBtnSearch("clothing_store", "");
+                prefsPageMe.edit().clear().apply();
+                prefsPageMy.edit().clear().apply();
+
+                myPage = 1;
+                getCheckBtnSearch(myPage, "clothing_store", "");
 
                 myTypeSearch = "clothing_store";
+                myPageMeString = "";
+                myQuery = "";
                 break;
             case R.id.btnDoctor:
-                getCheckBtnSearch("doctor", "");
+                prefsPageMe.edit().clear().apply();
+                prefsPageMy.edit().clear().apply();
+
+                myPage = 1;
+                getCheckBtnSearch(myPage, "doctor", "");
 
                 myTypeSearch = "doctor";
+                myPageMeString = "";
+                myQuery = "";
                 break;
             case R.id.btnGasStation:
-                getCheckBtnSearch("gas_station", "");
+                prefsPageMe.edit().clear().apply();
+                prefsPageMy.edit().clear().apply();
+
+                myPage = 1;
+                getCheckBtnSearch(myPage, "gas_station", "");
 
                 myTypeSearch = "gas_station";
+                myPageMeString = "";
+                myQuery = "";
                 break;
             case R.id.btnGym:
-                getCheckBtnSearch("gym", "");
+                prefsPageMe.edit().clear().apply();
+                prefsPageMy.edit().clear().apply();
+
+                myPage = 1;
+                getCheckBtnSearch(myPage, "gym", "");
 
                 myTypeSearch = "gym";
+                myPageMeString = "";
+                myQuery = "";
                 break;
             case R.id.btnJewelry:
-                getCheckBtnSearch("jewelry_store", "");
+                prefsPageMe.edit().clear().apply();
+                prefsPageMy.edit().clear().apply();
+
+                myPage = 1;
+                getCheckBtnSearch(myPage, "jewelry_store", "");
 
                 myTypeSearch = "jewelry_store";
+                myPageMeString = "";
+                myQuery = "";
                 break;
             case R.id.btnPark:
-                getCheckBtnSearch("park|amusement_park|parking|rv_park", "");
+                prefsPageMe.edit().clear().apply();
+                prefsPageMy.edit().clear().apply();
+
+                myPage = 1;
+                getCheckBtnSearch(myPage, "park|amusement_park|parking|rv_park", "");
 
                 myTypeSearch = "park|amusement_park|parking|rv_park";
+                myPageMeString = "";
+                myQuery = "";
                 break;
             case R.id.btnRestaurant:
-                getCheckBtnSearch("food|restaurant|cafe|bakery", "");
+                prefsPageMe.edit().clear().apply();
+                prefsPageMy.edit().clear().apply();
+
+                myPage = 1;
+                getCheckBtnSearch(myPage, "food|restaurant|cafe|bakery", "");
 
                 myTypeSearch = "food|restaurant|cafe|bakery";
+                myPageMeString = "";
+                myQuery = "";
                 break;
             case R.id.btnSchool:
-                getCheckBtnSearch("school", "");
+                prefsPageMe.edit().clear().apply();
+                prefsPageMy.edit().clear().apply();
+
+                myPage = 1;
+                getCheckBtnSearch(myPage, "school", "");
 
                 myTypeSearch = "school";
+                myPageMeString = "";
+                myQuery = "";
                 break;
             case R.id.btnSpa:
-                getCheckBtnSearch("spa", "");
+                prefsPageMe.edit().clear().apply();
+                prefsPageMy.edit().clear().apply();
+
+                myPage = 1;
+                getCheckBtnSearch(myPage, "spa", "");
 
                 myTypeSearch = "spa";
+                myPageMeString = "";
+                myQuery = "";
                 break;
             case R.id.imageNext:
-                getTypeQuery(myStringQueryPage, myStringQueryType, myStringQueryQuery);
+                myStringPage = prefsPage.getString("myStringPage", "");
+
+                getTypeQuery(myStringPage, myType, myStringQuery);
 
                 myPage++;
 
                 getAllCheckPage(myPage);
+
+                myPageMeString = myStringPage;
                 break;
             case R.id.imagePre:
-                if (myPage == 2) {
+                if (myPage == 2 || myPageMy == 2) {
                     pageTokenPre = "";
                 } else {
-                    pageTokenPre = prefsPre.getString("mystringquerypre1", "");
+                    pageTokenPre = prefsPre.getString("mystringquerypre", "");
                 }
 
-                getTypeQuery(pageTokenPre, myStringQueryType, myStringQueryQuery);
+                getTypeQuery(pageTokenPre, myType, myStringQuery);
 
                 myPage--;
 
                 getAllCheckPage(myPage);
+
+                myPageMeString = pageTokenPre;
                 break;
             case R.id.imagePreFirst:
-                getTypeQuery("", myStringQueryType, myStringQueryQuery);
+                getTypeQuery("", myType, myStringQuery);
 
                 myPage = 1;
 
                 getAllCheckPage(myPage);
+
+                myPageMeString = "";
                 break;
         }
-        editorTypeSearch.putString("mystringtypesearch", myTypeSearch).apply();
+        editorType.putString("mystringtypesearch", myTypeSearch).apply();
+        editorQuery.putString("mystringquerysearch", myQuery).apply();
+        editorPageMe.putString("mystringpageme", myPageMeString).apply();
+        editorPageMy.putInt("mystringpagemy", myPage).apply();
     }
 
-    private void getCheckBtnSearch(String type, String query) {
-        getTypeQuery("", type, query);
-        getDataPrefsPage(type, query);
-
-        myPage = 1;
-
-        getAllCheckPage(myPage);
+    private void getCheckBtnSearch(int page, String type, String query) {
+        myStringPageMe = prefsPageMe.getString("mystringpageme", "");
+        getTypeQuery(myStringPageMe, type, query);
+        getAllCheckPage(page);
     }
 
     private void getAllCheckPage(int page) {
-        getPage0();
-        getPage1();
-        getPageText(page);
+        getPage0(page);
+        getPage1(page);
+        getPageText();
     }
 
-    private void getPage0() {
-        if (myPage <= 0) {
+    private void getPage0(int page) {
+        myPageMy = prefsPageMy.getInt("mystringpagemy", 1);
+        if (page == 0 || myPageMy <= 0) {
             myPage = 1;
         } else {
             imagePre.setVisibility(View.VISIBLE);
         }
+        editorPageMy.putInt("mystringpagemy", myPage).apply();
     }
 
-    private void getPage1() {
-        if (myPage == 1) {
+    private void getPage1(int page) {
+        myPageMy = prefsPageMy.getInt("mystringpagemy", 1);
+        if (page == 1 || myPageMy == 1) {
             imagePre.setVisibility(View.GONE);
         } else {
             imagePre.setVisibility(View.VISIBLE);
         }
 
-        if (myPage > 2) {
+        if (page > 2 || myPageMy > 2) {
             imagePreFirst.setVisibility(View.VISIBLE);
         } else {
             imagePreFirst.setVisibility(View.GONE);
         }
     }
 
-    private void getPageText(int page) {
-        textPage.setText(String.valueOf(page));
+    private void getPageText() {
+        myPageMy = prefsPageMy.getInt("mystringpagemy", 1);
+        textPage.setText(String.valueOf(myPageMy));
     }
 
     private void getTypeQuery(String pageToken, String type, String query) {
-        if (!isConnected(getContext())) {
+        if (!isConnected(Objects.requireNonNull(getContext()))) {
             dataProviderHistory.getPlacesByLocation(mFragmentSearch);
             buildDialog(getContext()).show();
         } else {
@@ -512,10 +639,11 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
                                 imageNext.setVisibility(View.GONE);
                                 hasPage = "";
                             }
-                            editorPage.putString("myStringQueryPage", hasPage).apply();
+                            editorPage.putString("myStringPage", hasPage).apply();
 
-                            if (myPage == 1) {
-                                editorPre.putString("mystringquerypre1", hasPage).apply();
+                            myPageMy = prefsPageMy.getInt("mystringpagemy", 1);
+                            if (myPageMy == 1) {
+                                editorPre.putString("mystringquerypre", hasPage).apply();
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
