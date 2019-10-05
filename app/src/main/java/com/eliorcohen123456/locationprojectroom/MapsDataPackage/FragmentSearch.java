@@ -449,7 +449,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
 
     private void getPage0(int page) {
         myPageMy = prefsPageMy.getInt("mystringpagemy", 1);
-        if (page == 0 || myPageMy == 0) {
+        if (page <= 0 || myPageMy <= 0) {
             myPage = 1;
         } else {
             imagePre.setVisibility(View.VISIBLE);
