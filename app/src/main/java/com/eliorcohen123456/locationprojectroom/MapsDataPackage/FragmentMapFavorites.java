@@ -192,7 +192,7 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
         try {
             MapsInitializer.initialize(getContext());
             mGoogleMap = googleMap;
-            googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+            mGoogleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
             if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
@@ -204,8 +204,8 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                 // for ActivityCompat#requestPermissions for more details.
                 return;
             }
-            googleMap.setMyLocationEnabled(true);
-            googleMap.getUiSettings().setZoomControlsEnabled(true);
+            mGoogleMap.setMyLocationEnabled(true);
+            mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
             if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                     ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
@@ -219,7 +219,7 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
             if (provider != null) {
                 location = locationManager.getLastKnownLocation(provider);
                 if (location != null) {
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 8));
+                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 8));
                 }
             }
         } catch (Exception e) {
