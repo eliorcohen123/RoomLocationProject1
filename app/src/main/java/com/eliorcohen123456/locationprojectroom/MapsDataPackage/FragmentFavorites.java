@@ -77,7 +77,6 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
         fragmentFavorites = this;
 
         networkDataProviderFavorites = new NetworkDataProviderFavorites();
-
         p = new Paint();
     }
 
