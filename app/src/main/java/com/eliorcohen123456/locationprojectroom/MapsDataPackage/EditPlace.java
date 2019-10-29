@@ -70,7 +70,7 @@ public class EditPlace extends AppCompatActivity implements View.OnClickListener
         lng.setText(String.valueOf(item.getLng()));  // GetSerializable of lng
         photo.setText(item.getPhoto());  // GetSerializable of photo
 
-        //Initialize the ImageView
+        // Initialize the ImageView
         try {
             String picture = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="
                     + item.getPhoto() +
