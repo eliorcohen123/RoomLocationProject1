@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Room Lovely Favorite Places</string>
     <string name="hint">Search a place…</string>
-    <string name="map_id">123</string>
+    <string name="map_id">map_id</string>
     <string name="map_edit">map_edit</string>
     <string name="map_add_from_internet">map_add_from_internet</string>
     <string name="textView4_addPlace">Add Map</string>
