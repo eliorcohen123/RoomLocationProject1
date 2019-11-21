@@ -573,9 +573,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
     @Override
     public void onPlacesDataReceived(ArrayList<PlaceModel> results_) {
         // pass data result to mAdapterSearch
-        mPlacesViewModelSearch.getAllPlaces().observe(this, placesSearches -> {
-            mAdapterSearch.setPlaces(placesSearches);
-        });
+        mPlacesViewModelSearch.getAllPlaces().observe(this, placesSearches -> mAdapterSearch.setPlaces(placesSearches));
     }
 
     // stopShowingProgressDialog
