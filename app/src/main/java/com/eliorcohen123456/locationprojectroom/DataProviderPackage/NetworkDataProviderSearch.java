@@ -7,7 +7,9 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+
 import androidx.core.app.ActivityCompat;
+
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
@@ -120,7 +122,7 @@ public class NetworkDataProviderSearch {
                         ArrayList<PlacesSearch> listPlaces = new ArrayList<>();
                         for (PlaceModel placeModel : mPlaceModels) {
                             try {
-                                PlacesSearch place = new PlacesSearch(placeModel.getName(), placeModel.getGeometry().getLocation().getLat(), placeModel.getGeometry().getLocation().getLng(), placeModel.getVicinity(), placeModel.getPhotos().get(0).getPhoto_reference(), false, true, placeModel.getDistance(), placeModel.getRating(), placeModel.getUser_ratings_total(), placeModel.getOpening_hours());
+                                PlacesSearch place = new PlacesSearch(placeModel.getName(), placeModel.getVicinity(), placeModel.getGeometry().getLocation().getLat(), placeModel.getGeometry().getLocation().getLng(), placeModel.getPhotos().get(0).getPhoto_reference(), placeModel.getOpening_hours());
                                 listPlaces.add(place);
                             } catch (Exception e) {
 

@@ -10,17 +10,12 @@ import java.io.Serializable;
 @Entity(tableName = "places_table_search")
 public class PlacesSearch implements Serializable {
 
-    public PlacesSearch(@NonNull String mName, double mLat, double mLng, @NonNull String mAddress, String mPhoto, boolean mIsLastSearch, boolean mIsFavorite, String mDistance, double mRating, int mUser_ratings_total, boolean mIs_open) {
+    public PlacesSearch(@NonNull String mName, @NonNull String mAddress, double mLat, double mLng, String mPhoto, boolean mIs_open) {
         this.mName = mName;
+        this.mAddress = mAddress;
         this.mLat = mLat;
         this.mLng = mLng;
-        this.mAddress = mAddress;
         this.mPhoto = mPhoto;
-        this.mIsLastSearch = mIsLastSearch;
-        this.mIsFavorite = mIsFavorite;
-        this.mDistance = mDistance;
-        this.mRating = mRating;
-        this.mUser_ratings_total = mUser_ratings_total;
         this.mIs_open = mIs_open;
     }
 
@@ -55,12 +50,6 @@ public class PlacesSearch implements Serializable {
 
     @ColumnInfo(name = "user_ratings_total")
     private int mUser_ratings_total;
-
-    @ColumnInfo(name = "isLastSearch")
-    private boolean mIsLastSearch;
-
-    @ColumnInfo(name = "isFavorite")
-    private boolean mIsFavorite;
 
     @ColumnInfo(name = "opening_hours")
     boolean mIs_open;
@@ -139,22 +128,6 @@ public class PlacesSearch implements Serializable {
 
     public void setUser_ratings_total(int mUser_ratings_total) {
         this.mUser_ratings_total = mUser_ratings_total;
-    }
-
-    public boolean isIsLastSearch() {
-        return mIsLastSearch;
-    }
-
-    public void setIsLastSearch(boolean mIsLastSearch) {
-        this.mIsLastSearch = mIsLastSearch;
-    }
-
-    public boolean isIsFavorite() {
-        return mIsFavorite;
-    }
-
-    public void setIsFavorite(boolean mIsFavorite) {
-        this.mIsFavorite = mIsFavorite;
     }
 
     public boolean getmIs_open() {
