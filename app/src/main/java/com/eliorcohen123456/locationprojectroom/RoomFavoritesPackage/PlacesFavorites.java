@@ -52,7 +52,7 @@ public class PlacesFavorites implements Serializable {
     private int mUser_ratings_total;
 
     @ColumnInfo(name = "opening_hours")
-    boolean mIs_open;
+    private boolean mIs_open;
 
 
     public long getID() {

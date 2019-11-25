@@ -1,7 +1,9 @@
 package com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage;
 
 import android.app.Application;
+
 import androidx.lifecycle.LiveData;
+
 import android.os.AsyncTask;
 
 import java.util.List;
@@ -94,7 +96,7 @@ public class PlaceRepositoryFavorites {
         }
     }
 
-    public void insertPlace(PlacesFavorites place_) {
+    void insertPlace(PlacesFavorites place_) {
         new insertAsyncTask(mPlacesDaoFavorites).execute(place_);
     }
 

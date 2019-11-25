@@ -1,7 +1,9 @@
 package com.eliorcohen123456.locationprojectroom.RoomSearchPackage;
 
 import android.app.Application;
+
 import androidx.lifecycle.LiveData;
+
 import android.os.AsyncTask;
 
 import java.util.List;
@@ -94,7 +96,7 @@ public class PlaceRepositorySearch {
         }
     }
 
-    public void insertPlace(PlacesSearch place_) {
+    void insertPlace(PlacesSearch place_) {
         new insertAsyncTask(mPlacesDaoSearch).execute(place_);
     }
 
