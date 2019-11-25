@@ -3,9 +3,11 @@ package com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+
 import android.content.Context;
 
 @Database(entities = {PlacesFavorites.class}, version = 1, exportSchema = false)
+//@TypeConverters(Converter.class)
 public abstract class PlacesRoomDatabaseFavorites extends RoomDatabase {
 
     public abstract PlacesDaoFavorites placesDao();

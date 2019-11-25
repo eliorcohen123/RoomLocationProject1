@@ -6,6 +6,7 @@ import androidx.room.RoomDatabase;
 import android.content.Context;
 
 @Database(entities = {PlacesSearch.class}, version = 1, exportSchema = false)
+//@TypeConverters(Converter.class)
 public abstract class PlacesRoomDatabaseSearch extends RoomDatabase {
 
     public abstract PlacesDaoSearch placesDao();
