@@ -167,9 +167,9 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
                         holder.kmMe1.setText(disMile);
                     }
                     try {
-                        if (String.valueOf(current.getmIs_open()).equals("true")) {
+                        if (String.valueOf(current.getIs_open()).equals("true")) {
                             holder.isOpen1.setText("Open");
-                        } else if (String.valueOf(current.getmIs_open()).equals("false")) {
+                        } else if (String.valueOf(current.getIs_open()).equals("false")) {
                             holder.isOpen1.setText("Close");
                         } else {
                             holder.isOpen1.setText("No info");

@@ -130,11 +130,11 @@ public class PlacesFavorites implements Serializable {
         this.mUser_ratings_total = mUser_ratings_total;
     }
 
-    public boolean getmIs_open() {
+    public boolean getIs_open() {
         return mIs_open;
     }
 
-    public void setmIs_open(boolean mIs_open) {
+    public void setIs_open(boolean mIs_open) {
         this.mIs_open = mIs_open;
     }
 
