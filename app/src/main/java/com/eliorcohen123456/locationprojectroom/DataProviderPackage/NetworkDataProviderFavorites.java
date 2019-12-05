@@ -2,11 +2,10 @@ package com.eliorcohen123456.locationprojectroom.DataProviderPackage;
 
 import android.os.AsyncTask;
 
-import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlaceRepositoryFavorites;
-import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlacesFavorites;
-
 import java.util.ArrayList;
 
+import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlaceRepositoryFavorites;
+import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlacesFavorites;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.IPlacesDataReceived;
 import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
 import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplication;
