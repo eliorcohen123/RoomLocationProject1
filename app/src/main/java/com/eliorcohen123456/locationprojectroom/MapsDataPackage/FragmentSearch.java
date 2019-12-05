@@ -570,12 +570,6 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
         return builder;
     }
 
-    @Override
-    public void onPlacesDataReceived(ArrayList<PlaceModel> results_) {
-        // pass data result to mAdapterSearch
-        mPlacesViewModelSearch.getAllPlaces().observe(this, placesSearches -> mAdapterSearch.setPlaces(placesSearches));
-    }
-
     // stopShowingProgressDialog
     public static void stopShowingProgressDialog() {
         if (mProgressDialog != null) {
@@ -589,6 +583,12 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
         mProgressDialog = ProgressDialog.show(mFragmentSearch.getActivity(), "Loading...",
                 "Please wait...", true);
         mProgressDialog.show();
+    }
+
+    @Override
+    public void onPlacesDataReceived(ArrayList<PlaceModel> results_) {
+        // pass data result to mAdapterSearch
+        mPlacesViewModelSearch.getAllPlaces().observe(this, placesSearches -> mAdapterSearch.setPlaces(placesSearches));
     }
 
 }
