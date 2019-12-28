@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplication;
 import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlaceViewModelFavorites;
 import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlacesFavorites;
 import com.squareup.picasso.Picasso;
@@ -93,17 +95,14 @@ public class AddMarkerFavorites extends AppCompatActivity implements View.OnClic
                 double lat2 = Double.parseDouble(lat1);
                 double lng2 = Double.parseDouble(lng1);
 
-                PlacesFavorites placesFavorites = new PlacesFavorites(name1, address1, lat2, lng2, photo1);
-                placeViewModelFavorites = ViewModelProviders.of(AddMarkerFavorites.this).get(PlaceViewModelFavorites.class);
-                if (placeViewModelFavorites.exist(placesFavorites.getName()) == null) {
-                    placeViewModelFavorites.insertPlace(placesFavorites);
+                placeViewModelFavorites = new PlaceViewModelFavorites(NearByApplication.getApplication());
 
-                    // Pass from AddMapFromInternet to ActivityFavorites
-                    Intent intentAddInternetToMain = new Intent(AddMarkerFavorites.this, ActivityFavorites.class);
-                    startActivity(intentAddInternetToMain);
-                } else {
-                    Toast.makeText(this, "Current place already exist in your favorites", Toast.LENGTH_SHORT).show();
-                }
+                PlacesFavorites placesFavorites = new PlacesFavorites(name1, address1, lat2, lng2, photo1);
+                placeViewModelFavorites.insertPlace(placesFavorites);
+
+                // Pass from AddMapFromInternet to ActivityFavorites
+                Intent intentAddInternetToMain = new Intent(AddMarkerFavorites.this, ActivityFavorites.class);
+                startActivity(intentAddInternetToMain);
                 break;
             case R.id.textViewShow:
                 photo.setVisibility(View.INVISIBLE);  // Canceling the show of URL

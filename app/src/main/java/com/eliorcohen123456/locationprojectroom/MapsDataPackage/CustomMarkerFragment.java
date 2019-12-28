@@ -19,6 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplication;
+import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlaceViewModelFavorites;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -40,6 +42,7 @@ public class CustomMarkerFragment extends Fragment implements OnMapReadyCallback
     private LocationManager locationManager;
     private String provider;
     private Toolbar toolbar;
+    private PlaceViewModelFavorites placeViewModelFavorites;
 
     @Nullable
     @Override
@@ -130,10 +133,15 @@ public class CustomMarkerFragment extends Fragment implements OnMapReadyCallback
         });
 
         mGoogleMap.setOnMarkerClickListener(marker -> {
-            Intent intent = new Intent(getContext(), AddMarkerFavorites.class);
-            intent.putExtra(getString(R.string.lat_marker), marker.getPosition().latitude);
-            intent.putExtra(getString(R.string.lng_marker), marker.getPosition().longitude);
-            startActivity(intent);
+            placeViewModelFavorites = new PlaceViewModelFavorites(NearByApplication.getApplication());
+            if (placeViewModelFavorites.exist("", marker.getPosition().latitude, marker.getPosition().longitude) == null) {
+                Intent intent = new Intent(getContext(), AddMarkerFavorites.class);
+                intent.putExtra(getString(R.string.lat_marker), marker.getPosition().latitude);
+                intent.putExtra(getString(R.string.lng_marker), marker.getPosition().longitude);
+                startActivity(intent);
+            } else {
+                Toast.makeText(getContext(), "Current place already exist in your favorites", Toast.LENGTH_SHORT).show();
+            }
             return true;
         });
     }

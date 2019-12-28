@@ -13,7 +13,7 @@ import java.util.List;
 @Dao
 public interface PlacesDaoFavorites {
 
-    @Insert()
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(PlacesFavorites place_);
 
     @Delete
@@ -34,6 +34,6 @@ public interface PlacesDaoFavorites {
     @Update
     void update(PlacesFavorites... place_);
 
-    @Query("SELECT * from places_table_favorites WHERE name= :name")
-    PlacesFavorites getItemById(String name);
+    @Query("SELECT * from places_table_favorites WHERE name= :name AND lat= :lat AND lng= :lng")
+    PlacesFavorites getItemById(String name, double lat, double lng);
 }

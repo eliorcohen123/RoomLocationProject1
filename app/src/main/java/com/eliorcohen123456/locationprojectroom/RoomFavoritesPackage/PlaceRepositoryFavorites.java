@@ -62,8 +62,8 @@ public class PlaceRepositoryFavorites {
         new updatePlaceAsyncTask(mPlacesDaoFavorites).execute(places);
     }
 
-    PlacesFavorites getExist(String name) {
-        return mPlacesDaoFavorites.getItemById(name);
+    PlacesFavorites getExist(String name, double lat, double lng) {
+        return mPlacesDaoFavorites.getItemById(name, lat, lng);
     }
 
     private static class deletePlaceAsyncTask extends AsyncTask<PlacesFavorites, Void, Void> {

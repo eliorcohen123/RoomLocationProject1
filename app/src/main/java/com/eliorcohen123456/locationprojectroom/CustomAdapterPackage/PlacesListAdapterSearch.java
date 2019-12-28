@@ -80,7 +80,7 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
                 switch (item.getItemId()) {
                     case 1:
                         placeViewModelFavorites = new PlaceViewModelFavorites(NearByApplication.getApplication());
-                        if (placeViewModelFavorites.exist(current.getName()) == null) {
+                        if (placeViewModelFavorites.exist(current.getName(), current.getLat(), current.getLng()) == null) {
                             Intent intent = new Intent(mInflater.getContext(), AddPlaceFavorites.class);
                             intent.putExtra(mInflater.getContext().getString(R.string.map_add_from_internet), current);
                             mInflater.getContext().startActivity(intent);

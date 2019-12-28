@@ -41,8 +41,8 @@ public class PlaceViewModelFavorites extends AndroidViewModel {
         placeRepositoryFavorites.updatePlace(places);
     }
 
-    public PlacesFavorites exist(String name) {
-        return placeRepositoryFavorites.getExist(name);
+    public PlacesFavorites exist(String name, double lat, double lng) {
+        return placeRepositoryFavorites.getExist(name, lat, lng);
     }
 
 }
