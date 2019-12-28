@@ -13,7 +13,7 @@ import java.util.List;
 @Dao
 public interface PlacesDaoFavorites {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert()
     void insert(PlacesFavorites place_);
 
     @Delete
@@ -33,4 +33,7 @@ public interface PlacesDaoFavorites {
 
     @Update
     void update(PlacesFavorites... place_);
+
+    @Query("SELECT * from places_table_favorites WHERE name= :name")
+    PlacesFavorites getItemById(String name);
 }

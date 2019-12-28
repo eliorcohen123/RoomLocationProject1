@@ -18,7 +18,7 @@ public abstract class PlacesRoomDatabaseFavorites extends RoomDatabase {
             synchronized (PlacesRoomDatabaseFavorites.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            PlacesRoomDatabaseFavorites.class, "places_database_favorites")
+                            PlacesRoomDatabaseFavorites.class, "places_database_favorites").allowMainThreadQueries()
                             .build();
                 }
             }
