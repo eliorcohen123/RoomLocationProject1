@@ -97,13 +97,13 @@ public class AddMarkerFavorites extends AppCompatActivity implements View.OnClic
                 placeViewModelFavorites = ViewModelProviders.of(AddMarkerFavorites.this).get(PlaceViewModelFavorites.class);
                 if (placeViewModelFavorites.exist(placesFavorites.getName()) == null) {
                     placeViewModelFavorites.insertPlace(placesFavorites);
+
+                    // Pass from AddMapFromInternet to ActivityFavorites
+                    Intent intentAddInternetToMain = new Intent(AddMarkerFavorites.this, ActivityFavorites.class);
+                    startActivity(intentAddInternetToMain);
                 } else {
                     Toast.makeText(this, "Current place already exist in your favorites", Toast.LENGTH_SHORT).show();
                 }
-
-                // Pass from AddMapFromInternet to ActivityFavorites
-                Intent intentAddInternetToMain = new Intent(AddMarkerFavorites.this, ActivityFavorites.class);
-                startActivity(intentAddInternetToMain);
                 break;
             case R.id.textViewShow:
                 photo.setVisibility(View.INVISIBLE);  // Canceling the show of URL

@@ -1,9 +1,12 @@
 package com.eliorcohen123456.locationprojectroom.MapsDataPackage;
 
 import androidx.lifecycle.ViewModelProviders;
+
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -99,11 +102,7 @@ public class AddPlaceFavorites extends AppCompatActivity implements View.OnClick
 
                 PlacesFavorites placesFavorites = new PlacesFavorites(name1, address1, lat2, lng2, photo1);
                 placeViewModelFavorites = ViewModelProviders.of(AddPlaceFavorites.this).get(PlaceViewModelFavorites.class);
-                if (placeViewModelFavorites.exist(placesFavorites.getName()) == null) {
-                    placeViewModelFavorites.insertPlace(placesFavorites);
-                } else {
-                    Toast.makeText(this, "Current place already exist in your favorites", Toast.LENGTH_SHORT).show();
-                }
+                placeViewModelFavorites.insertPlace(placesFavorites);
 
                 // Pass from AddMapFromInternet to ActivityFavorites
                 Intent intentAddInternetToMain = new Intent(AddPlaceFavorites.this, ActivityFavorites.class);

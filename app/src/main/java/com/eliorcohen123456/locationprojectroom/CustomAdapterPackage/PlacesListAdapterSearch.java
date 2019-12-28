@@ -28,8 +28,11 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplication;
 import com.eliorcohen123456.locationprojectroom.MapsDataPackage.AddPlaceFavorites;
+import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlaceViewModelFavorites;
 import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
@@ -46,6 +49,7 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
         private TextView name1, address1, kmMe1, isOpen1;
         private ImageView image1;
         private RelativeLayout relativeLayout1;
+        private PlaceViewModelFavorites placeViewModelFavorites;
 
         private PlaceViewHolder(View itemView) {
             super(itemView);
@@ -75,9 +79,14 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
                 PlacesSearch current = mPlacesSearchList.get(getAdapterPosition());
                 switch (item.getItemId()) {
                     case 1:
-                        Intent intent = new Intent(mInflater.getContext(), AddPlaceFavorites.class);
-                        intent.putExtra(mInflater.getContext().getString(R.string.map_add_from_internet), current);
-                        mInflater.getContext().startActivity(intent);
+                        placeViewModelFavorites = new PlaceViewModelFavorites(NearByApplication.getApplication());
+                        if (placeViewModelFavorites.exist(current.getName()) == null) {
+                            Intent intent = new Intent(mInflater.getContext(), AddPlaceFavorites.class);
+                            intent.putExtra(mInflater.getContext().getString(R.string.map_add_from_internet), current);
+                            mInflater.getContext().startActivity(intent);
+                        } else {
+                            Toast.makeText(mInflater.getContext(), "Current place already exist in your favorites", Toast.LENGTH_SHORT).show();
+                        }
                         break;
                     case 2:
                         String name = current.getName();
