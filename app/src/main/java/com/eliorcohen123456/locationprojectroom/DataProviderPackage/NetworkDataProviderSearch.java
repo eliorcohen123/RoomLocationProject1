@@ -25,7 +25,6 @@ import com.eliorcohen123456.locationprojectroom.MapsDataPackage.FragmentSearch;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlacesSearch;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.IPlacesDataReceived;
 import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
-import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceRepositorySearch;
 import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplication;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceViewModelSearch;
 
@@ -118,7 +117,6 @@ public class NetworkDataProviderSearch {
                         }
                     try {
                         mPlaceModels = getLocationListFromJson(response.body().string());
-                        PlaceRepositorySearch placeRepositorySearch = new PlaceRepositorySearch(NearByApplication.getApplication());
                         ArrayList<PlacesSearch> listPlaces = new ArrayList<>();
                         for (PlaceModel placeModel : mPlaceModels) {
                             try {
@@ -130,7 +128,7 @@ public class NetworkDataProviderSearch {
                         }
                         placeViewModelSearch = new PlaceViewModelSearch(NearByApplication.getApplication());
                         placeViewModelSearch.deleteAll();
-                        placeRepositorySearch.insertPlace(listPlaces);
+                        placeViewModelSearch.insertPlace(listPlaces);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

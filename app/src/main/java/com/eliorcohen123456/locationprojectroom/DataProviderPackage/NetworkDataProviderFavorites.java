@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import java.util.ArrayList;
 
 import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlaceRepositoryFavorites;
+import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlaceViewModelFavorites;
 import com.eliorcohen123456.locationprojectroom.RoomFavoritesPackage.PlacesFavorites;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.IPlacesDataReceived;
 import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
@@ -27,6 +28,7 @@ public class NetworkDataProviderFavorites {
 
         private ArrayList<PlaceModel> mPlaceModels;
         private IPlacesDataReceived mIPlacesDataReceived;
+        private PlaceViewModelFavorites placeViewModelFavorites;
 
         public GetPlacesByLocationAsyncTask(IPlacesDataReceived iPlacesDataReceived) {
             mIPlacesDataReceived = iPlacesDataReceived;
@@ -45,7 +47,8 @@ public class NetworkDataProviderFavorites {
 
                 }
             }
-            placeRepository.insertPlace(listPlaces);
+            placeViewModelFavorites = new PlaceViewModelFavorites(NearByApplication.getApplication());
+            placeViewModelFavorites.insertPlace(listPlaces);
 
             return mIPlacesDataReceived;
         }

@@ -4,10 +4,10 @@ import android.os.AsyncTask;
 
 import java.util.ArrayList;
 
+import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceViewModelSearch;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlacesSearch;
 import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.IPlacesDataReceived;
 import com.eliorcohen123456.locationprojectroom.DataAppPackage.PlaceModel;
-import com.eliorcohen123456.locationprojectroom.RoomSearchPackage.PlaceRepositorySearch;
 import com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplication;
 
 public class NetworkDataProviderHistory {
@@ -27,6 +27,7 @@ public class NetworkDataProviderHistory {
 
         private ArrayList<PlaceModel> mPlaceModels;
         private IPlacesDataReceived mIPlacesDataReceived;
+        private PlaceViewModelSearch placeViewModelSearch;
 
         public GetPlacesByLocationAsyncTask(IPlacesDataReceived iPlacesDataReceived) {
             mIPlacesDataReceived = iPlacesDataReceived;
@@ -35,7 +36,6 @@ public class NetworkDataProviderHistory {
         @Override
         protected IPlacesDataReceived doInBackground(String... urls) {
             mPlaceModels = new ArrayList<PlaceModel>();
-            PlaceRepositorySearch placeRepositorySearch = new PlaceRepositorySearch(NearByApplication.getApplication());
             ArrayList<PlacesSearch> listPlaces = new ArrayList<>();
             for (PlaceModel placeModel : mPlaceModels) {
                 try {
@@ -45,7 +45,8 @@ public class NetworkDataProviderHistory {
 
                 }
             }
-            placeRepositorySearch.insertPlace(listPlaces);
+            placeViewModelSearch = new PlaceViewModelSearch(NearByApplication.getApplication());
+            placeViewModelSearch.insertPlace(listPlaces);
 
             return mIPlacesDataReceived;
         }
