@@ -9,16 +9,15 @@ import java.util.List;
 public class PlaceViewModelSearch extends AndroidViewModel {
 
     private PlaceRepositorySearch mRepository;
-    private LiveData<List<PlacesSearch>> mAllPlaces;
 
     public PlaceViewModelSearch(Application application) {
         super(application);
+
         mRepository = new PlaceRepositorySearch(application);
-        mAllPlaces = mRepository.getAllPlaces();
     }
 
     public LiveData<List<PlacesSearch>> getAllPlaces() {
-        return mAllPlaces;
+        return mRepository.getAllPlaces();
     }
 
     public void insertPlace(List<PlacesSearch> placesSearch) {

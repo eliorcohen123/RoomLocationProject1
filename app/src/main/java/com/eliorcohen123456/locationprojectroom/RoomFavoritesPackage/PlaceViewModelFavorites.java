@@ -9,16 +9,15 @@ import java.util.List;
 public class PlaceViewModelFavorites extends AndroidViewModel {
 
     private PlaceRepositoryFavorites placeRepositoryFavorites;
-    private LiveData<List<PlacesFavorites>> mAllPlacesFavorites;
 
     public PlaceViewModelFavorites(Application application) {
         super(application);
+
         placeRepositoryFavorites = new PlaceRepositoryFavorites(application);
-        mAllPlacesFavorites = placeRepositoryFavorites.getAllPlaces();
     }
 
     public LiveData<List<PlacesFavorites>> getAllPlaces() {
-        return mAllPlacesFavorites;
+        return placeRepositoryFavorites.getAllPlaces();
     }
 
     public void insertPlace(List<PlacesFavorites> placesFavorites) {
