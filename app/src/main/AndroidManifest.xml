@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.eliorcohen123456.locationprojectroom">
+    package="com.eliorcohen12345.locationproject">
 
     <uses-feature
         android:name="android.hardware.telephony"
@@ -16,7 +16,7 @@
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
     <application
-        android:name="com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.NearByApplication"
+        android:name="com.eliorcohen12345.locationproject.MainAndOtherPackage.NearByApplication"
         android:allowBackup="true"
         android:icon="@drawable/mapsicon"
         android:label="@string/app_name"
@@ -24,8 +24,8 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.MainActivity"
-            android:configChanges="orientation|keyboardHidden">
+            android:name="com.eliorcohen12345.locationproject.MapsDataPackage.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,39 +42,51 @@
                 <data android:mimeType="text/*" />
             </intent-filter>
         </activity>
-        <activity android:name="com.eliorcohen123456.locationprojectroom.MapsDataPackage.AddPlaceFavorites" />
-        <activity android:name="com.eliorcohen123456.locationprojectroom.MapsDataPackage.ActivityFavorites" />
-        <activity android:name="com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.SettingsActivity" />
-        <activity android:name="com.eliorcohen123456.locationprojectroom.MapsDataPackage.DeletePlace" />
-        <activity android:name="com.eliorcohen123456.locationprojectroom.MapsDataPackage.DeleteAllDataHistory" />
-        <activity android:name="com.eliorcohen123456.locationprojectroom.MapsDataPackage.DeleteAllDataFavorites" />
-        <activity android:name="com.eliorcohen123456.locationprojectroom.MapsDataPackage.EditPlace" />
-        <activity android:name="com.eliorcohen123456.locationprojectroom.MainAndOtherPackage.Credits" />
-        <activity android:name="com.eliorcohen123456.locationprojectroom.MapsDataPackage.AddMarkerFavorites" />
-        <activity android:name="com.eliorcohen123456.locationprojectroom.MapsDataPackage.PlaceCustomActivity" />
+        <activity android:name="com.eliorcohen12345.locationproject.MapsDataPackage.AddPlaceFavorites" />
+        <activity
+            android:name="com.eliorcohen12345.locationproject.MapsDataPackage.ActivityFavorites"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity android:name="com.eliorcohen12345.locationproject.MainAndOtherPackage.SettingsActivity" />
+        <activity android:name="com.eliorcohen12345.locationproject.MapsDataPackage.DeletePlace" />
+        <activity android:name="com.eliorcohen12345.locationproject.MapsDataPackage.DeleteAllDataHistory" />
+        <activity android:name="com.eliorcohen12345.locationproject.MapsDataPackage.DeleteAllDataFavorites" />
+        <activity android:name="com.eliorcohen12345.locationproject.MapsDataPackage.EditPlace" />
+        <activity android:name="com.eliorcohen12345.locationproject.MainAndOtherPackage.Credits" />
+        <activity android:name="com.eliorcohen12345.locationproject.MapsDataPackage.AddMarkerFavorites" />
+        <activity android:name="com.eliorcohen12345.locationproject.MapsDataPackage.PlaceCustomActivity" />
+        <activity
+            android:name="com.eliorcohen12345.locationproject.MapsDataPackage.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.eliorcohen12345.locationproject.MapsDataPackage.ChatActivity" />
+        <activity
+            android:name="com.eliorcohen12345.locationproject.MapsDataPackage.ForgotPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.eliorcohen12345.locationproject.MainAndOtherPackage.MainActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/api_key_map" />
 
-        <service android:name=".MainAndOtherPackage.MyFirebaseMessagingService">
+        <service android:name="com.eliorcohen12345.locationproject.MainAndOtherPackage.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
         <receiver
-            android:name=".GeofencePackage.GeofenceBroadcastReceiver"
+            android:name="com.eliorcohen12345.locationproject.GeofencePackage.GeofenceBroadcastReceiver"
             android:enabled="true"
             android:exported="true" />
 
         <service
-            android:name=".GeofencePackage.GeofenceTransitionsJobIntentService"
+            android:name="com.eliorcohen12345.locationproject.GeofencePackage.GeofenceTransitionsJobIntentService"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <service
-            android:name=".MainAndOtherPackage.GoogleService"
+            android:name="com.eliorcohen12345.locationproject.MainAndOtherPackage.GoogleService"
             android:exported="true" />
     </application>
 

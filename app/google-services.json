@@ -1,27 +1,35 @@
 {
   "project_info": {
-    "project_number": "214846205695",
-    "firebase_url": "https://room-lovely-favorites-places.firebaseio.com",
-    "project_id": "room-lovely-favorites-places",
-    "storage_bucket": "room-lovely-favorites-places.appspot.com"
+    "project_number": "243506622347",
+    "firebase_url": "https://lovely-favorite-places.firebaseio.com",
+    "project_id": "lovely-favorite-places",
+    "storage_bucket": "lovely-favorite-places.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:214846205695:android:91b70cb7d326b028",
+        "mobilesdk_app_id": "1:243506622347:android:9c2b172bfdfdf2db",
         "android_client_info": {
-          "package_name": "com.eliorcohen123456.locationprojectroom"
+          "package_name": "com.eliorcohen12345.locationproject"
         }
       },
       "oauth_client": [
         {
-          "client_id": "214846205695-gitic073q4eu74udmq942upr7cgqb179.apps.googleusercontent.com",
+          "client_id": "243506622347-kg5dmj705nm5p6o5l34f3f455h9h02dn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eliorcohen12345.locationproject",
+            "certificate_hash": "761d81e72981310e1eca8cf6ec7a1dc2851d9c91"
+          }
+        },
+        {
+          "client_id": "243506622347-q6vq0a64nqvctltt69v6gsvru95patbd.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB7NjHOiWmOs7QJEamkfOErTK_lvePl6jk"
+          "current_key": "AIzaSyBduOkbkr16OjAR3fspk-j9KBEGc0kQMhI"
         }
       ],
       "services": {
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "243506622347-q6vq0a64nqvctltt69v6gsvru95patbd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
