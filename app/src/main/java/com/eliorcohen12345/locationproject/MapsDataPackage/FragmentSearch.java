@@ -51,23 +51,20 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.eliorcohen12345.locationproject.CustomAdapterPackage.PlacesListAdapterSearch;
-import com.eliorcohen12345.locationproject.DataAppPackage.PlaceModel;
 import com.eliorcohen12345.locationproject.DataProviderPackage.NetworkDataProviderHistory;
 import com.eliorcohen12345.locationproject.DataProviderPackage.NetworkDataProviderSearch;
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.ItemDecoration;
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.NearByApplication;
 import com.eliorcohen12345.locationproject.R;
-import com.eliorcohen12345.locationproject.RoomSearchPackage.IPlacesDataReceived;
 import com.eliorcohen12345.locationproject.RoomSearchPackage.PlaceViewModelSearch;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 import eliorcohen.com.googlemapsapi.GoogleMapsApi;
 
-public class FragmentSearch extends Fragment implements View.OnClickListener, IPlacesDataReceived {
+public class FragmentSearch extends Fragment implements View.OnClickListener {
 
     private PlaceViewModelSearch mPlacesViewModelSearch;
     private RecyclerView recyclerView;
@@ -221,6 +218,8 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
         }
 
         mPlacesViewModelSearch = ViewModelProviders.of(this).get(PlaceViewModelSearch.class);
+
+        mPlacesViewModelSearch.getAllPlaces().observe(this, placesSearches -> mAdapterSearch.setPlaces(placesSearches));
     }
 
     private void refreshUI() {
@@ -479,7 +478,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
 
     private void getTypeQuery(String pageToken, String type, String query) {
         if (!isConnected(Objects.requireNonNull(getContext()))) {
-            dataProviderHistory.getPlacesByLocation(mFragmentSearch);
+            dataProviderHistory.getPlacesByLocation();
             buildDialog(getContext()).show();
         } else {
             if (query.equals("")) {
@@ -494,7 +493,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
             editorType.putString("mystringtype", type).apply();
             editorPagePass.putString("mystringpagepass", pageToken).apply();
 
-            dataProviderSearch.getPlacesByLocation(myRadius, pageToken, myOpen, type, query, mFragmentSearch);
+            dataProviderSearch.getPlacesByLocation(myRadius, pageToken, myOpen, type, query);
 
             locationManager = (LocationManager) NearByApplication.getApplication().getSystemService(Context.LOCATION_SERVICE);
             criteria = new Criteria();
@@ -583,12 +582,6 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, IP
         mProgressDialog = ProgressDialog.show(mFragmentSearch.getActivity(), "Loading...",
                 "Please wait...", true);
         mProgressDialog.show();
-    }
-
-    @Override
-    public void onPlacesDataReceived(ArrayList<PlaceModel> results_) {
-        // pass data result to mAdapterSearch
-        mPlacesViewModelSearch.getAllPlaces().observe(this, placesSearches -> mAdapterSearch.setPlaces(placesSearches));
     }
 
 }

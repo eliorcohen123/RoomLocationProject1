@@ -41,7 +41,6 @@ import android.widget.Toast;
 import com.eliorcohen12345.locationproject.DataAppPackage.PlaceModel;
 import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlaceViewModelFavorites;
 import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlacesFavorites;
-import com.eliorcohen12345.locationproject.RoomSearchPackage.IPlacesDataReceived;
 import com.eliorcohen12345.locationproject.DataProviderPackage.NetworkDataProviderFavorites;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -68,7 +67,7 @@ import java.util.List;
 import com.eliorcohen12345.locationproject.CustomAdapterPackage.CustomInfoWindowGoogleMapFavorites;
 import com.eliorcohen12345.locationproject.R;
 
-public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback, View.OnClickListener, IPlacesDataReceived {
+public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback, View.OnClickListener {
 
     private PlaceViewModelFavorites mPlacesViewModel;
     private GoogleMap mGoogleMap;
@@ -81,7 +80,6 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
     private Criteria criteria;
     private String provider;
     private ImageView moovit, gett, waze, num1, num2, num3, num4, num5, btnOpenList;
-    private FragmentMapFavorites fragmentMapFavorites;
     private List<Marker> markers;
     private CoordinatorLayout coordinatorLayout;
     private NetworkDataProviderFavorites networkDataProviderFavorites;
@@ -131,8 +129,6 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
 
         linearList.setVisibility(View.GONE);
 
-        fragmentMapFavorites = this;
-
         isClicked = true;
 
         networkDataProviderFavorites = new NetworkDataProviderFavorites();
@@ -167,12 +163,69 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
 
     private void getData() {
         try {
-            networkDataProviderFavorites.getPlacesByLocation(fragmentMapFavorites);
+            networkDataProviderFavorites.getPlacesByLocation();
         } catch (Exception e) {
 
         }
 
         mPlacesViewModel = ViewModelProviders.of(this).get(PlaceViewModelFavorites.class);
+
+        mPlacesViewModel.getAllPlaces().observe(this, placesFavorites -> {
+            try {
+                for (int i = 0; i <= placesFavorites.size(); i++) {
+                    if (placeModelFavorites != null) {
+                        markerFavorites = mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(placeModelFavorites.getLat(), placeModelFavorites.getLng())).title(placeModelFavorites.getName()).icon(BitmapDescriptorFactory
+                                .defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+                        markers.add(markerFavorites);
+                    }
+
+                    try {
+                        markerAllFavorites[i] = mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(placesFavorites.get(i).getLat(), placesFavorites.get(i).getLng())).title(placesFavorites.get(i).getName()).icon(BitmapDescriptorFactory
+                                .defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
+                        if (!markerAllFavorites[i].getTitle().equals(markerFavorites.getTitle())) {
+                            markers.add(markerAllFavorites[i]);
+                        }
+                    } catch (Exception e) {
+
+                    }
+                }
+            } catch (Exception e) {
+
+            }
+
+            mGoogleMap.setOnMarkerClickListener(marker -> {
+                try {
+                    for (int finalI = 0; finalI <= placesFavorites.size(); finalI++) {
+                        final int finalI1 = finalI;
+                        if (marker.getTitle().equals(placesFavorites.get(finalI1).getName())) {
+                            try {
+                                getMoovit(placesFavorites.get(finalI1).getLat(), placesFavorites.get(finalI1).getLng(), placesFavorites.get(finalI1).getName(), location.getLatitude(), location.getLongitude());
+                                getGetTaxi(placesFavorites.get(finalI1).getLat(), placesFavorites.get(finalI1).getLng());
+                                getWaze(placesFavorites.get(finalI1).getLat(), placesFavorites.get(finalI1).getLng());
+
+                                getNavigation(placesFavorites.get(finalI1).getLat(), placesFavorites.get(finalI1).getLng(), placesFavorites.get(finalI1).getName(), placesFavorites.get(finalI1).getAddress(), marker);
+                            } catch (Exception e) {
+
+                            }
+                            break;
+                        } else if (marker.equals(markerFavorites)) {
+                            try {
+                                getMoovit(placeModelFavorites.getLat(), placeModelFavorites.getLng(), placeModelFavorites.getName(), location.getLatitude(), location.getLongitude());
+                                getGetTaxi(placeModelFavorites.getLat(), placeModelFavorites.getLng());
+                                getWaze(placeModelFavorites.getLat(), placeModelFavorites.getLng());
+
+                                getNavigation(placeModelFavorites.getLat(), placeModelFavorites.getLng(), placeModelFavorites.getName(), placeModelFavorites.getAddress(), marker);
+                            } catch (Exception e) {
+
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+
+                }
+                return false;
+            });
+        });
     }
 
     @Override
@@ -243,67 +296,6 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onPlacesDataReceived(ArrayList<PlaceModel> results_) {
-        // pass data result to adapter
-        mPlacesViewModel.getAllPlaces().observe(this, placesFavorites -> {
-            try {
-                for (int i = 0; i <= placesFavorites.size(); i++) {
-                    if (placeModelFavorites != null) {
-                        markerFavorites = mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(placeModelFavorites.getLat(), placeModelFavorites.getLng())).title(placeModelFavorites.getName()).icon(BitmapDescriptorFactory
-                                .defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
-                        markers.add(markerFavorites);
-                    }
-
-                    try {
-                        markerAllFavorites[i] = mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(placesFavorites.get(i).getLat(), placesFavorites.get(i).getLng())).title(placesFavorites.get(i).getName()).icon(BitmapDescriptorFactory
-                                .defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
-                        if (!markerAllFavorites[i].getTitle().equals(markerFavorites.getTitle())) {
-                            markers.add(markerAllFavorites[i]);
-                        }
-                    } catch (Exception e) {
-
-                    }
-                }
-            } catch (Exception e) {
-
-            }
-
-            mGoogleMap.setOnMarkerClickListener(marker -> {
-                try {
-                    for (int finalI = 0; finalI <= placesFavorites.size(); finalI++) {
-                        final int finalI1 = finalI;
-                        if (marker.getTitle().equals(placesFavorites.get(finalI1).getName())) {
-                            try {
-                                getMoovit(placesFavorites.get(finalI1).getLat(), placesFavorites.get(finalI1).getLng(), placesFavorites.get(finalI1).getName(), location.getLatitude(), location.getLongitude());
-                                getGetTaxi(placesFavorites.get(finalI1).getLat(), placesFavorites.get(finalI1).getLng());
-                                getWaze(placesFavorites.get(finalI1).getLat(), placesFavorites.get(finalI1).getLng());
-
-                                getNavigation(placesFavorites.get(finalI1).getLat(), placesFavorites.get(finalI1).getLng(), placesFavorites.get(finalI1).getName(), placesFavorites.get(finalI1).getAddress(), marker);
-                            } catch (Exception e) {
-
-                            }
-                            break;
-                        } else if (marker.equals(markerFavorites)) {
-                            try {
-                                getMoovit(placeModelFavorites.getLat(), placeModelFavorites.getLng(), placeModelFavorites.getName(), location.getLatitude(), location.getLongitude());
-                                getGetTaxi(placeModelFavorites.getLat(), placeModelFavorites.getLng());
-                                getWaze(placeModelFavorites.getLat(), placeModelFavorites.getLng());
-
-                                getNavigation(placeModelFavorites.getLat(), placeModelFavorites.getLng(), placeModelFavorites.getName(), placeModelFavorites.getAddress(), marker);
-                            } catch (Exception e) {
-
-                            }
-                        }
-                    }
-                } catch (Exception e) {
-
-                }
-                return false;
-            });
-        });
     }
 
     private void getMoovit(final double des_lat, final double des_lng, final String name, final double orig_lat, final double orig_lng) {

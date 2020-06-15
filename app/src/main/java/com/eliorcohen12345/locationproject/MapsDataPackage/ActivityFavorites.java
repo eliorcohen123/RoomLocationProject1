@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -23,7 +22,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.eliorcohen12345.locationproject.DataAppPackage.PlaceModel;
 import com.eliorcohen12345.locationproject.DataProviderPackage.NetworkDataProviderFavorites;
 import com.eliorcohen12345.locationproject.GeofencePackage.Constants;
 import com.eliorcohen12345.locationproject.GeofencePackage.GeofenceBroadcastReceiver;
@@ -33,7 +31,6 @@ import com.eliorcohen12345.locationproject.MainAndOtherPackage.NearByApplication
 import com.eliorcohen12345.locationproject.R;
 import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlaceViewModelFavorites;
 import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlacesFavorites;
-import com.eliorcohen12345.locationproject.RoomSearchPackage.IPlacesDataReceived;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
 import com.google.android.gms.location.GeofencingRequest;
@@ -46,12 +43,11 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
 // Activity of FragmentFavorites
-public class ActivityFavorites extends AppCompatActivity implements IPlacesDataReceived, OnCompleteListener<Void> {
+public class ActivityFavorites extends AppCompatActivity implements OnCompleteListener<Void> {
 
     private PlaceViewModelFavorites mPlacesViewModel;
     private NetworkDataProviderFavorites networkDataProviderFavorites;
@@ -71,7 +67,6 @@ public class ActivityFavorites extends AppCompatActivity implements IPlacesDataR
     private boolean boolean_permission;
     private SharedPreferences mPref;
     private SharedPreferences.Editor mEdit;
-    private Geocoder geocoder;
 
     private enum PendingGeofenceTask {
         ADD, REMOVE, NONE
@@ -98,12 +93,18 @@ public class ActivityFavorites extends AppCompatActivity implements IPlacesDataR
 
     private void initUI() {
         networkDataProviderFavorites = new NetworkDataProviderFavorites();
-        networkDataProviderFavorites.getPlacesByLocation(this);
+        networkDataProviderFavorites.getPlacesByLocation();
 
         mPlacesViewModel = ViewModelProviders.of(this).get(PlaceViewModelFavorites.class);
 
         prefsSeekGeo = PreferenceManager.getDefaultSharedPreferences(this);
         myRadiusGeo = prefsSeekGeo.getInt("seek_geo", 500);
+
+        if (myRadiusGeo == 0) {
+            Toast.makeText(this, "Radius cannot be equal to 0", Toast.LENGTH_LONG).show();
+        } else {
+            mPlacesViewModel.getAllPlaces().observe(this, this::populateGeofenceList);
+        }
 
         if (myRadiusGeo != 0) {
             mGeofenceList = new ArrayList<>();
@@ -113,7 +114,6 @@ public class ActivityFavorites extends AppCompatActivity implements IPlacesDataR
 
             mGeofencingClient = LocationServices.getGeofencingClient(this);
 
-            geocoder = new Geocoder(this, Locale.getDefault());
             mPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             mEdit = mPref.edit();
 
@@ -342,15 +342,6 @@ public class ActivityFavorites extends AppCompatActivity implements IPlacesDataR
             addGeofences();
         } else if (mPendingGeofenceTask == PendingGeofenceTask.REMOVE) {
             removeGeofences();
-        }
-    }
-
-    @Override
-    public void onPlacesDataReceived(ArrayList<PlaceModel> results_) {
-        if (myRadiusGeo == 0) {
-            Toast.makeText(this, "Radius cannot be equal to 0", Toast.LENGTH_LONG).show();
-        } else {
-            mPlacesViewModel.getAllPlaces().observe(this, this::populateGeofenceList);
         }
     }
 

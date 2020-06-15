@@ -23,7 +23,6 @@ import java.util.List;
 
 import com.eliorcohen12345.locationproject.MapsDataPackage.FragmentSearch;
 import com.eliorcohen12345.locationproject.RoomSearchPackage.PlacesSearch;
-import com.eliorcohen12345.locationproject.RoomSearchPackage.IPlacesDataReceived;
 import com.eliorcohen12345.locationproject.DataAppPackage.PlaceModel;
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.NearByApplication;
 import com.eliorcohen12345.locationproject.RoomSearchPackage.PlaceViewModelSearch;
@@ -35,21 +34,20 @@ import okhttp3.Response;
 
 public class NetworkDataProviderSearch {
 
-    public void getPlacesByLocation(int radius, String page, String open, String type, String query, IPlacesDataReceived resultListener_) {
+    public void getPlacesByLocation(int radius, String page, String open, String type, String query) {
 
         //go get data from google API
         //take time...
         //more time...
         //Data received -> resultListener_
 
-        GetPlacesByLocationAsyncTask getPlacesByLocationAsyncTask = new GetPlacesByLocationAsyncTask(resultListener_);
+        GetPlacesByLocationAsyncTask getPlacesByLocationAsyncTask = new GetPlacesByLocationAsyncTask();
         getPlacesByLocationAsyncTask.execute(String.valueOf(radius), page, open, type, query);
     }
 
-    private class GetPlacesByLocationAsyncTask extends AsyncTask<String, Integer, IPlacesDataReceived> {
+    private static class GetPlacesByLocationAsyncTask extends AsyncTask<String, Integer, ArrayList<PlaceModel>> {
 
         private ArrayList<PlaceModel> mPlaceModels;
-        private IPlacesDataReceived mIPlacesDataReceived;
         private PlaceViewModelSearch placeViewModelSearch;
         private Location location;
         private LocationManager locationManager;
@@ -59,29 +57,12 @@ public class NetworkDataProviderSearch {
         private double diagonalInches;
         private GoogleMapsApi googleMapsApi = new GoogleMapsApi();
 
-        // startShowingProgressDialog of FragmentSearch
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
+        public GetPlacesByLocationAsyncTask() {
 
-            // Tablet/Phone mode
-            DisplayMetrics metrics = new DisplayMetrics();
-            ((WindowManager) NearByApplication.getApplication().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(metrics);
-
-            float yInches = metrics.heightPixels / metrics.ydpi;
-            float xInches = metrics.widthPixels / metrics.xdpi;
-            diagonalInches = Math.sqrt(xInches * xInches + yInches * yInches);
-            if (diagonalInches < 6.5) {
-                FragmentSearch.startShowingProgressDialog();
-            }
-        }
-
-        public GetPlacesByLocationAsyncTask(IPlacesDataReceived iPlacesDataReceived) {
-            mIPlacesDataReceived = iPlacesDataReceived;
         }
 
         @Override
-        protected IPlacesDataReceived doInBackground(String... urls) {
+        protected ArrayList<PlaceModel> doInBackground(String... urls) {
             OkHttpClient client = new OkHttpClient();
             locationManager = (LocationManager) NearByApplication.getApplication().getSystemService(Context.LOCATION_SERVICE);
             criteria = new Criteria();
@@ -135,7 +116,7 @@ public class NetworkDataProviderSearch {
                 }
             }
 
-            return mIPlacesDataReceived;
+            return mPlaceModels;
         }
 
         private ArrayList<PlaceModel> getLocationListFromJson(String jsonResponse) {
@@ -149,7 +130,7 @@ public class NetworkDataProviderSearch {
             return arrList;
         }
 
-        private class LocationResponse {
+        private static class LocationResponse {
 
             private List<PlaceModel> results;
 
@@ -161,7 +142,7 @@ public class NetworkDataProviderSearch {
         }
 
         @Override
-        protected void onPostExecute(IPlacesDataReceived iPlacesDataReceived_) {
+        protected void onPostExecute(ArrayList<PlaceModel> arrayList) {
             // Tablet/Phone mode
             DisplayMetrics metrics = new DisplayMetrics();
             ((WindowManager) NearByApplication.getApplication().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(metrics);
@@ -171,12 +152,6 @@ public class NetworkDataProviderSearch {
             diagonalInches = Math.sqrt(xInches * xInches + yInches * yInches);
             if (diagonalInches <= 6.5) {
                 FragmentSearch.stopShowingProgressDialog();
-            }
-
-            try {
-                iPlacesDataReceived_.onPlacesDataReceived(mPlaceModels);
-            } catch (Exception e) {
-                iPlacesDataReceived_.onPlacesDataReceived(mPlaceModels);
             }
         }
     }

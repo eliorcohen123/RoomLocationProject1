@@ -39,7 +39,6 @@ import com.eliorcohen12345.locationproject.DataProviderPackage.NetworkDataProvid
 import com.eliorcohen12345.locationproject.DataProviderPackage.NetworkDataProviderSearch;
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.NearByApplication;
 import com.eliorcohen12345.locationproject.R;
-import com.eliorcohen12345.locationproject.RoomSearchPackage.IPlacesDataReceived;
 import com.eliorcohen12345.locationproject.RoomSearchPackage.PlaceViewModelSearch;
 import com.eliorcohen12345.locationproject.RoomSearchPackage.PlacesSearch;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -65,7 +64,7 @@ import com.google.maps.model.EncodedPolyline;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, View.OnClickListener, IPlacesDataReceived {
+public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, View.OnClickListener {
 
     private PlaceViewModelSearch mPlacesViewModel;
     private GoogleMap mGoogleMap;
@@ -77,7 +76,6 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
     private LocationManager locationManager;
     private Criteria criteria;
     private ImageView moovit, gett, waze, num1, num2, num3, num4, num5, btnOpenList;
-    private FragmentMapSearch fragmentMapSearch;
     private List<Marker> markers;
     private CoordinatorLayout coordinatorLayout;
     private NetworkDataProviderSearch dataProviderSearch;
@@ -131,8 +129,6 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
 
         linearList.setVisibility(View.GONE);
 
-        fragmentMapSearch = this;
-
         isClicked = true;
 
         dataProviderHistory = new NetworkDataProviderHistory();
@@ -167,7 +163,7 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
     private void getData() {
         try {
             if (!isConnected(getContext())) {
-                dataProviderHistory.getPlacesByLocation(fragmentMapSearch);
+                dataProviderHistory.getPlacesByLocation();
                 buildDialog(getContext()).show();
             } else {
                 settingsQuery = getActivity().getSharedPreferences("mysettingsquery", Context.MODE_PRIVATE);
@@ -190,9 +186,9 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
                 myOpen = prefsOpen.getString("open", "");
 
                 if (settingsQuery.contains("mystringquery") && settingsType.contains("mystringtype") && settingsPage.contains("mystringpagepass")) {
-                    dataProviderSearch.getPlacesByLocation(myRadius, myStringPage, myOpen, myStringType, myStringQuery, fragmentMapSearch);
+                    dataProviderSearch.getPlacesByLocation(myRadius, myStringPage, myOpen, myStringType, myStringQuery);
                 } else {
-                    dataProviderSearch.getPlacesByLocation(myRadius, "", myOpen, "", "", fragmentMapSearch);
+                    dataProviderSearch.getPlacesByLocation(myRadius, "", myOpen, "", "");
                 }
             }
         } catch (Exception e) {
@@ -200,63 +196,7 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
         }
 
         mPlacesViewModel = ViewModelProviders.of(this).get(PlaceViewModelSearch.class);
-    }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        mMapView = view.findViewById(R.id.mapSearch);
-        if (mMapView != null) {
-            mMapView.onCreate(null);
-            mMapView.onResume();
-            mMapView.getMapAsync(this);
-        }
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        try {
-            MapsInitializer.initialize(getContext());
-            mGoogleMap = googleMap;
-            mGoogleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-            mGoogleMap.setMyLocationEnabled(true);
-            mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
-            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-            }
-            if (provider != null) {
-                location = locationManager.getLastKnownLocation(provider);
-                if (location != null) {
-                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 8));
-                }
-            }
-        } catch (Exception e) {
-
-        }
-    }
-
-    @Override
-    public void onPlacesDataReceived(ArrayList<PlaceModel> results_) {
-        // pass data result to adapter
         mPlacesViewModel.getAllPlaces().observe(this, placesSearches -> {
             if (mGoogleMap != null) {
                 mGoogleMap.clear();
@@ -318,6 +258,58 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
                 return false;
             });
         });
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mMapView = view.findViewById(R.id.mapSearch);
+        if (mMapView != null) {
+            mMapView.onCreate(null);
+            mMapView.onResume();
+            mMapView.getMapAsync(this);
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        try {
+            MapsInitializer.initialize(getContext());
+            mGoogleMap = googleMap;
+            mGoogleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            mGoogleMap.setMyLocationEnabled(true);
+            mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
+            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+            }
+            if (provider != null) {
+                location = locationManager.getLastKnownLocation(provider);
+                if (location != null) {
+                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 8));
+                }
+            }
+        } catch (Exception e) {
+
+        }
     }
 
     // Add circle of NearBy

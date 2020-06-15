@@ -28,18 +28,14 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.eliorcohen12345.locationproject.CustomAdapterPackage.PlacesListAdapterFavorites;
-import com.eliorcohen12345.locationproject.DataAppPackage.PlaceModel;
 import com.eliorcohen12345.locationproject.DataProviderPackage.NetworkDataProviderFavorites;
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.ItemDecoration;
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.MainActivity;
 import com.eliorcohen12345.locationproject.R;
 import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlaceViewModelFavorites;
 import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlacesFavorites;
-import com.eliorcohen12345.locationproject.RoomSearchPackage.IPlacesDataReceived;
 
-import java.util.ArrayList;
-
-public class FragmentFavorites extends Fragment implements IPlacesDataReceived, NavigationView.OnNavigationItemSelectedListener {
+public class FragmentFavorites extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
 
     private PlaceViewModelFavorites mPlacesViewModelFavorites;
     private RecyclerView recyclerView;
@@ -47,7 +43,6 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
     private PlacesListAdapterFavorites mAdapterFavorites;
     private Paint p;
     private DrawerLayout drawer;
-    private FragmentFavorites fragmentFavorites;
     private Toolbar toolbar;
     private NavigationView navigationView;
     private ItemDecoration itemDecoration;
@@ -73,8 +68,6 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
         navigationView = mView.findViewById(R.id.nav_view);
 
         recyclerView = mView.findViewById(R.id.places_list_favorites);
-
-        fragmentFavorites = this;
 
         networkDataProviderFavorites = new NetworkDataProviderFavorites();
         p = new Paint();
@@ -102,7 +95,7 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
     }
 
     private void getData() {
-        networkDataProviderFavorites.getPlacesByLocation(fragmentFavorites);
+        networkDataProviderFavorites.getPlacesByLocation();
     }
 
     private void myRecyclerView() {
@@ -119,6 +112,8 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
         }
 
         mPlacesViewModelFavorites = ViewModelProviders.of(this).get(PlaceViewModelFavorites.class);
+
+        mPlacesViewModelFavorites.getAllPlaces().observe(this, placesFavorites -> mAdapterFavorites.setPlaces(placesFavorites));
     }
 
     private void enableSwipe() {
@@ -199,12 +194,6 @@ public class FragmentFavorites extends Fragment implements IPlacesDataReceived, 
         DrawerLayout drawer = mView.findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.END);
         return true;
-    }
-
-    @Override
-    public void onPlacesDataReceived(ArrayList<PlaceModel> results_) {
-        // pass data result to mAdapterFavorites
-        mPlacesViewModelFavorites.getAllPlaces().observe(this, placesFavorites -> mAdapterFavorites.setPlaces(placesFavorites));
     }
 
 }
