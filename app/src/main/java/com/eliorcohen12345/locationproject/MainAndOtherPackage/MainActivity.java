@@ -194,7 +194,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if (id == R.id.credits) {
+        if (id == R.id.mainList) {
+            Intent intentCredits = new Intent(this, MainActivity.class);
+            startActivity(intentCredits);
+        } else if (id == R.id.credits) {
             Intent intentCredits = new Intent(this, Credits.class);
             startActivity(intentCredits);
         } else if (id == R.id.favorites) {
@@ -222,9 +225,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     "Hey check out my app at: https://play.google.com/store/apps/details?id=com.eliorcohen12345.locationproject");
             sendIntent.setType("text/plain");
             startActivity(sendIntent);
-        }else if (id == R.id.signOut) {
+        } else if (id == R.id.signOut) {
             signOut();
-        }  else if (id == R.id.exit) {
+        } else if (id == R.id.exit) {
             ActivityCompat.finishAffinity(this);
         }
 

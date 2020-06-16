@@ -99,17 +99,9 @@ public class FragmentSearch extends Fragment implements View.OnClickListener {
         initListeners();
         myRecyclerView();
         refreshUI();
+        getCheckBtnSearch(myPage, myType, myStringQuery);
 
         return mView;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        myType = prefsType.getString("mystringtypesearch", "");
-        myStringQuery = prefsQuery.getString("mystringquerysearch", "");
-        getCheckBtnSearch(myPage, myType, myStringQuery);
     }
 
     private void initUI() {
@@ -147,7 +139,10 @@ public class FragmentSearch extends Fragment implements View.OnClickListener {
         mAdapterSearch = new PlacesListAdapterSearch(getContext());
         googleMapsApi = new GoogleMapsApi();
 
+        myType = prefsType.getString("mystringtypesearch", "");
+        myStringQuery = prefsQuery.getString("mystringquerysearch", "");
         myPageMy = prefsPageMy.getInt("mystringpagemy", 1);
+
         if (myPageMy == 1) {
             myPage = 1;
         } else if (myPageMy == 2) {
