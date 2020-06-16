@@ -18,8 +18,10 @@
     <application
         android:name="com.eliorcohen12345.locationproject.MainAndOtherPackage.NearByApplication"
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@drawable/mapsicon"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@drawable/mapsicon"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
