@@ -101,12 +101,12 @@ public class FragmentFavorites extends Fragment implements NavigationView.OnNavi
     private void myRecyclerView() {
         try {
             mAdapterFavorites = new PlacesListAdapterFavorites(getContext());
-            recyclerView.setAdapter(mAdapterFavorites);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             if (itemDecoration == null) {
                 itemDecoration = new ItemDecoration(20);
                 recyclerView.addItemDecoration(itemDecoration);
             }
+            recyclerView.setAdapter(mAdapterFavorites);
         } catch (Exception e) {
 
         }

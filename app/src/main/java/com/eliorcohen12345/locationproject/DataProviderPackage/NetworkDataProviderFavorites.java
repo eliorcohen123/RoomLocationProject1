@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 
 import java.util.ArrayList;
 
-import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlaceRepositoryFavorites;
 import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlaceViewModelFavorites;
 import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlacesFavorites;
 import com.eliorcohen12345.locationproject.DataAppPackage.PlaceModel;
@@ -28,14 +27,9 @@ public class NetworkDataProviderFavorites {
         private ArrayList<PlaceModel> mPlaceModels;
         private PlaceViewModelFavorites placeViewModelFavorites;
 
-        public GetPlacesByLocationAsyncTask() {
-
-        }
-
         @Override
         protected ArrayList<PlaceModel> doInBackground(String... urls) {
             mPlaceModels = new ArrayList<PlaceModel>();
-            PlaceRepositoryFavorites placeRepository = new PlaceRepositoryFavorites(NearByApplication.getApplication());
             ArrayList<PlacesFavorites> listPlaces = new ArrayList<>();
             for (PlaceModel placeModel : mPlaceModels) {
                 try {

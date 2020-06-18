@@ -202,12 +202,12 @@ public class FragmentSearch extends Fragment implements View.OnClickListener {
 
     private void myRecyclerView() {
         try {
-            recyclerView.setAdapter(mAdapterSearch);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             if (itemDecoration == null) {
                 itemDecoration = new ItemDecoration(20);
                 recyclerView.addItemDecoration(itemDecoration);
             }
+            recyclerView.setAdapter(mAdapterSearch);
         } catch (Exception e) {
 
         }

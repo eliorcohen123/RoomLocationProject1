@@ -47,7 +47,7 @@ public class NetworkDataProviderSearch {
 
     private static class GetPlacesByLocationAsyncTask extends AsyncTask<String, Integer, ArrayList<PlaceModel>> {
 
-        private ArrayList<PlaceModel> mPlaceModels;
+        private ArrayList<PlaceModel> mPlaceModels = new ArrayList<>();
         private PlaceViewModelSearch placeViewModelSearch;
         private Location location;
         private LocationManager locationManager;
@@ -56,10 +56,6 @@ public class NetworkDataProviderSearch {
         private String urlQuery;
         private double diagonalInches;
         private GoogleMapsApi googleMapsApi = new GoogleMapsApi();
-
-        public GetPlacesByLocationAsyncTask() {
-
-        }
 
         @Override
         protected ArrayList<PlaceModel> doInBackground(String... urls) {

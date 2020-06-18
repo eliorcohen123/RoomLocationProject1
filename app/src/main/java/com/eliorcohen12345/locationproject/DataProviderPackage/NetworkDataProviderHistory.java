@@ -27,9 +27,6 @@ public class NetworkDataProviderHistory {
         private ArrayList<PlaceModel> mPlaceModels;
         private PlaceViewModelSearch placeViewModelSearch;
 
-        public GetPlacesByLocationAsyncTask() {
-        }
-
         @Override
         protected ArrayList<PlaceModel> doInBackground(String... urls) {
             mPlaceModels = new ArrayList<PlaceModel>();
