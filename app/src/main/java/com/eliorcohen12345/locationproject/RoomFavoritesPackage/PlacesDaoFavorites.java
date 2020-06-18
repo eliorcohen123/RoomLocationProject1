@@ -28,7 +28,7 @@ public interface PlacesDaoFavorites {
     @Query("DELETE FROM places_table_favorites WHERE ID= :id_")
     void deleteByID(Long id_);
 
-    @Query("SELECT * from places_table_favorites ORDER BY name ASC")
+    @Query("SELECT * from places_table_favorites")
     LiveData<List<PlacesFavorites>> getAllPlaces();
 
     @Update

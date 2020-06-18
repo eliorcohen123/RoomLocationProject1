@@ -41,7 +41,6 @@ import android.widget.Toast;
 import com.eliorcohen12345.locationproject.DataAppPackage.PlaceModel;
 import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlaceViewModelFavorites;
 import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlacesFavorites;
-import com.eliorcohen12345.locationproject.DataProviderPackage.NetworkDataProviderFavorites;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -82,7 +81,6 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
     private ImageView moovit, gett, waze, num1, num2, num3, num4, num5, btnOpenList;
     private List<Marker> markers;
     private CoordinatorLayout coordinatorLayout;
-    private NetworkDataProviderFavorites networkDataProviderFavorites;
     private LinearLayout linearList;
     private boolean isClicked;
     private AlphaAnimation anim;
@@ -131,7 +129,6 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
 
         isClicked = true;
 
-        networkDataProviderFavorites = new NetworkDataProviderFavorites();
         markers = new ArrayList<Marker>();
 
         setHasOptionsMenu(true);
@@ -162,12 +159,6 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
     }
 
     private void getData() {
-        try {
-            networkDataProviderFavorites.getPlacesByLocation();
-        } catch (Exception e) {
-
-        }
-
         mPlacesViewModel = ViewModelProviders.of(this).get(PlaceViewModelFavorites.class);
 
         mPlacesViewModel.getAllPlaces().observe(this, placesFavorites -> {
@@ -380,6 +371,7 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
                 locationB.setLongitude(location.getLongitude());
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
                 String result = prefs.getString("myKm", "1000.0");
+                assert result != null;
                 double val = Double.parseDouble(result);
                 distanceMe = locationA.distanceTo(locationB) / val;
 

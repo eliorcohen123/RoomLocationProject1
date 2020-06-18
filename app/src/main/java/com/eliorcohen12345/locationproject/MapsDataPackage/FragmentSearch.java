@@ -51,7 +51,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.eliorcohen12345.locationproject.CustomAdapterPackage.PlacesListAdapterSearch;
-import com.eliorcohen12345.locationproject.DataProviderPackage.NetworkDataProviderHistory;
 import com.eliorcohen12345.locationproject.DataProviderPackage.NetworkDataProviderSearch;
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.ItemDecoration;
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.NearByApplication;
@@ -77,7 +76,6 @@ public class FragmentSearch extends Fragment implements View.OnClickListener {
     private Button btnBank, btnBar, btnBeauty, btnBooks, btnBusStation, btnCars, btnClothing, btnDoctor, btnGasStation,
             btnGym, btnJewelry, btnPark, btnRestaurant, btnSchool, btnSpa;
     private NetworkDataProviderSearch dataProviderSearch;
-    private NetworkDataProviderHistory dataProviderHistory;
     private SharedPreferences prefsSeek, settingsQuery, settingsType, settingsPagePass, prefsOpen, prefsPage, prefsPre,
             prefsQuery, prefsType, prefsPageMe, prefsPageMy;
     private SharedPreferences.Editor editorQuery, editorType, editorPagePass, editorPage, editorPre, editorPageMe, editorPageMy;
@@ -134,7 +132,6 @@ public class FragmentSearch extends Fragment implements View.OnClickListener {
 
         mFragmentSearch = this;
 
-        dataProviderHistory = new NetworkDataProviderHistory();
         dataProviderSearch = new NetworkDataProviderSearch();
         mAdapterSearch = new PlacesListAdapterSearch(getContext());
         googleMapsApi = new GoogleMapsApi();
@@ -473,7 +470,6 @@ public class FragmentSearch extends Fragment implements View.OnClickListener {
 
     private void getTypeQuery(String pageToken, String type, String query) {
         if (!isConnected(Objects.requireNonNull(getContext()))) {
-            dataProviderHistory.getPlacesByLocation();
             buildDialog(getContext()).show();
         } else {
             if (query.equals("")) {

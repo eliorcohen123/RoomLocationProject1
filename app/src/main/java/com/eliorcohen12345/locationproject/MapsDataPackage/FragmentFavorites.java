@@ -28,7 +28,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.eliorcohen12345.locationproject.CustomAdapterPackage.PlacesListAdapterFavorites;
-import com.eliorcohen12345.locationproject.DataProviderPackage.NetworkDataProviderFavorites;
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.ItemDecoration;
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.MainActivity;
 import com.eliorcohen12345.locationproject.R;
@@ -46,7 +45,6 @@ public class FragmentFavorites extends Fragment implements NavigationView.OnNavi
     private Toolbar toolbar;
     private NavigationView navigationView;
     private ItemDecoration itemDecoration;
-    private NetworkDataProviderFavorites networkDataProviderFavorites;
 
     @Nullable
     @Override
@@ -55,7 +53,6 @@ public class FragmentFavorites extends Fragment implements NavigationView.OnNavi
 
         initUI();
         drawerLayout();
-        getData();
         myRecyclerView();
         enableSwipe();
 
@@ -69,7 +66,6 @@ public class FragmentFavorites extends Fragment implements NavigationView.OnNavi
 
         recyclerView = mView.findViewById(R.id.places_list_favorites);
 
-        networkDataProviderFavorites = new NetworkDataProviderFavorites();
         p = new Paint();
     }
 
@@ -92,10 +88,6 @@ public class FragmentFavorites extends Fragment implements NavigationView.OnNavi
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    private void getData() {
-        networkDataProviderFavorites.getPlacesByLocation();
     }
 
     private void myRecyclerView() {

@@ -27,7 +27,7 @@ public interface PlacesDaoSearch {
     @Query("DELETE FROM places_table_search WHERE ID= :id_")
     void deleteByID(Long id_);
 
-    @Query("SELECT * from places_table_search ORDER BY name ASC")
+    @Query("SELECT * from places_table_search")
     LiveData<List<PlacesSearch>> getAllPlaces();
 
     @Update

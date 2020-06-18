@@ -35,7 +35,6 @@ import android.widget.Toast;
 
 import com.eliorcohen12345.locationproject.CustomAdapterPackage.CustomInfoWindowGoogleMapSearch;
 import com.eliorcohen12345.locationproject.DataAppPackage.PlaceModel;
-import com.eliorcohen12345.locationproject.DataProviderPackage.NetworkDataProviderHistory;
 import com.eliorcohen12345.locationproject.DataProviderPackage.NetworkDataProviderSearch;
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.NearByApplication;
 import com.eliorcohen12345.locationproject.R;
@@ -79,7 +78,6 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
     private List<Marker> markers;
     private CoordinatorLayout coordinatorLayout;
     private NetworkDataProviderSearch dataProviderSearch;
-    private NetworkDataProviderHistory dataProviderHistory;
     private SharedPreferences prefsSeek, settingsQuery, settingsType, settingsPage, prefsOpen;
     private TextView disNearBy, disSearch;
     private String myStringQuery, myStringType, myStringPage, provider;
@@ -131,7 +129,6 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
 
         isClicked = true;
 
-        dataProviderHistory = new NetworkDataProviderHistory();
         dataProviderSearch = new NetworkDataProviderSearch();
         markers = new ArrayList<Marker>();
     }
@@ -163,7 +160,6 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
     private void getData() {
         try {
             if (!isConnected(getContext())) {
-                dataProviderHistory.getPlacesByLocation();
                 buildDialog(getContext()).show();
             } else {
                 settingsQuery = getActivity().getSharedPreferences("mysettingsquery", Context.MODE_PRIVATE);

@@ -22,7 +22,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.eliorcohen12345.locationproject.DataProviderPackage.NetworkDataProviderFavorites;
 import com.eliorcohen12345.locationproject.GeofencePackage.Constants;
 import com.eliorcohen12345.locationproject.GeofencePackage.GeofenceBroadcastReceiver;
 import com.eliorcohen12345.locationproject.GeofencePackage.GeofenceErrorMessages;
@@ -50,7 +49,6 @@ import java.util.Objects;
 public class ActivityFavorites extends AppCompatActivity implements OnCompleteListener<Void> {
 
     private PlaceViewModelFavorites mPlacesViewModel;
-    private NetworkDataProviderFavorites networkDataProviderFavorites;
     private GeofencingClient mGeofencingClient;
     private ArrayList<Geofence> mGeofenceList;
     private PendingIntent mGeofencePendingIntent;
@@ -92,9 +90,6 @@ public class ActivityFavorites extends AppCompatActivity implements OnCompleteLi
     }
 
     private void initUI() {
-        networkDataProviderFavorites = new NetworkDataProviderFavorites();
-        networkDataProviderFavorites.getPlacesByLocation();
-
         mPlacesViewModel = ViewModelProviders.of(this).get(PlaceViewModelFavorites.class);
 
         prefsSeekGeo = PreferenceManager.getDefaultSharedPreferences(this);
