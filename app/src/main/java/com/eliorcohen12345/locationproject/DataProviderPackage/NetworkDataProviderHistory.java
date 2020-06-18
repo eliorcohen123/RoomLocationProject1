@@ -22,18 +22,18 @@ public class NetworkDataProviderHistory {
         getPlacesByLocationAsyncTask.execute();
     }
 
-    private static class GetPlacesByLocationAsyncTask extends AsyncTask<String, Integer, ArrayList<PlaceModel>> {
+    private static class GetPlacesByLocationAsyncTask extends AsyncTask<Void, Integer, ArrayList<PlacesSearch>> {
 
-        private ArrayList<PlaceModel> mPlaceModels;
+        private ArrayList<PlacesSearch> mPlaceModels;
         private PlaceViewModelSearch placeViewModelSearch;
 
         @Override
-        protected ArrayList<PlaceModel> doInBackground(String... urls) {
-            mPlaceModels = new ArrayList<PlaceModel>();
+        protected ArrayList<PlacesSearch> doInBackground(Void... voids) {
+            mPlaceModels = new ArrayList<PlacesSearch>();
             ArrayList<PlacesSearch> listPlaces = new ArrayList<>();
-            for (PlaceModel placeModel : mPlaceModels) {
+            for (PlacesSearch placeModel : mPlaceModels) {
                 try {
-                    PlacesSearch place = new PlacesSearch(placeModel.getName(), placeModel.getVicinity(), placeModel.getGeometry().getLocation().getLat(), placeModel.getGeometry().getLocation().getLng(), placeModel.getPhotos().get(0).getPhoto_reference(), placeModel.getOpening_hours());
+                    PlacesSearch place = new PlacesSearch(placeModel.getName(), placeModel.getAddress(), placeModel.getLat(), placeModel.getLng(), placeModel.getPhoto(), placeModel.getIs_open());
                     listPlaces.add(place);
                 } catch (Exception e) {
 
@@ -46,7 +46,7 @@ public class NetworkDataProviderHistory {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<PlaceModel> iPlacesDataReceived_) {
+        protected void onPostExecute(ArrayList<PlacesSearch> iPlacesDataReceived_) {
 
         }
     }

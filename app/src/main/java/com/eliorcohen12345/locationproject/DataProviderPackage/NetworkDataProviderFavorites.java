@@ -8,6 +8,7 @@ import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlaceViewModelFa
 import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlacesFavorites;
 import com.eliorcohen12345.locationproject.DataAppPackage.PlaceModel;
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.NearByApplication;
+import com.eliorcohen12345.locationproject.RoomSearchPackage.PlacesSearch;
 
 public class NetworkDataProviderFavorites {
 
@@ -22,18 +23,18 @@ public class NetworkDataProviderFavorites {
         getPlacesByLocationAsyncTask.execute();
     }
 
-    private static class GetPlacesByLocationAsyncTask extends AsyncTask<String, Integer, ArrayList<PlaceModel>> {
+    private static class GetPlacesByLocationAsyncTask extends AsyncTask<Void, Integer, ArrayList<PlacesFavorites>> {
 
-        private ArrayList<PlaceModel> mPlaceModels;
+        private ArrayList<PlacesFavorites> mPlaceModels;
         private PlaceViewModelFavorites placeViewModelFavorites;
 
         @Override
-        protected ArrayList<PlaceModel> doInBackground(String... urls) {
-            mPlaceModels = new ArrayList<PlaceModel>();
+        protected ArrayList<PlacesFavorites> doInBackground(Void... voids) {
+            mPlaceModels = new ArrayList<PlacesFavorites>();
             ArrayList<PlacesFavorites> listPlaces = new ArrayList<>();
-            for (PlaceModel placeModel : mPlaceModels) {
+            for (PlacesFavorites placeModel : mPlaceModels) {
                 try {
-                    PlacesFavorites place = new PlacesFavorites(placeModel.getName(), placeModel.getVicinity(), placeModel.getGeometry().getLocation().getLat(), placeModel.getGeometry().getLocation().getLng(), placeModel.getPhotos().get(0).getPhoto_reference());
+                    PlacesFavorites place = new PlacesFavorites(placeModel.getName(), placeModel.getAddress(), placeModel.getLat(), placeModel.getLng(), placeModel.getPhoto());
                     listPlaces.add(place);
                 } catch (Exception e) {
 
@@ -46,7 +47,7 @@ public class NetworkDataProviderFavorites {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<PlaceModel> iPlacesDataReceived_) {
+        protected void onPostExecute(ArrayList<PlacesFavorites> iPlacesDataReceived_) {
 
         }
     }
