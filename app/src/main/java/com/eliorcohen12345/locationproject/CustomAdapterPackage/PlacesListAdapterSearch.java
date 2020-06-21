@@ -2,53 +2,45 @@ package com.eliorcohen12345.locationproject.CustomAdapterPackage;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.DisplayMetrics;
-import android.view.ContextMenu;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.eliorcohen12345.locationproject.MainAndOtherPackage.NearByApplication;
-import com.eliorcohen12345.locationproject.MapsDataPackage.AddPlaceFavorites;
+import com.eliorcohen12345.locationproject.MapsDataPackage.FragmentMapSearch;
+import com.eliorcohen12345.locationproject.R;
 import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlaceViewModelFavorites;
+import com.eliorcohen12345.locationproject.RoomSearchPackage.PlacesSearch;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.Collections;
 import java.util.List;
 
-import com.eliorcohen12345.locationproject.MapsDataPackage.FragmentMapSearch;
-import com.eliorcohen12345.locationproject.R;
-import com.eliorcohen12345.locationproject.RoomSearchPackage.PlacesSearch;
-
 public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdapterSearch.PlaceViewHolder> {
 
-    class PlaceViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
+    class PlaceViewHolder extends RecyclerView.ViewHolder {
 
         private TextView name1, address1, kmMe1, isOpen1;
-        private ImageView image1;
-        private RelativeLayout relativeLayout1;
+        private LinearLayout linear1;
         private PlaceViewModelFavorites placeViewModelFavorites;
 
         private PlaceViewHolder(View itemView) {
@@ -57,52 +49,8 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
             address1 = itemView.findViewById(R.id.address1);
             kmMe1 = itemView.findViewById(R.id.kmMe1);
             isOpen1 = itemView.findViewById(R.id.isOpen1);
-            image1 = itemView.findViewById(R.id.image1);
-            relativeLayout1 = itemView.findViewById(R.id.relative1);
-
-            itemView.setOnCreateContextMenuListener(this);
+            linear1 = itemView.findViewById(R.id.linear1);
         }
-
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            menu.setHeaderTitle("Select Action");
-            MenuItem add_to_favorites = menu.add(Menu.NONE, 1, 1, "Add to favorites");
-            MenuItem share = menu.add(Menu.NONE, 2, 2, "Share");
-
-            add_to_favorites.setOnMenuItemClickListener(onChange);
-            share.setOnMenuItemClickListener(onChange);
-        }
-
-        private final MenuItem.OnMenuItemClickListener onChange = new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                PlacesSearch current = mPlacesSearchList.get(getAdapterPosition());
-                switch (item.getItemId()) {
-                    case 1:
-                        placeViewModelFavorites = new PlaceViewModelFavorites(NearByApplication.getApplication());
-                        if (placeViewModelFavorites.exist(current.getName(), current.getLat(), current.getLng()) == null) {
-                            Intent intent = new Intent(mInflater.getContext(), AddPlaceFavorites.class);
-                            intent.putExtra(mInflater.getContext().getString(R.string.map_add_from_internet), current);
-                            mInflater.getContext().startActivity(intent);
-                        } else {
-                            Toast.makeText(mInflater.getContext(), "Current place already exist in your favorites", Toast.LENGTH_SHORT).show();
-                        }
-                        break;
-                    case 2:
-                        String name = current.getName();
-                        String address = current.getAddress();
-                        double lat = current.getLat();
-                        double lng = current.getLng();
-                        Intent sendIntent = new Intent();
-                        sendIntent.setAction(Intent.ACTION_SEND);
-                        sendIntent.putExtra(Intent.EXTRA_TEXT, "Name: " + name + "\nAddress: " + address + "\nLatitude: " + lat + "\nLongitude: " + lng);
-                        sendIntent.setType("text/plain");
-                        mInflater.getContext().startActivity(sendIntent);
-                        break;
-                }
-                return false;
-            }
-        };
     }
 
     private final LayoutInflater mInflater;
@@ -189,13 +137,28 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
                     try {
                         Picasso.get().load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="
                                 + current.getPhoto() +
-                                "&key=" + mInflater.getContext().getString(R.string.api_key_search)).into(holder.image1);
+                                "&key=" + mInflater.getContext().getString(R.string.api_key_search)).into(new Target() {
+                            @Override
+                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                holder.linear1.setBackground(new BitmapDrawable(bitmap));
+                            }
+
+                            @Override
+                            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                                holder.linear1.setBackgroundResource(R.drawable.no_image_available);
+                            }
+
+                            @Override
+                            public void onPrepareLoad(Drawable placeHolderDrawable) {
+                                holder.linear1.setBackgroundResource(R.drawable.no_image_available);
+                            }
+                        });
                     } catch (Exception e) {
-                        holder.image1.setImageResource(R.drawable.no_image_available);
+                        holder.linear1.setBackgroundResource(R.drawable.no_image_available);
                     }
                 }
             }
-            holder.relativeLayout1.setOnClickListener(v -> {
+            holder.linear1.setOnClickListener(v -> {
                 // Tablet/Phone mode
                 DisplayMetrics metrics = new DisplayMetrics();
                 ((AppCompatActivity) mInflater.getContext()).getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -217,8 +180,6 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
                 }
                 fragmentTransaction.addToBackStack(null).commit();
             });
-
-            setFadeAnimation(holder.itemView);
         } else {
             // Covers the case of data not being ready yet.
             holder.name1.setText("No Places");
@@ -266,10 +227,8 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
         else return 0;
     }
 
-    private void setFadeAnimation(View view) {
-        AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
-        anim.setDuration(1500);
-        view.startAnimation(anim);
+    public PlacesSearch getPlaceAtPosition(int position) {
+        return mPlacesSearchList.get(position);
     }
 
 }

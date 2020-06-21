@@ -3,14 +3,17 @@ package com.eliorcohen12345.locationproject.MapsDataPackage;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
-
-import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.graphics.RectF;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Criteria;
 import android.location.Location;
@@ -22,18 +25,6 @@ import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.SearchView;
-
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -46,6 +37,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -55,7 +59,9 @@ import com.eliorcohen12345.locationproject.DataProviderPackage.NetworkDataProvid
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.ItemDecoration;
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.NearByApplication;
 import com.eliorcohen12345.locationproject.R;
+import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlaceViewModelFavorites;
 import com.eliorcohen12345.locationproject.RoomSearchPackage.PlaceViewModelSearch;
+import com.eliorcohen12345.locationproject.RoomSearchPackage.PlacesSearch;
 
 import org.json.JSONObject;
 
@@ -87,6 +93,8 @@ public class FragmentSearch extends Fragment implements View.OnClickListener {
     private LocationManager locationManager;
     private Criteria criteria;
     private GoogleMapsApi googleMapsApi;
+    private Paint p;
+    private PlaceViewModelFavorites placeViewModelFavorites;
 
     @Nullable
     @Override
@@ -98,6 +106,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener {
         myRecyclerView();
         refreshUI();
         getCheckBtnSearch(myPage, myType, myStringQuery);
+        enableSwipe();
 
         return mView;
     }
@@ -131,6 +140,8 @@ public class FragmentSearch extends Fragment implements View.OnClickListener {
         initPrefs();
 
         mFragmentSearch = this;
+
+        p = new Paint();
 
         dataProviderSearch = new NetworkDataProviderSearch();
         mAdapterSearch = new PlacesListAdapterSearch(getContext());
@@ -238,6 +249,74 @@ public class FragmentSearch extends Fragment implements View.OnClickListener {
 
             swipeRefreshLayout.setRefreshing(false);
         });
+    }
+
+    private void enableSwipe() {
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                PlacesSearch mPlace = mAdapterSearch.getPlaceAtPosition(position);
+
+                if (direction == ItemTouchHelper.LEFT) {
+                    placeViewModelFavorites = new PlaceViewModelFavorites(NearByApplication.getApplication());
+                    if (placeViewModelFavorites.exist(mPlace.getName(), mPlace.getLat(), mPlace.getLng()) == null) {
+                        Intent intent = new Intent(getContext(), AddPlaceFavorites.class);
+                        intent.putExtra(getContext().getString(R.string.map_add_from_internet), mPlace);
+                        getContext().startActivity(intent);
+                    } else {
+                        Toast.makeText(getContext(), "Current place already exist in your favorites", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    String name = mPlace.getName();
+                    String address = mPlace.getAddress();
+                    double lat = mPlace.getLat();
+                    double lng = mPlace.getLng();
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Name: " + name + "\nAddress: " + address + "\nLatitude: " + lat + "\nLongitude: " + lng);
+                    sendIntent.setType("text/plain");
+                    getContext().startActivity(sendIntent);
+                }
+            }
+
+            @Override
+            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+
+                Bitmap icon;
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+
+                    View itemView = viewHolder.itemView;
+                    float height = (float) itemView.getBottom() - (float) itemView.getTop();
+                    float width = height / 3;
+
+                    if (dX < 0) {
+                        p.setColor(Color.parseColor("#008000"));
+                        RectF background = new RectF((float) itemView.getRight() + dX, (float) itemView.getTop(), (float) itemView.getRight(), (float) itemView.getBottom());
+                        c.drawRect(background, p);
+                        icon = BitmapFactory.decodeResource(getResources(), R.drawable.add_icon);
+                        RectF icon_dest = new RectF((float) itemView.getRight() - 2 * width, (float) itemView.getTop() + width, (float) itemView.getRight() - width, (float) itemView.getBottom() - width);
+                        c.drawBitmap(icon, null, icon_dest, p);
+                    } else {
+                        p.setColor(Color.parseColor("#8FBC8F"));
+                        RectF background = new RectF((float) itemView.getLeft(), (float) itemView.getTop(), dX, (float) itemView.getBottom());
+                        c.drawRect(background, p);
+                        icon = BitmapFactory.decodeResource(getResources(), R.drawable.share_icon);
+                        RectF icon_dest = new RectF((float) itemView.getLeft() + width, (float) itemView.getTop() + width, (float) itemView.getLeft() + 2 * width, (float) itemView.getBottom() - width);
+                        c.drawBitmap(icon, null, icon_dest, p);
+                    }
+                }
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     // Sets off the menu of activity_menu

@@ -4,50 +4,47 @@ import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentManager;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
-
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
-import java.util.Collections;
-import java.util.List;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.eliorcohen12345.locationproject.MapsDataPackage.FragmentMapFavorites;
 import com.eliorcohen12345.locationproject.R;
 import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlacesFavorites;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
+import java.util.Collections;
+import java.util.List;
 
 public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListAdapterFavorites.PlaceViewHolder> {
 
     class PlaceViewHolder extends RecyclerView.ViewHolder {
 
         private TextView name3, address3, kmMe3;
-        private ImageView image3;
-        private RelativeLayout relativeLayout3;
+        private LinearLayout linear3;
 
         private PlaceViewHolder(View itemView) {
             super(itemView);
             name3 = itemView.findViewById(R.id.name1);
             address3 = itemView.findViewById(R.id.address1);
             kmMe3 = itemView.findViewById(R.id.kmMe1);
-            image3 = itemView.findViewById(R.id.image1);
-            relativeLayout3 = itemView.findViewById(R.id.relative1);
+            linear3 = itemView.findViewById(R.id.linear1);
         }
     }
 
@@ -120,16 +117,31 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
                         // Put the text in kmMe3
                         holder.kmMe3.setText(disMile);
                     }
-                    if (!current.getPhoto().equals("")) {
+                    try {
                         Picasso.get().load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="
                                 + current.getPhoto() +
-                                "&key=" + mInflater.getContext().getString(R.string.api_key_search)).into(holder.image3);
-                    } else {
-                        holder.image3.setImageResource(R.drawable.no_image_available);
+                                "&key=" + mInflater.getContext().getString(R.string.api_key_search)).into(new Target() {
+                            @Override
+                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                holder.linear3.setBackground(new BitmapDrawable(bitmap));
+                            }
+
+                            @Override
+                            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                                holder.linear3.setBackgroundResource(R.drawable.no_image_available);
+                            }
+
+                            @Override
+                            public void onPrepareLoad(Drawable placeHolderDrawable) {
+                                holder.linear3.setBackgroundResource(R.drawable.no_image_available);
+                            }
+                        });
+                    } catch (Exception e) {
+                        holder.linear3.setBackgroundResource(R.drawable.no_image_available);
                     }
                 }
             }
-            holder.relativeLayout3.setOnClickListener(v -> {
+            holder.linear3.setOnClickListener(v -> {
                 FragmentMapFavorites fragmentMapFavorites = new FragmentMapFavorites();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(mInflater.getContext().getString(R.string.map_favorites_key), current);
@@ -137,8 +149,6 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
                 FragmentManager fragmentManager = ((AppCompatActivity) mInflater.getContext()).getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.fragmentFavoritesContainer, fragmentMapFavorites).addToBackStack(null).commit();
             });
-
-            setFadeAnimation(holder.itemView);
         } else {
             // Covers the case of data not being ready yet.
             holder.name3.setText("No Places");
@@ -188,12 +198,6 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
 
     public PlacesFavorites getPlaceAtPosition(int position) {
         return mPlacesFavoritesList.get(position);
-    }
-
-    private void setFadeAnimation(View view) {
-        AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
-        anim.setDuration(1500);
-        view.startAnimation(anim);
     }
 
 }
