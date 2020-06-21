@@ -4,8 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
@@ -23,11 +21,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.eliorcohen12345.locationproject.MapsDataPackage.FragmentMapFavorites;
 import com.eliorcohen12345.locationproject.R;
 import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlacesFavorites;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
@@ -117,23 +118,14 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
                         // Put the text in kmMe3
                         holder.kmMe3.setText(disMile);
                     }
+
                     try {
-                        Picasso.get().load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="
+                        Glide.with(mInflater.getContext()).load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="
                                 + current.getPhoto() +
-                                "&key=" + mInflater.getContext().getString(R.string.api_key_search)).into(new Target() {
+                                "&key=" + mInflater.getContext().getString(R.string.api_key_search)).into(new SimpleTarget<Drawable>() {
                             @Override
-                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                                holder.linear3.setBackground(new BitmapDrawable(bitmap));
-                            }
-
-                            @Override
-                            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-                                holder.linear3.setBackgroundResource(R.drawable.no_image_available);
-                            }
-
-                            @Override
-                            public void onPrepareLoad(Drawable placeHolderDrawable) {
-                                holder.linear3.setBackgroundResource(R.drawable.no_image_available);
+                            public void onResourceReady(@NotNull Drawable resource, Transition<? super Drawable> transition) {
+                                holder.linear3.setBackground(resource);
                             }
                         });
                     } catch (Exception e) {
@@ -141,6 +133,7 @@ public class PlacesListAdapterFavorites extends RecyclerView.Adapter<PlacesListA
                     }
                 }
             }
+
             holder.linear3.setOnClickListener(v -> {
                 FragmentMapFavorites fragmentMapFavorites = new FragmentMapFavorites();
                 Bundle bundle = new Bundle();

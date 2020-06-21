@@ -43,7 +43,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.squareup.okhttp3:okhttp:4.0.1'
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'android.arch.navigation:navigation-fragment:1.0.0'
     implementation 'android.arch.navigation:navigation-ui:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
@@ -58,6 +57,7 @@ dependencies {
     implementation 'com.github.eliorcohen123:LocationProject1:1.04'
     implementation 'com.github.guy-4444:SmartRateUsDialog-Android:1.00.08'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
 
 //    implementation project(':googlemapsapi')
 

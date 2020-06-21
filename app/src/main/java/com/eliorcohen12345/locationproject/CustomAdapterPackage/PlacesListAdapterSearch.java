@@ -4,8 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
@@ -25,12 +23,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.eliorcohen12345.locationproject.MapsDataPackage.FragmentMapSearch;
 import com.eliorcohen12345.locationproject.R;
-import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlaceViewModelFavorites;
 import com.eliorcohen12345.locationproject.RoomSearchPackage.PlacesSearch;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,7 +41,6 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
 
         private TextView name1, address1, kmMe1, isOpen1;
         private LinearLayout linear1;
-        private PlaceViewModelFavorites placeViewModelFavorites;
 
         private PlaceViewHolder(View itemView) {
             super(itemView);
@@ -134,23 +133,14 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
                     } catch (Exception e) {
 
                     }
+
                     try {
-                        Picasso.get().load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="
+                        Glide.with(mInflater.getContext()).load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="
                                 + current.getPhoto() +
-                                "&key=" + mInflater.getContext().getString(R.string.api_key_search)).into(new Target() {
+                                "&key=" + mInflater.getContext().getString(R.string.api_key_search)).into(new SimpleTarget<Drawable>() {
                             @Override
-                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                                holder.linear1.setBackground(new BitmapDrawable(bitmap));
-                            }
-
-                            @Override
-                            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-                                holder.linear1.setBackgroundResource(R.drawable.no_image_available);
-                            }
-
-                            @Override
-                            public void onPrepareLoad(Drawable placeHolderDrawable) {
-                                holder.linear1.setBackgroundResource(R.drawable.no_image_available);
+                            public void onResourceReady(@NotNull Drawable resource, Transition<? super Drawable> transition) {
+                                holder.linear1.setBackground(resource);
                             }
                         });
                     } catch (Exception e) {
@@ -158,6 +148,7 @@ public class PlacesListAdapterSearch extends RecyclerView.Adapter<PlacesListAdap
                     }
                 }
             }
+
             holder.linear1.setOnClickListener(v -> {
                 // Tablet/Phone mode
                 DisplayMetrics metrics = new DisplayMetrics();
