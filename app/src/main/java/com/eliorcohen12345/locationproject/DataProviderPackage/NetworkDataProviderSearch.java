@@ -52,8 +52,7 @@ public class NetworkDataProviderSearch {
         private Location location;
         private LocationManager locationManager;
         private Criteria criteria;
-        private String provider;
-        private String urlQuery;
+        private String provider, urlQuery;
         private double diagonalInches;
         private GoogleMapsApi googleMapsApi = new GoogleMapsApi();
 
