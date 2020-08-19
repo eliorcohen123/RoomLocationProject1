@@ -20,7 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.NearByApplication;
-import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlaceViewModelFavorites;
+import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlacesViewModelFavorites;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -42,7 +42,7 @@ public class CustomMarkerFragment extends Fragment implements OnMapReadyCallback
     private LocationManager locationManager;
     private String provider;
     private Toolbar toolbar;
-    private PlaceViewModelFavorites placeViewModelFavorites;
+    private PlacesViewModelFavorites placesViewModelFavorites;
 
     @Nullable
     @Override
@@ -133,8 +133,8 @@ public class CustomMarkerFragment extends Fragment implements OnMapReadyCallback
         });
 
         mGoogleMap.setOnMarkerClickListener(marker -> {
-            placeViewModelFavorites = new PlaceViewModelFavorites(NearByApplication.getApplication());
-            if (placeViewModelFavorites.exist("", marker.getPosition().latitude, marker.getPosition().longitude) == null) {
+            placesViewModelFavorites = new PlacesViewModelFavorites(NearByApplication.getApplication());
+            if (placesViewModelFavorites.exist("", marker.getPosition().latitude, marker.getPosition().longitude) == null) {
                 Intent intent = new Intent(getContext(), AddMarkerFavorites.class);
                 intent.putExtra(getString(R.string.lat_marker), marker.getPosition().latitude);
                 intent.putExtra(getString(R.string.lng_marker), marker.getPosition().longitude);

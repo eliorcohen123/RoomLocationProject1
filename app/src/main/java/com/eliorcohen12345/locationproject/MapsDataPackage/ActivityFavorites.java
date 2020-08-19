@@ -28,7 +28,7 @@ import com.eliorcohen12345.locationproject.GeofencePackage.GeofenceErrorMessages
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.GoogleService;
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.NearByApplication;
 import com.eliorcohen12345.locationproject.R;
-import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlaceViewModelFavorites;
+import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlacesViewModelFavorites;
 import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlacesFavorites;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
@@ -48,7 +48,7 @@ import java.util.Objects;
 // Activity of FragmentFavorites
 public class ActivityFavorites extends AppCompatActivity implements OnCompleteListener<Void> {
 
-    private PlaceViewModelFavorites mPlacesViewModel;
+    private PlacesViewModelFavorites mPlacesViewModel;
     private GeofencingClient mGeofencingClient;
     private ArrayList<Geofence> mGeofenceList;
     private PendingIntent mGeofencePendingIntent;
@@ -90,7 +90,7 @@ public class ActivityFavorites extends AppCompatActivity implements OnCompleteLi
     }
 
     private void initUI() {
-        mPlacesViewModel = ViewModelProviders.of(this).get(PlaceViewModelFavorites.class);
+        mPlacesViewModel = ViewModelProviders.of(this).get(PlacesViewModelFavorites.class);
 
         prefsSeekGeo = PreferenceManager.getDefaultSharedPreferences(this);
         myRadiusGeo = prefsSeekGeo.getInt("seek_geo", 500);

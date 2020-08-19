@@ -13,13 +13,13 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.bumptech.glide.Glide;
 import com.eliorcohen12345.locationproject.R;
-import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlaceViewModelFavorites;
+import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlacesViewModelFavorites;
 import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlacesFavorites;
 
 public class EditPlace extends AppCompatActivity implements View.OnClickListener {
 
     private PlacesFavorites item;
-    private PlaceViewModelFavorites placeViewModelFavorites;
+    private PlacesViewModelFavorites placesViewModelFavorites;
     private long id;
     private EditText name, address, lat, lng, photo;
     private TextView textViewOK, textViewShow;
@@ -53,7 +53,7 @@ public class EditPlace extends AppCompatActivity implements View.OnClickListener
 
         btnBack = findViewById(R.id.btnBack);
 
-        placeViewModelFavorites = ViewModelProviders.of(EditPlace.this).get(PlaceViewModelFavorites.class);
+        placesViewModelFavorites = ViewModelProviders.of(EditPlace.this).get(PlacesViewModelFavorites.class);
     }
 
     private void initListeners() {
@@ -96,7 +96,7 @@ public class EditPlace extends AppCompatActivity implements View.OnClickListener
 
                 PlacesFavorites placesFavorites = new PlacesFavorites(name1, address1, lat2, lng2, photo1);
                 placesFavorites.setID(id);
-                placeViewModelFavorites.updatePlace(placesFavorites);
+                placesViewModelFavorites.updatePlace(placesFavorites);
 
                 // Pass from AddMapFromInternet to ActivityFavorites
                 Intent intentAddInternetToMain = new Intent(EditPlace.this, ActivityFavorites.class);

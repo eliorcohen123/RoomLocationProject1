@@ -10,14 +10,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eliorcohen12345.locationproject.R;
-import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlaceViewModelFavorites;
+import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlacesViewModelFavorites;
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.MainActivity;
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.NearByApplication;
 
 public class DeleteAllDataFavorites extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnOK, btnCancel;
-    private PlaceViewModelFavorites placeViewModelFavorites;
+    private PlacesViewModelFavorites placesViewModelFavorites;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class DeleteAllDataFavorites extends AppCompatActivity implements View.On
         btnOK = findViewById(R.id.btnOK);
         btnCancel = findViewById(R.id.btnCancel);
 
-        placeViewModelFavorites = new PlaceViewModelFavorites(NearByApplication.getApplication());
+        placesViewModelFavorites = new PlacesViewModelFavorites(NearByApplication.getApplication());
     }
 
     private void initListeners() {
@@ -44,7 +44,7 @@ public class DeleteAllDataFavorites extends AppCompatActivity implements View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnOK:
-                placeViewModelFavorites.deleteAll();
+                placesViewModelFavorites.deleteAll();
 
                 Toast toast = Toast.makeText(DeleteAllDataFavorites.this, "All the data of favorites are deleted!", Toast.LENGTH_LONG);
                 View view = toast.getView();

@@ -13,14 +13,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.NearByApplication;
 import com.eliorcohen12345.locationproject.R;
-import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlaceViewModelFavorites;
+import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlacesViewModelFavorites;
 import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlacesFavorites;
 
 public class AddMarkerFavorites extends AppCompatActivity implements View.OnClickListener {
 
     private double latS;
     private double lngS;
-    private PlaceViewModelFavorites placeViewModelFavorites;
+    private PlacesViewModelFavorites placesViewModelFavorites;
     private EditText name, address, lat, lng, photo;
     private TextView textViewOK, textViewShow;
     private ImageView imageView;
@@ -89,10 +89,10 @@ public class AddMarkerFavorites extends AppCompatActivity implements View.OnClic
                 double lat2 = Double.parseDouble(lat1);
                 double lng2 = Double.parseDouble(lng1);
 
-                placeViewModelFavorites = new PlaceViewModelFavorites(NearByApplication.getApplication());
+                placesViewModelFavorites = new PlacesViewModelFavorites(NearByApplication.getApplication());
 
                 PlacesFavorites placesFavorites = new PlacesFavorites(name1, address1, lat2, lng2, photo1);
-                placeViewModelFavorites.insertPlace(placesFavorites);
+                placesViewModelFavorites.insertPlace(placesFavorites);
 
                 // Pass from AddMapFromInternet to ActivityFavorites
                 Intent intentAddInternetToMain = new Intent(AddMarkerFavorites.this, ActivityFavorites.class);

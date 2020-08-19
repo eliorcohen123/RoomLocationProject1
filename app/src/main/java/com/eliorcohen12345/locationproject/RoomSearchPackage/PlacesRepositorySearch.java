@@ -8,12 +8,12 @@ import android.os.AsyncTask;
 
 import java.util.List;
 
-public class PlaceRepositorySearch {
+public class PlacesRepositorySearch {
 
     private PlacesDaoSearch mPlacesDaoSearch;
     private LiveData<List<PlacesSearch>> mAllPlaces;
 
-    public PlaceRepositorySearch(Application application) {
+    public PlacesRepositorySearch(Application application) {
         PlacesRoomDatabaseSearch db = PlacesRoomDatabaseSearch.getDatabase(application);
         mPlacesDaoSearch = db.placesDao();
         mAllPlaces = mPlacesDaoSearch.getAllPlaces();

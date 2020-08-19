@@ -39,7 +39,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.eliorcohen12345.locationproject.DataAppPackage.PlaceModel;
-import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlaceViewModelFavorites;
+import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlacesViewModelFavorites;
 import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlacesFavorites;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -68,7 +68,7 @@ import com.eliorcohen12345.locationproject.R;
 
 public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback, View.OnClickListener {
 
-    private PlaceViewModelFavorites mPlacesViewModel;
+    private PlacesViewModelFavorites mPlacesViewModel;
     private GoogleMap mGoogleMap;
     private MapView mMapView;
     private View mView;
@@ -159,7 +159,7 @@ public class FragmentMapFavorites extends Fragment implements OnMapReadyCallback
     }
 
     private void getData() {
-        mPlacesViewModel = ViewModelProviders.of(this).get(PlaceViewModelFavorites.class);
+        mPlacesViewModel = ViewModelProviders.of(this).get(PlacesViewModelFavorites.class);
 
         mPlacesViewModel.getAllPlaces().observe(this, placesFavorites -> {
             try {

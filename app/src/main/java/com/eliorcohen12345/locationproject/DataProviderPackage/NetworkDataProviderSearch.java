@@ -25,7 +25,7 @@ import com.eliorcohen12345.locationproject.MapsDataPackage.FragmentSearch;
 import com.eliorcohen12345.locationproject.RoomSearchPackage.PlacesSearch;
 import com.eliorcohen12345.locationproject.DataAppPackage.PlaceModel;
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.NearByApplication;
-import com.eliorcohen12345.locationproject.RoomSearchPackage.PlaceViewModelSearch;
+import com.eliorcohen12345.locationproject.RoomSearchPackage.PlacesViewModelSearch;
 
 import eliorcohen.com.googlemapsapi.GoogleMapsApi;
 import okhttp3.OkHttpClient;
@@ -48,7 +48,7 @@ public class NetworkDataProviderSearch {
     private static class GetPlacesByLocationAsyncTask extends AsyncTask<String, Integer, ArrayList<PlaceModel>> {
 
         private ArrayList<PlaceModel> mPlaceModels = new ArrayList<>();
-        private PlaceViewModelSearch placeViewModelSearch;
+        private PlacesViewModelSearch placesViewModelSearch;
         private Location location;
         private LocationManager locationManager;
         private Criteria criteria;
@@ -102,9 +102,9 @@ public class NetworkDataProviderSearch {
 
                             }
                         }
-                        placeViewModelSearch = new PlaceViewModelSearch(NearByApplication.getApplication());
-                        placeViewModelSearch.deleteAll();
-                        placeViewModelSearch.insertPlace(listPlaces);
+                        placesViewModelSearch = new PlacesViewModelSearch(NearByApplication.getApplication());
+                        placesViewModelSearch.deleteAll();
+                        placesViewModelSearch.insertPlace(listPlaces);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

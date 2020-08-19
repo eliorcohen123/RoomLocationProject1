@@ -6,14 +6,14 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-public class PlaceViewModelSearch extends AndroidViewModel {
+public class PlacesViewModelSearch extends AndroidViewModel {
 
-    private PlaceRepositorySearch mRepository;
+    private PlacesRepositorySearch mRepository;
 
-    public PlaceViewModelSearch(Application application) {
+    public PlacesViewModelSearch(Application application) {
         super(application);
 
-        mRepository = new PlaceRepositorySearch(application);
+        mRepository = new PlacesRepositorySearch(application);
     }
 
     public LiveData<List<PlacesSearch>> getAllPlaces() {

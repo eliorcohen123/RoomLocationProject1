@@ -12,12 +12,12 @@ import android.widget.Toast;
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.MainActivity;
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.NearByApplication;
 import com.eliorcohen12345.locationproject.R;
-import com.eliorcohen12345.locationproject.RoomSearchPackage.PlaceViewModelSearch;
+import com.eliorcohen12345.locationproject.RoomSearchPackage.PlacesViewModelSearch;
 
 public class DeleteAllDataHistory extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnOK, btnCancel;
-    private PlaceViewModelSearch placeViewModelSearch;
+    private PlacesViewModelSearch placesViewModelSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class DeleteAllDataHistory extends AppCompatActivity implements View.OnCl
         btnOK = findViewById(R.id.btnOK);
         btnCancel = findViewById(R.id.btnCancel);
 
-        placeViewModelSearch = new PlaceViewModelSearch(NearByApplication.getApplication());
+        placesViewModelSearch = new PlacesViewModelSearch(NearByApplication.getApplication());
     }
 
     private void initListeners() {
@@ -44,7 +44,7 @@ public class DeleteAllDataHistory extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnOK:
-                placeViewModelSearch.deleteAll();
+                placesViewModelSearch.deleteAll();
 
                 Toast toast = Toast.makeText(DeleteAllDataHistory.this, "All the data of history are deleted!", Toast.LENGTH_LONG);
                 View view = toast.getView();

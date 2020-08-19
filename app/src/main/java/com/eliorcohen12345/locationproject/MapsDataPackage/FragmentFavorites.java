@@ -31,12 +31,12 @@ import com.eliorcohen12345.locationproject.CustomAdapterPackage.PlacesListAdapte
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.ItemDecoration;
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.MainActivity;
 import com.eliorcohen12345.locationproject.R;
-import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlaceViewModelFavorites;
+import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlacesViewModelFavorites;
 import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlacesFavorites;
 
 public class FragmentFavorites extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
 
-    private PlaceViewModelFavorites mPlacesViewModelFavorites;
+    private PlacesViewModelFavorites mPlacesViewModelFavorites;
     private RecyclerView recyclerView;
     private View mView;
     private PlacesListAdapterFavorites mAdapterFavorites;
@@ -103,7 +103,7 @@ public class FragmentFavorites extends Fragment implements NavigationView.OnNavi
 
         }
 
-        mPlacesViewModelFavorites = ViewModelProviders.of(this).get(PlaceViewModelFavorites.class);
+        mPlacesViewModelFavorites = ViewModelProviders.of(this).get(PlacesViewModelFavorites.class);
 
         mPlacesViewModelFavorites.getAllPlaces().observe(this, placesFavorites -> mAdapterFavorites.setPlaces(placesFavorites));
     }

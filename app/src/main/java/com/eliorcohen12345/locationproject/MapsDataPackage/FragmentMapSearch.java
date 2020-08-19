@@ -38,7 +38,7 @@ import com.eliorcohen12345.locationproject.DataAppPackage.PlaceModel;
 import com.eliorcohen12345.locationproject.DataProviderPackage.NetworkDataProviderSearch;
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.NearByApplication;
 import com.eliorcohen12345.locationproject.R;
-import com.eliorcohen12345.locationproject.RoomSearchPackage.PlaceViewModelSearch;
+import com.eliorcohen12345.locationproject.RoomSearchPackage.PlacesViewModelSearch;
 import com.eliorcohen12345.locationproject.RoomSearchPackage.PlacesSearch;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -65,7 +65,7 @@ import java.util.List;
 
 public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, View.OnClickListener {
 
-    private PlaceViewModelSearch mPlacesViewModel;
+    private PlacesViewModelSearch mPlacesViewModel;
     private GoogleMap mGoogleMap;
     private MapView mMapView;
     private View mView;
@@ -191,7 +191,7 @@ public class FragmentMapSearch extends Fragment implements OnMapReadyCallback, V
 
         }
 
-        mPlacesViewModel = ViewModelProviders.of(this).get(PlaceViewModelSearch.class);
+        mPlacesViewModel = ViewModelProviders.of(this).get(PlacesViewModelSearch.class);
 
         mPlacesViewModel.getAllPlaces().observe(this, placesSearches -> {
             if (mGoogleMap != null) {

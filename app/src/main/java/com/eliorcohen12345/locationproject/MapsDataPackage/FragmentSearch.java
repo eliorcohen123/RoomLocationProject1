@@ -59,8 +59,8 @@ import com.eliorcohen12345.locationproject.DataProviderPackage.NetworkDataProvid
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.ItemDecoration;
 import com.eliorcohen12345.locationproject.MainAndOtherPackage.NearByApplication;
 import com.eliorcohen12345.locationproject.R;
-import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlaceViewModelFavorites;
-import com.eliorcohen12345.locationproject.RoomSearchPackage.PlaceViewModelSearch;
+import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlacesViewModelFavorites;
+import com.eliorcohen12345.locationproject.RoomSearchPackage.PlacesViewModelSearch;
 import com.eliorcohen12345.locationproject.RoomSearchPackage.PlacesSearch;
 
 import org.json.JSONObject;
@@ -71,7 +71,7 @@ import eliorcohen.com.googlemapsapi.GoogleMapsApi;
 
 public class FragmentSearch extends Fragment implements View.OnClickListener {
 
-    private PlaceViewModelSearch mPlacesViewModelSearch;
+    private PlacesViewModelSearch mPlacesViewModelSearch;
     private RecyclerView recyclerView;
     private View mView;
     private static ProgressDialog mProgressDialog;
@@ -94,7 +94,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener {
     private Criteria criteria;
     private GoogleMapsApi googleMapsApi;
     private Paint p;
-    private PlaceViewModelFavorites placeViewModelFavorites;
+    private PlacesViewModelFavorites placesViewModelFavorites;
 
     @Nullable
     @Override
@@ -220,7 +220,7 @@ public class FragmentSearch extends Fragment implements View.OnClickListener {
 
         }
 
-        mPlacesViewModelSearch = ViewModelProviders.of(this).get(PlaceViewModelSearch.class);
+        mPlacesViewModelSearch = ViewModelProviders.of(this).get(PlacesViewModelSearch.class);
 
         mPlacesViewModelSearch.getAllPlaces().observe(this, placesSearches -> mAdapterSearch.setPlaces(placesSearches));
     }
@@ -265,8 +265,8 @@ public class FragmentSearch extends Fragment implements View.OnClickListener {
                 PlacesSearch mPlace = mAdapterSearch.getPlaceAtPosition(position);
 
                 if (direction == ItemTouchHelper.LEFT) {
-                    placeViewModelFavorites = new PlaceViewModelFavorites(NearByApplication.getApplication());
-                    if (placeViewModelFavorites.exist(mPlace.getName(), mPlace.getLat(), mPlace.getLng()) == null) {
+                    placesViewModelFavorites = new PlacesViewModelFavorites(NearByApplication.getApplication());
+                    if (placesViewModelFavorites.exist(mPlace.getName(), mPlace.getLat(), mPlace.getLng()) == null) {
                         Intent intent = new Intent(getContext(), AddPlaceFavorites.class);
                         intent.putExtra(getContext().getString(R.string.map_add_from_internet), mPlace);
                         getContext().startActivity(intent);
