@@ -27,7 +27,7 @@ public class CustomInfoWindowGoogleMapFavorites implements GoogleMap.InfoWindowA
     @Override
     public View getInfoContents(Marker marker) {
         View view = ((Activity) context).getLayoutInflater()
-                .inflate(R.layout.map_custom_infowindow_favorites, null);
+                .inflate(R.layout.custom_infowindow_favorites, null);
 
         TextView name = view.findViewById(R.id.nameInfo);
 

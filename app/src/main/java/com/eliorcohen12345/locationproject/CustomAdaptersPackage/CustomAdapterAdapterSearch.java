@@ -67,7 +67,7 @@ public class CustomAdapterAdapterSearch extends RecyclerView.Adapter<CustomAdapt
 
     @Override
     public PlaceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.recyclerview_item_total, parent, false);
+        View itemView = mInflater.inflate(R.layout.apapter_place, parent, false);
         return new PlaceViewHolder(itemView);
     }
 
