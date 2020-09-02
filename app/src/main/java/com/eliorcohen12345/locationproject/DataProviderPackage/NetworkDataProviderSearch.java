@@ -21,10 +21,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.eliorcohen12345.locationproject.MapsDataPackage.FragmentSearch;
+import com.eliorcohen12345.locationproject.PagesPackage.SearchFragment;
 import com.eliorcohen12345.locationproject.RoomSearchPackage.PlacesSearch;
-import com.eliorcohen12345.locationproject.DataAppPackage.PlaceModel;
-import com.eliorcohen12345.locationproject.MainAndOtherPackage.NearByApplication;
+import com.eliorcohen12345.locationproject.ModelsPackage.PlaceModel;
+import com.eliorcohen12345.locationproject.OthersPackage.NearByApplication;
 import com.eliorcohen12345.locationproject.RoomSearchPackage.PlacesViewModelSearch;
 
 import eliorcohen.com.googlemapsapi.GoogleMapsApi;
@@ -146,7 +146,7 @@ public class NetworkDataProviderSearch {
             float xInches = metrics.widthPixels / metrics.xdpi;
             diagonalInches = Math.sqrt(xInches * xInches + yInches * yInches);
             if (diagonalInches <= 6.5) {
-                FragmentSearch.stopShowingProgressDialog();
+                SearchFragment.stopShowingProgressDialog();
             }
         }
     }
