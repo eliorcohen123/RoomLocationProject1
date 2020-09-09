@@ -23,7 +23,7 @@ import java.util.List;
 
 import com.eliorcohen12345.locationproject.PagesPackage.SearchFragment;
 import com.eliorcohen12345.locationproject.RoomSearchPackage.PlacesSearch;
-import com.eliorcohen12345.locationproject.ModelsPackage.PlaceModel;
+import com.eliorcohen12345.locationproject.ModelsPackage.Results;
 import com.eliorcohen12345.locationproject.OthersPackage.NearByApplication;
 import com.eliorcohen12345.locationproject.RoomSearchPackage.PlacesViewModelSearch;
 
@@ -45,9 +45,9 @@ public class NetworkDataProviderSearch {
         getPlacesByLocationAsyncTask.execute(String.valueOf(radius), page, open, type, query);
     }
 
-    private static class GetPlacesByLocationAsyncTask extends AsyncTask<String, Integer, ArrayList<PlaceModel>> {
+    private static class GetPlacesByLocationAsyncTask extends AsyncTask<String, Integer, ArrayList<Results>> {
 
-        private ArrayList<PlaceModel> mPlaceModels = new ArrayList<>();
+        private ArrayList<Results> mResults = new ArrayList<>();
         private PlacesViewModelSearch placesViewModelSearch;
         private Location location;
         private LocationManager locationManager;
@@ -57,7 +57,7 @@ public class NetworkDataProviderSearch {
         private GoogleMapsApi googleMapsApi = new GoogleMapsApi();
 
         @Override
-        protected ArrayList<PlaceModel> doInBackground(String... urls) {
+        protected ArrayList<Results> doInBackground(String... urls) {
             OkHttpClient client = new OkHttpClient();
             locationManager = (LocationManager) NearByApplication.getApplication().getSystemService(Context.LOCATION_SERVICE);
             criteria = new Criteria();
@@ -92,11 +92,11 @@ public class NetworkDataProviderSearch {
                             e.printStackTrace();
                         }
                     try {
-                        mPlaceModels = getLocationListFromJson(response.body().string());
+                        mResults = getLocationListFromJson(response.body().string());
                         ArrayList<PlacesSearch> listPlaces = new ArrayList<>();
-                        for (PlaceModel placeModel : mPlaceModels) {
+                        for (Results results : mResults) {
                             try {
-                                PlacesSearch place = new PlacesSearch(placeModel.getName(), placeModel.getVicinity(), placeModel.getGeometry().getLocation().getLat(), placeModel.getGeometry().getLocation().getLng(), placeModel.getPhotos().get(0).getPhoto_reference(), placeModel.getOpening_hours());
+                                PlacesSearch place = new PlacesSearch(results.getName(), results.getVicinity(), results.getGeometry().getLocation().getLat(), results.getGeometry().getLocation().getLng(), results.getPhotos().get(0).getPhoto_reference(), results.getOpening_hours());
                                 listPlaces.add(place);
                             } catch (Exception e) {
 
@@ -111,15 +111,15 @@ public class NetworkDataProviderSearch {
                 }
             }
 
-            return mPlaceModels;
+            return mResults;
         }
 
-        private ArrayList<PlaceModel> getLocationListFromJson(String jsonResponse) {
-            List<PlaceModel> stuLocationData;
+        private ArrayList<Results> getLocationListFromJson(String jsonResponse) {
+            List<Results> stuLocationData;
             Gson gson = new GsonBuilder().create();
             LocationResponse response = gson.fromJson(jsonResponse, LocationResponse.class);
             stuLocationData = response.results;
-            ArrayList<PlaceModel> arrList = new ArrayList<>();
+            ArrayList<Results> arrList = new ArrayList<>();
             arrList.addAll(stuLocationData);
 
             return arrList;
@@ -127,17 +127,17 @@ public class NetworkDataProviderSearch {
 
         private static class LocationResponse {
 
-            private List<PlaceModel> results;
+            private List<Results> results;
 
             // public constructor is necessary for collections
             public LocationResponse() {
-                results = new ArrayList<PlaceModel>();
+                results = new ArrayList<Results>();
             }
 
         }
 
         @Override
-        protected void onPostExecute(ArrayList<PlaceModel> arrayList) {
+        protected void onPostExecute(ArrayList<Results> arrayList) {
             // Tablet/Phone mode
             DisplayMetrics metrics = new DisplayMetrics();
             ((WindowManager) NearByApplication.getApplication().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(metrics);

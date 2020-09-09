@@ -34,7 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eliorcohen12345.locationproject.CustomAdaptersPackage.CustomInfoWindowGoogleMapSearch;
-import com.eliorcohen12345.locationproject.ModelsPackage.PlaceModel;
+import com.eliorcohen12345.locationproject.ModelsPackage.Results;
 import com.eliorcohen12345.locationproject.DataProviderPackage.NetworkDataProviderSearch;
 import com.eliorcohen12345.locationproject.OthersPackage.NearByApplication;
 import com.eliorcohen12345.locationproject.R;
@@ -487,7 +487,7 @@ public class MapSearchFragment extends Fragment implements OnMapReadyCallback, V
         if (provider != null) {
             location = locationManager.getLastKnownLocation(provider);
             if (location != null) {
-                PlaceModel info = new PlaceModel();
+                Results info = new Results();
                 double distanceMe;
                 Location locationA = new Location("Point A");
                 locationA.setLatitude(getLat);

@@ -38,7 +38,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.eliorcohen12345.locationproject.ModelsPackage.PlaceModel;
+import com.eliorcohen12345.locationproject.ModelsPackage.Results;
 import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlacesViewModelFavorites;
 import com.eliorcohen12345.locationproject.RoomFavoritesPackage.PlacesFavorites;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -361,7 +361,7 @@ public class MapFavoritesFragment extends Fragment implements OnMapReadyCallback
         if (provider != null) {
             location = locationManager.getLastKnownLocation(provider);
             if (location != null) {
-                PlaceModel info = new PlaceModel();
+                Results info = new Results();
                 double distanceMe;
                 Location locationA = new Location("Point A");
                 locationA.setLatitude(getLat);
