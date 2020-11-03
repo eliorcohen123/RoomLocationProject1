@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Results implements Serializable {
 
-    private String id;
+    private String place_id;
     private String name;
     private String vicinity;
     private String distance;
@@ -15,12 +15,12 @@ public class Results implements Serializable {
     private Geometry geometry;
     private OpeningHours opening_hours;
 
-    public String getId() {
-        return id;
+    public String getPlace_id() {
+        return place_id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPlace_id(String place_id) {
+        this.place_id = place_id;
     }
 
     public String getName() {
