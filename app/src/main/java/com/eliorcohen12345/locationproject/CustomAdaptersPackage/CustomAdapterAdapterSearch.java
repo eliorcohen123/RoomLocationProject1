@@ -75,9 +75,7 @@ public class CustomAdapterAdapterSearch extends RecyclerView.Adapter<CustomAdapt
     public void onBindViewHolder(final PlaceViewHolder holder, final int position) {
         if (mPlacesSearchList != null) {
             final PlacesSearch current = mPlacesSearchList.get(position);
-            locationManager = (LocationManager) mInflater.getContext().getSystemService(Context.LOCATION_SERVICE);
-            criteria = new Criteria();
-            provider = locationManager.getBestProvider(criteria, true);
+            initLocation();
             if (ActivityCompat.checkSelfPermission(mInflater.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.checkSelfPermission(mInflater.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
             }// TODO: Consider calling
@@ -180,9 +178,7 @@ public class CustomAdapterAdapterSearch extends RecyclerView.Adapter<CustomAdapt
 
     public void setPlaces(List<PlacesSearch> placesSearches) {
         mPlacesSearchList = placesSearches;
-        locationManager = (LocationManager) mInflater.getContext().getSystemService(Context.LOCATION_SERVICE);
-        criteria = new Criteria();
-        provider = locationManager.getBestProvider(criteria, true);
+        initLocation();;
         if (ActivityCompat.checkSelfPermission(mInflater.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.checkSelfPermission(mInflater.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
         }// TODO: Consider calling
@@ -208,6 +204,12 @@ public class CustomAdapterAdapterSearch extends RecyclerView.Adapter<CustomAdapt
             }
         }
         notifyDataSetChanged();
+    }
+
+    private void initLocation() {
+        locationManager = (LocationManager) mInflater.getContext().getSystemService(Context.LOCATION_SERVICE);
+        criteria = new Criteria();
+        provider = locationManager.getBestProvider(criteria, true);
     }
 
     // getItemCount() is called many times, and when it is first called,
